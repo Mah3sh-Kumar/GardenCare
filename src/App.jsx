@@ -97,7 +97,7 @@ function App() {
               <Route path="*" element={<Navigate to="/dashboard" replace />} />
             </Routes>
           </Router>
-          </ToastProvider>
+        </ToastProvider>
         </ThemeProvider>
       </AuthProvider>
     </ErrorBoundary>
