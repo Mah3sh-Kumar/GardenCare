@@ -13,7 +13,7 @@ import DataService from '../../services/dataService';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useSensorData } from '../../lib/useRealtimeData';
 
-const MoistureHumidityChart = () => {
+const MoistureHumidityChart = React.memo(() => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const { sensorData, loading, error } = useSensorData(24);
@@ -241,6 +241,6 @@ const MoistureHumidityChart = () => {
       </ResponsiveContainer>
     </div>
   );
-};
+});
 
 export default MoistureHumidityChart;

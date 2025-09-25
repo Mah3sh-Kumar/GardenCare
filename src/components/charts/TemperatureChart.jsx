@@ -13,7 +13,7 @@ import DataService from '../../services/dataService';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useSensorData } from '../../lib/useRealtimeData';
 
-const TemperatureChart = () => {
+const TemperatureChart = React.memo(() => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const { sensorData, loading, error } = useSensorData(24);
@@ -206,6 +206,6 @@ const TemperatureChart = () => {
       </ResponsiveContainer>
     </div>
   );
-};
+});
 
 export default TemperatureChart;
