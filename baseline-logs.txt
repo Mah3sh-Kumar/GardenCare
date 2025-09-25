@@ -22,4 +22,4 @@ DEV SERVER:
 - Vite v7.1.4
 - Local: http://localhost:5173/
 - Network: http://192.168.0.169:5173/
-- No build errors
+- No build errorsnpm found
