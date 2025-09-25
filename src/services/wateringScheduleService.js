@@ -1,4 +1,4 @@
-import { supabase, queryWithAuth, handleSupabaseError } from '../lib/supabase';
+import { supabase, queryWithAuth, handleSupabaseError } from '../lib/supabaseClient';
 
 // Watering Schedule Service with real-time capabilities
 export class WateringScheduleService {

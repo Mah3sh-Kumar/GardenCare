@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
-import { supabase } from '../lib/supabase';
+import { supabase } from '../lib/supabaseClient';
 import { ProfileService } from '../services/profileService';
 import { DeviceService } from '../services/deviceService';
 import {

@@ -16,7 +16,7 @@ import {
 } from 'react-icons/fi';
 import { DeviceService } from '../services/deviceService';
 import { useTheme } from '../contexts/ThemeContext';
-import { supabase, forceSchemaRefresh } from '../lib/supabase';
+import { supabase, forceSchemaRefresh } from '../lib/supabaseClient';
 
 // Get Supabase config values
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;

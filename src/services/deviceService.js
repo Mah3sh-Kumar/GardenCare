@@ -1,4 +1,4 @@
-import { supabase, handleSupabaseError } from '../lib/supabase';
+import { supabase, handleSupabaseError } from '../lib/supabaseClient';
 
 // Device Service for managing ESP32 devices with real-time capabilities
 export class DeviceService {

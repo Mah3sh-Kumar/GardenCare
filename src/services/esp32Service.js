@@ -1,4 +1,4 @@
-import { supabase } from '../lib/supabase';
+import { supabase } from '../lib/supabaseClient';
 
 // ESP32 Integration Service for two-way communication between ESP32, Supabase, and the dashboard
 export class ESP32Service {

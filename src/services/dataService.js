@@ -1,4 +1,4 @@
-import { supabase, queryWithAuth, handleSupabaseError } from '../lib/supabase';
+import { supabase, queryWithAuth, handleSupabaseError } from '../lib/supabaseClient';
 
 // Enhanced Data Service with optimized Supabase v2 queries and RLS support
 export class DataService {

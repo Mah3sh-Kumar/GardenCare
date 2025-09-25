@@ -1,4 +1,4 @@
-import { supabase, handleSupabaseError } from '../lib/supabase';
+import { supabase, handleSupabaseError } from '../lib/supabaseClient';
 
 // Analytics Service for advanced data analysis and insights with real-time capabilities
 export class AnalyticsService {

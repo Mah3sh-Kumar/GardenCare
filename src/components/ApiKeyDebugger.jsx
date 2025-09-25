@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { supabase, createFreshClient } from '../lib/supabase';
+import { supabase, createFreshClient } from '../lib/supabaseClient';
 
 export default function ApiKeyDebugger() {
   const [debugInfo, setDebugInfo] = useState(null);

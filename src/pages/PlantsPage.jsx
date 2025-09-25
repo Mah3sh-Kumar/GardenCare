@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { supabase, getCurrentUser } from '../lib/supabase';
+import { supabase, getCurrentUser } from '../lib/supabaseClient';
 
 const PlantsPage = () => {
   const [zones, setZones] = useState([]);
