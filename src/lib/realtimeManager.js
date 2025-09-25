@@ -1,5 +1,7 @@
 import { supabase } from './supabaseClient';
 
+import { debugLog, logRealtimeEvent } from '../utils/errorHandling';
+
 /**
  * Centralized Realtime Subscription Manager for Supabase
  * Handles all realtime subscriptions with reconnection logic, backoff, and deduplication
@@ -50,7 +52,8 @@ class RealtimeManager {
           ...(options.filter && { filter: options.filter }),
         },
         (payload) => {
-          this.log(`Realtime event for ${table}:`, payload);
+          logRealtimeEvent(payload, table);
+          debugLog(`Realtime event for ${table}:`, payload);
           
           // Reset reconnect attempts on successful event
           this.reconnectAttempts.set(subscriptionKey, 0);

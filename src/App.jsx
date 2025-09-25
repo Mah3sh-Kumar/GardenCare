@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { ToastProvider } from './components/ui/Toast';
 import ErrorBoundary from './components/ErrorBoundary';
 import AuthenticatedLayout from './components/layout/AuthenticatedLayout';
 import Login from './pages/Login';
@@ -27,7 +28,8 @@ function App() {
     <ErrorBoundary>
       <AuthProvider>
         <ThemeProvider>
-          <Router>
+          <ToastProvider>
+            <Router>
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
@@ -95,6 +97,7 @@ function App() {
               <Route path="*" element={<Navigate to="/dashboard" replace />} />
             </Routes>
           </Router>
+          </ToastProvider>
         </ThemeProvider>
       </AuthProvider>
     </ErrorBoundary>
