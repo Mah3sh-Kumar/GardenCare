@@ -12,6 +12,7 @@ import PlantRecommendationsPanel from '../components/PlantRecommendationsPanel';
 import DataService from '../services/dataService';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
+import realtimeManager, { sensorDataSubscription, alertsSubscription } from '../lib/realtimeManager';
 
 const Dashboard = () => {
   const { theme } = useTheme();
@@ -49,17 +50,34 @@ const Dashboard = () => {
     }
   }, []);
 
-  // Auto-refresh effect
+  // Auto-refresh effect with realtime subscriptions
   useEffect(() => {
     loadDashboardData();
 
-    // Set up auto-refresh every 30 seconds
+    // Set up realtime subscriptions for sensor data and alerts
+    const sensorSub = sensorDataSubscription((payload) => {
+      // New sensor data received, refresh stats
+      setRefreshCount((prev) => prev + 1);
+      loadDashboardData();
+    });
+
+    const alertsSub = alertsSubscription((payload) => {
+      // New alert received, refresh dashboard to update notifications
+      setRefreshCount((prev) => prev + 1);
+      loadDashboardData();
+    });
+
+    // Fallback refresh every 5 minutes (reduced from 30s due to realtime)
     const interval = setInterval(() => {
       setRefreshCount((prev) => prev + 1);
       loadDashboardData();
-    }, 30000);
+    }, 300000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      realtimeManager.unsubscribe('sensor_data');
+      realtimeManager.unsubscribe('alerts');
+    };
   }, [loadDashboardData]);
 
   // Manual refresh handler

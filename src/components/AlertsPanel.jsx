@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import DataService from '../services/dataService';
+import realtimeManager, { alertsSubscription } from '../lib/realtimeManager';
 
 const AlertsPanel = () => {
   const { theme } = useTheme();
@@ -11,6 +12,40 @@ const AlertsPanel = () => {
 
   useEffect(() => {
     loadAlerts();
+
+    // Set up realtime subscription for alerts
+    const subscription = alertsSubscription((payload) => {
+      const { eventType, new: newAlert, old: oldAlert } = payload;
+      
+      switch (eventType) {
+        case 'INSERT':
+          // Add new alert if it's unread
+          if (newAlert && !newAlert.read) {
+            setAlerts((prev) => [newAlert, ...prev]);
+          }
+          break;
+        case 'UPDATE':
+          // Update alert (typically marking as read)
+          if (newAlert) {
+            setAlerts((prev) => 
+              prev.map((alert) => 
+                alert.id === newAlert.id ? newAlert : alert
+              ).filter(alert => !alert.read) // Remove read alerts
+            );
+          }
+          break;
+        case 'DELETE':
+          // Remove deleted alert
+          if (oldAlert) {
+            setAlerts((prev) => prev.filter((alert) => alert.id !== oldAlert.id));
+          }
+          break;
+      }
+    });
+
+    return () => {
+      realtimeManager.unsubscribe('alerts');
+    };
   }, []);
 
   const loadAlerts = async () => {

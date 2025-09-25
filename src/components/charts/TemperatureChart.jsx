@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   LineChart,
   Line,
@@ -11,43 +11,24 @@ import {
 } from 'recharts';
 import DataService from '../../services/dataService';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useSensorData } from '../../lib/useRealtimeData';
 
 const TemperatureChart = () => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { sensorData, loading, error } = useSensorData(24);
 
-  useEffect(() => {
-    loadTemperatureData();
-  }, []);
-
-  const loadTemperatureData = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      const sensorData = await DataService.getSensorDataForCharts(24);
-
-      // Transform data for chart
-      const chartData = sensorData.map((item) => ({
-        time: new Date(item.timestamp).toLocaleTimeString('en-US', {
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: false,
-        }),
-        temperature: parseFloat(item.temperature) || 0,
-      }));
-
-      setData(chartData);
-    } catch (err) {
-      console.error('Error loading temperature data:', err);
-      setError('Failed to load temperature data');
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Transform data for chart with memoization for performance
+  const chartData = useMemo(() => {
+    return sensorData.map((item) => ({
+      time: new Date(item.timestamp).toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+      }),
+      temperature: parseFloat(item.temperature) || 0,
+    }));
+  }, [sensorData]);
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -109,7 +90,7 @@ const TemperatureChart = () => {
             {error}
           </p>
           <button
-            onClick={loadTemperatureData}
+            onClick={() => window.location.reload()}
             className={`px-3 py-1 rounded-lg text-xs transition-colors ${
               isDark
                 ? 'bg-gray-700 hover:bg-gray-600 text-white'
@@ -123,7 +104,7 @@ const TemperatureChart = () => {
     );
   }
 
-  if (data.length === 0) {
+  if (chartData.length === 0) {
     return (
       <div className="h-72 flex items-center justify-center">
         <div className="text-center">
@@ -159,7 +140,7 @@ const TemperatureChart = () => {
     <div className="h-72">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
-          data={data}
+          data={chartData}
           margin={{
             top: 5,
             right: 30,

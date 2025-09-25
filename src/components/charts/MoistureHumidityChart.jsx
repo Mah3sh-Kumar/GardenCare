@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   LineChart,
   Line,
@@ -11,47 +11,28 @@ import {
 } from 'recharts';
 import DataService from '../../services/dataService';
 import { useTheme } from '../../contexts/ThemeContext';
+import { useSensorData } from '../../lib/useRealtimeData';
 
 const MoistureHumidityChart = () => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { sensorData, loading, error } = useSensorData(24);
 
-  useEffect(() => {
-    loadMoistureHumidityData();
-  }, []);
-
-  const loadMoistureHumidityData = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      const sensorData = await DataService.getSensorDataForCharts(24);
-
-      // Transform data for chart with validation
-      const chartData = sensorData
-        .filter((item) => item && item.timestamp) // Filter out invalid data
-        .map((item) => ({
-          time: new Date(item.timestamp).toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false,
-          }),
-          moisture: parseFloat(item.soil_moisture) || 0,
-          humidity: parseFloat(item.humidity) || 0,
-        }))
-        .filter((item) => item.moisture >= 0 && item.humidity >= 0); // Filter out negative values
-
-      setData(chartData);
-    } catch (err) {
-      console.error('Error loading moisture/humidity data:', err);
-      setError('Failed to load moisture/humidity data');
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Transform data for chart with validation and memoization
+  const chartData = useMemo(() => {
+    return sensorData
+      .filter((item) => item && item.timestamp) // Filter out invalid data
+      .map((item) => ({
+        time: new Date(item.timestamp).toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+        }),
+        moisture: parseFloat(item.soil_moisture) || 0,
+        humidity: parseFloat(item.humidity) || 0,
+      }))
+      .filter((item) => item.moisture >= 0 && item.humidity >= 0); // Filter out negative values
+  }, [sensorData]);
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -119,7 +100,7 @@ const MoistureHumidityChart = () => {
             {error}
           </p>
           <button
-            onClick={loadMoistureHumidityData}
+            onClick={() => window.location.reload()}
             className={`px-3 py-1 rounded-lg text-xs transition-colors ${
               isDark
                 ? 'bg-gray-700 hover:bg-gray-600 text-white'
@@ -134,7 +115,7 @@ const MoistureHumidityChart = () => {
     );
   }
 
-  if (data.length === 0) {
+  if (chartData.length === 0) {
     return (
       <div className="h-72 flex items-center justify-center">
         <div className="text-center">
@@ -174,7 +155,7 @@ const MoistureHumidityChart = () => {
     >
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
-          data={data}
+          data={chartData}
           margin={{
             top: 5,
             right: 30,

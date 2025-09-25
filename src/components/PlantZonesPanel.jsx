@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import DataService from '../services/dataService';
+import realtimeManager, { zonesSubscription, sensorDataSubscription } from '../lib/realtimeManager';
 
 const PlantZonesPanel = () => {
   const { theme } = useTheme();
@@ -11,6 +12,44 @@ const PlantZonesPanel = () => {
 
   useEffect(() => {
     loadZones();
+
+    // Set up realtime subscriptions for zones and sensor data
+    const zonesSub = zonesSubscription((payload) => {
+      const { eventType, new: newZone, old: oldZone } = payload;
+      
+      switch (eventType) {
+        case 'INSERT':
+          if (newZone) {
+            setZones((prev) => [...prev, newZone]);
+          }
+          break;
+        case 'UPDATE':
+          if (newZone) {
+            setZones((prev) => 
+              prev.map((zone) => 
+                zone.id === newZone.id ? newZone : zone
+              )
+            );
+          }
+          break;
+        case 'DELETE':
+          if (oldZone) {
+            setZones((prev) => prev.filter((zone) => zone.id !== oldZone.id));
+          }
+          break;
+      }
+    });
+
+    // Subscribe to sensor data to update moisture levels
+    const sensorSub = sensorDataSubscription((payload) => {
+      // Refresh zones when new sensor data comes in to update moisture levels
+      loadZones();
+    });
+
+    return () => {
+      realtimeManager.unsubscribe('zones');
+      realtimeManager.unsubscribe('sensor_data');
+    };
   }, []);
 
   const loadZones = async () => {
