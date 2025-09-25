@@ -1,0 +1,3659 @@
+[
+    {
+        "Plant_Name": "Rice",
+        "Scientific_Name": "Oryza sativa",
+        "Category": "Cereals",
+        "Soil_Types": [
+            "Clay",
+            "Alluvial",
+            "Delta soils"
+        ],
+        "Water_Requirement": "High (100cm/season)",
+        "Humidity_Range_Percent": "70-85%",
+        "Temperature_Range_Celsius": "20-35°C",
+        "Fertilizer_Needs": "N:P:K 120:60:40, Organic matter"
+    },
+    {
+        "Plant_Name": "Wheat",
+        "Scientific_Name": "Triticum aestivum",
+        "Category": "Cereals",
+        "Soil_Types": [
+            "Well-drained loamy",
+            "Clay loamy"
+        ],
+        "Water_Requirement": "Medium (25-75cm)",
+        "Humidity_Range_Percent": "50-70%",
+        "Temperature_Range_Celsius": "15-20°C",
+        "Fertilizer_Needs": "N:P:K 120:60:40, FYM 10t/ha"
+    },
+    {
+        "Plant_Name": "Maize",
+        "Scientific_Name": "Zea mays",
+        "Category": "Cereals",
+        "Soil_Types": [
+            "Alluvial",
+            "Red",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-100cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "21-27°C",
+        "Fertilizer_Needs": "N:P:K 120:60:40, Organic compost"
+    },
+    {
+        "Plant_Name": "Barley",
+        "Scientific_Name": "Hordeum vulgare",
+        "Category": "Cereals",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low-Medium (40-60cm)",
+        "Humidity_Range_Percent": "55-65%",
+        "Temperature_Range_Celsius": "12-25°C",
+        "Fertilizer_Needs": "N:P:K 80:40:20, Moderate organic"
+    },
+    {
+        "Plant_Name": "Cowpea (Lobia)",
+        "Scientific_Name": "Vigna unguiculata",
+        "Category": "Pulses",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-100cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "N:P:K 25:50:50kg/ha, Rhizobium"
+    },
+    {
+        "Plant_Name": "Horse Gram (Kulthi)",
+        "Scientific_Name": "Macrotyloma uniflorum",
+        "Category": "Pulses",
+        "Soil_Types": [
+            "Red laterite",
+            "Poor soils"
+        ],
+        "Water_Requirement": "Low (40-75cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "N:P:K 25:50:25kg/ha, Drought tolerant"
+    },
+    {
+        "Plant_Name": "Moth Bean",
+        "Scientific_Name": "Vigna aconitifolia",
+        "Category": "Pulses",
+        "Soil_Types": [
+            "Sandy",
+            "Arid soils"
+        ],
+        "Water_Requirement": "Low (30-50cm)",
+        "Humidity_Range_Percent": "50-65%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "N:P:K 25:25:25kg/ha, Drought resistant"
+    },
+    {
+        "Plant_Name": "Lathyrus (Khesari)",
+        "Scientific_Name": "Lathyrus sativus",
+        "Category": "Pulses",
+        "Soil_Types": [
+            "Clay loam",
+            "Waterlogged soils"
+        ],
+        "Water_Requirement": "Medium (50-80cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 25:50:25kg/ha, Waterlogging tolerant"
+    },
+    {
+        "Plant_Name": "Kidney Bean (Rajma)",
+        "Scientific_Name": "Phaseolus vulgaris",
+        "Category": "Pulses",
+        "Soil_Types": [
+            "Well-drained loamy",
+            "Mountain soils"
+        ],
+        "Water_Requirement": "Medium (75-125cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "14-27°C",
+        "Fertilizer_Needs": "N:P:K 25:60:60kg/ha, Cool climate"
+    },
+    {
+        "Plant_Name": "Foxtail Millet (Kakum)",
+        "Scientific_Name": "Setaria italica",
+        "Category": "Minor Millets",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red soil"
+        ],
+        "Water_Requirement": "Low-Medium (35-75cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "26-35°C",
+        "Fertilizer_Needs": "N:P:K 40:20:20kg/ha, Drought tolerant"
+    },
+    {
+        "Plant_Name": "Little Millet (Kutki)",
+        "Scientific_Name": "Panicum sumatrense",
+        "Category": "Minor Millets",
+        "Soil_Types": [
+            "Sandy loam",
+            "Hill soils"
+        ],
+        "Water_Requirement": "Medium (75-125cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "20-35°C",
+        "Fertilizer_Needs": "N:P:K 40:20:20kg/ha, Tribal areas"
+    },
+    {
+        "Plant_Name": "Kodo Millet (Kodon)",
+        "Scientific_Name": "Paspalum scrobiculatum",
+        "Category": "Minor Millets",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red laterite"
+        ],
+        "Water_Requirement": "Medium (50-100cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "N:P:K 40:20:20kg/ha, Poor soils"
+    },
+    {
+        "Plant_Name": "Proso Millet (Chena)",
+        "Scientific_Name": "Panicum miliaceum",
+        "Category": "Minor Millets",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low (25-50cm)",
+        "Humidity_Range_Percent": "50-65%",
+        "Temperature_Range_Celsius": "15-35°C",
+        "Fertilizer_Needs": "N:P:K 40:20:20kg/ha, Short duration"
+    },
+    {
+        "Plant_Name": "Barnyard Millet (Sanwa)",
+        "Scientific_Name": "Echinochloa esculenta",
+        "Category": "Minor Millets",
+        "Soil_Types": [
+            "Sandy loam",
+            "Clay loam"
+        ],
+        "Water_Requirement": "Medium (75-150cm)",
+        "Humidity_Range_Percent": "70-85%",
+        "Temperature_Range_Celsius": "20-40°C",
+        "Fertilizer_Needs": "N:P:K 40:20:20kg/ha, High altitude"
+    },
+    {
+        "Plant_Name": "Browntop Millet",
+        "Scientific_Name": "Urochloa ramosa",
+        "Category": "Minor Millets",
+        "Soil_Types": [
+            "Sandy",
+            "Red laterite"
+        ],
+        "Water_Requirement": "Low-Medium (40-80cm)",
+        "Humidity_Range_Percent": "60-75%",
+        "Temperature_Range_Celsius": "20-35°C",
+        "Fertilizer_Needs": "N:P:K 30:15:15kg/ha, Marginal lands"
+    },
+    {
+        "Plant_Name": "Job's Tears (Adlay)",
+        "Scientific_Name": "Coix lacryma-jobi",
+        "Category": "Minor Millets",
+        "Soil_Types": [
+            "Moist clay loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "75-85%",
+        "Temperature_Range_Celsius": "20-30°C",
+        "Fertilizer_Needs": "N:P:K 60:30:30kg/ha, Medicinal grain"
+    },
+    {
+        "Plant_Name": "Caraway",
+        "Scientific_Name": "Carum carvi",
+        "Category": "Seed Spices",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-75cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-20°C",
+        "Fertilizer_Needs": "N:P:K 60:30:30kg/ha, Cool season"
+    },
+    {
+        "Plant_Name": "Anise",
+        "Scientific_Name": "Pimpinella anisum",
+        "Category": "Seed Spices",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (40-60cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 80:40:40kg/ha, Mediterranean"
+    },
+    {
+        "Plant_Name": "Celery Seed",
+        "Scientific_Name": "Apium graveolens",
+        "Category": "Seed Spices",
+        "Soil_Types": [
+            "Organic rich",
+            "Moist soil"
+        ],
+        "Water_Requirement": "High (80-120cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "15-21°C",
+        "Fertilizer_Needs": "N:P:K 120:60:100kg/ha, Cool humid"
+    },
+    {
+        "Plant_Name": "Poppy Seed",
+        "Scientific_Name": "Papaver somniferum",
+        "Category": "Seed Spices",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-75cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 100:50:50kg/ha, Cool dry"
+    },
+    {
+        "Plant_Name": "Elephant Foot Yam",
+        "Scientific_Name": "Amorphophallus paeoniifolius",
+        "Category": "Underutilized Tubers",
+        "Soil_Types": [
+            "Clay loam",
+            "Organic rich"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "75-85%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "N:P:K 100:50:150kg/ha, High organic"
+    },
+    {
+        "Plant_Name": "Greater Yam",
+        "Scientific_Name": "Dioscorea alata",
+        "Category": "Underutilized Tubers",
+        "Soil_Types": [
+            "Deep loamy",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (150-250cm)",
+        "Humidity_Range_Percent": "75-85%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "N:P:K 100:50:150kg/ha, Deep soil"
+    },
+    {
+        "Plant_Name": "Lesser Yam",
+        "Scientific_Name": "Dioscorea esculenta",
+        "Category": "Underutilized Tubers",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (100-150cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "25-32°C",
+        "Fertilizer_Needs": "N:P:K 80:40:120kg/ha, Moderate fertility"
+    },
+    {
+        "Plant_Name": "Chinese Potato",
+        "Scientific_Name": "Solenostemon rotundifolius",
+        "Category": "Underutilized Tubers",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red laterite"
+        ],
+        "Water_Requirement": "Medium (75-125cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "20-30°C",
+        "Fertilizer_Needs": "N:P:K 60:30:90kg/ha, Tuber crop"
+    },
+    {
+        "Plant_Name": "Arrowroot",
+        "Scientific_Name": "Maranta arundinacea",
+        "Category": "Underutilized Tubers",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "75-85%",
+        "Temperature_Range_Celsius": "21-30°C",
+        "Fertilizer_Needs": "N:P:K 80:40:120kg/ha, Starch crop"
+    },
+    {
+        "Plant_Name": "Yam Bean",
+        "Scientific_Name": "Pachyrhizus erosus",
+        "Category": "Underutilized Tubers",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (75-125cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "20-30°C",
+        "Fertilizer_Needs": "N:P:K 60:40:80kg/ha, Climbing legume"
+    },
+    {
+        "Plant_Name": "Drumstick (Moringa)",
+        "Scientific_Name": "Moringa oleifera",
+        "Category": "Regional Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (30-250cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "20-40°C",
+        "Fertilizer_Needs": "N:P:K 100:40:140kg/ha, Nutrient dense"
+    },
+    {
+        "Plant_Name": "Curry Leaves",
+        "Scientific_Name": "Murraya koenigii",
+        "Category": "Regional Vegetables",
+        "Soil_Types": [
+            "Red sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (75-150cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "16-37°C",
+        "Fertilizer_Needs": "N:P:K 60:80:40g/plant, Organic preferred"
+    },
+    {
+        "Plant_Name": "Ivy Gourd (Tindora)",
+        "Scientific_Name": "Coccinia grandis",
+        "Category": "Regional Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-80cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "N:P:K 100:50:50kg/ha, Climbing vine"
+    },
+    {
+        "Plant_Name": "Pointed Gourd (Parwal)",
+        "Scientific_Name": "Trichosanthes dioica",
+        "Category": "Regional Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Alluvial"
+        ],
+        "Water_Requirement": "High (75-125cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "N:P:K 100:50:100kg/ha, Dioecious vine"
+    },
+    {
+        "Plant_Name": "Water Spinach (Kalmi)",
+        "Scientific_Name": "Ipomoea aquatica",
+        "Category": "Regional Vegetables",
+        "Soil_Types": [
+            "Clay loam",
+            "Wetland soils"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "80-90%",
+        "Temperature_Range_Celsius": "22-35°C",
+        "Fertilizer_Needs": "N:P:K 120:60:100kg/ha, Aquatic"
+    },
+    {
+        "Plant_Name": "Malabar Spinach",
+        "Scientific_Name": "Basella alba",
+        "Category": "Regional Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Organic rich"
+        ],
+        "Water_Requirement": "High (75-125cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "N:P:K 100:50:75kg/ha, Heat tolerant"
+    },
+    {
+        "Plant_Name": "Colocasia Leaves",
+        "Scientific_Name": "Colocasia esculenta",
+        "Category": "Regional Vegetables",
+        "Soil_Types": [
+            "Clay loam",
+            "Moist soil"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "80-90%",
+        "Temperature_Range_Celsius": "21-27°C",
+        "Fertilizer_Needs": "N:P:K 100:50:100kg/ha, Large leaves"
+    },
+    {
+        "Plant_Name": "Lamb's Quarters",
+        "Scientific_Name": "Chenopodium album",
+        "Category": "Wild Edible Greens",
+        "Soil_Types": [
+            "Sandy loam",
+            "Disturbed soils"
+        ],
+        "Water_Requirement": "Medium (30-60cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 60:30:30kg/ha, Nutrient dense weed"
+    },
+    {
+        "Plant_Name": "Wild Amaranth",
+        "Scientific_Name": "Amaranthus viridis",
+        "Category": "Wild Edible Greens",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-75cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "22-35°C",
+        "Fertilizer_Needs": "N:P:K 80:40:40kg/ha, Heat tolerant"
+    },
+    {
+        "Plant_Name": "Purslane",
+        "Scientific_Name": "Portulaca oleracea",
+        "Category": "Wild Edible Greens",
+        "Soil_Types": [
+            "Sandy",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low (25-50cm)",
+        "Humidity_Range_Percent": "50-70%",
+        "Temperature_Range_Celsius": "18-35°C",
+        "Fertilizer_Needs": "N:P:K 40:20:20kg/ha, Succulent, Omega-3"
+    },
+    {
+        "Plant_Name": "Dandelion (Cultivated)",
+        "Scientific_Name": "Taraxacum officinale",
+        "Category": "Wild Edible Greens",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (30-50cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 80:40:60kg/ha, Bitter greens"
+    },
+    {
+        "Plant_Name": "Chickweed",
+        "Scientific_Name": "Stellaria media",
+        "Category": "Wild Edible Greens",
+        "Soil_Types": [
+            "Moist loamy",
+            "Organic rich"
+        ],
+        "Water_Requirement": "Medium (40-60cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "10-20°C",
+        "Fertilizer_Needs": "N:P:K 60:30:30kg/ha, Cool season"
+    },
+    {
+        "Plant_Name": "Mulberry",
+        "Scientific_Name": "Morus alba",
+        "Category": "Berry Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (75-150cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-35°C",
+        "Fertilizer_Needs": "N:P:K 200:100:200g/tree, Silkworm feed"
+    },
+    {
+        "Plant_Name": "Jamun (Black Plum)",
+        "Scientific_Name": "Syzygium cumini",
+        "Category": "Subtropical Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Alluvial"
+        ],
+        "Water_Requirement": "Medium (100-200cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "23-35°C",
+        "Fertilizer_Needs": "N:P:K 1000:500:1000g/tree, Diabetic fruit"
+    },
+    {
+        "Plant_Name": "Wood Apple",
+        "Scientific_Name": "Limonia acidissima",
+        "Category": "Subtropical Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red laterite"
+        ],
+        "Water_Requirement": "Low-Medium (50-100cm)",
+        "Humidity_Range_Percent": "60-75%",
+        "Temperature_Range_Celsius": "20-40°C",
+        "Fertilizer_Needs": "N:P:K 500:250:500g/tree, Hardy tree"
+    },
+    {
+        "Plant_Name": "Tamarind",
+        "Scientific_Name": "Tamarindus indica",
+        "Category": "Subtropical Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red soil"
+        ],
+        "Water_Requirement": "Medium (50-150cm)",
+        "Humidity_Range_Percent": "60-75%",
+        "Temperature_Range_Celsius": "20-40°C",
+        "Fertilizer_Needs": "N:P:K 2000:1000:2000g/tree, Long-lived tree"
+    },
+    {
+        "Plant_Name": "Indian Gooseberry (Amla)",
+        "Scientific_Name": "Phyllanthus emblica",
+        "Category": "Medicinal Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red laterite"
+        ],
+        "Water_Requirement": "Medium (75-150cm)",
+        "Humidity_Range_Percent": "60-75%",
+        "Temperature_Range_Celsius": "10-46°C",
+        "Fertilizer_Needs": "N:P:K 1000:500:500g/tree, Vitamin C rich"
+    },
+    {
+        "Plant_Name": "Davana",
+        "Scientific_Name": "Artemisia pallens",
+        "Category": "Aromatic Crops",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red soil"
+        ],
+        "Water_Requirement": "Medium (50-75cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-30°C",
+        "Fertilizer_Needs": "N:P:K 100:50:50kg/ha, Essential oil"
+    },
+    {
+        "Plant_Name": "Japanese Mint",
+        "Scientific_Name": "Mentha arvensis",
+        "Category": "Aromatic Crops",
+        "Soil_Types": [
+            "Clay loam",
+            "Moist soil"
+        ],
+        "Water_Requirement": "High (100-150cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "20-35°C",
+        "Fertilizer_Needs": "N:P:K 150:75:100kg/ha, Menthol source"
+    },
+    {
+        "Plant_Name": "Ocimum (African Basil)",
+        "Scientific_Name": "Ocimum gratissimum",
+        "Category": "Aromatic Crops",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-100cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "20-35°C",
+        "Fertilizer_Needs": "N:P:K 120:60:100kg/ha, Essential oil"
+    },
+    {
+        "Plant_Name": "Khus (Vetiver)",
+        "Scientific_Name": "Chrysopogon zizanioides",
+        "Category": "Aromatic Crops",
+        "Soil_Types": [
+            "Clay loam",
+            "Marginal soils"
+        ],
+        "Water_Requirement": "Low-Medium (25-75cm)",
+        "Humidity_Range_Percent": "60-80%",
+        "Temperature_Range_Celsius": "20-40°C",
+        "Fertilizer_Needs": "N:P:K 60:30:30kg/ha, Soil conservation"
+    },
+    {
+        "Plant_Name": "Pistachio",
+        "Scientific_Name": "Pistacia vera",
+        "Category": "Nuts",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low-Medium (25-75cm)",
+        "Humidity_Range_Percent": "50-65%",
+        "Temperature_Range_Celsius": "7-38°C",
+        "Fertilizer_Needs": "N:P:K 1000:400:800g/tree, Arid regions"
+    },
+    {
+        "Plant_Name": "Hazelnut",
+        "Scientific_Name": "Corylus avellana",
+        "Category": "Nuts",
+        "Soil_Types": [
+            "Well-drained loamy",
+            "Mountain"
+        ],
+        "Water_Requirement": "Medium (75-125cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "4-24°C",
+        "Fertilizer_Needs": "N:P:K 150:75:150g/bush, Cool climate"
+    },
+    {
+        "Plant_Name": "Pecan",
+        "Scientific_Name": "Carya illinoinensis",
+        "Category": "Nuts",
+        "Soil_Types": [
+            "Deep alluvial",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (100-150cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "20-30°C",
+        "Fertilizer_Needs": "N:P:K 2000:1000:1500g/tree, Large tree"
+    },
+    {
+        "Plant_Name": "Pine Nut",
+        "Scientific_Name": "Pinus gerardiana",
+        "Category": "Nuts",
+        "Soil_Types": [
+            "Mountain soils",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (40-100cm)",
+        "Humidity_Range_Percent": "50-70%",
+        "Temperature_Range_Celsius": "5-25°C",
+        "Fertilizer_Needs": "N:P:K 500:250:500g/tree, High altitude"
+    },
+    {
+        "Plant_Name": "Water Chestnut",
+        "Scientific_Name": "Trapa natans",
+        "Category": "Aquatic Crops",
+        "Soil_Types": [
+            "Pond mud",
+            "Organic rich"
+        ],
+        "Water_Requirement": "Aquatic (Standing water)",
+        "Humidity_Range_Percent": "90-95%",
+        "Temperature_Range_Celsius": "20-30°C",
+        "Fertilizer_Needs": "Organic manure 10t/ha, Aquatic"
+    },
+    {
+        "Plant_Name": "Lotus Root",
+        "Scientific_Name": "Nelumbo nucifera",
+        "Category": "Aquatic Crops",
+        "Soil_Types": [
+            "Clay loam",
+            "Pond mud"
+        ],
+        "Water_Requirement": "Aquatic (Standing water)",
+        "Humidity_Range_Percent": "90-95%",
+        "Temperature_Range_Celsius": "22-35°C",
+        "Fertilizer_Needs": "N:P:K 100:50:100kg/ha, Sacred plant"
+    },
+    {
+        "Plant_Name": "Water Caltrop",
+        "Scientific_Name": "Trapa bispinosa",
+        "Category": "Aquatic Crops",
+        "Soil_Types": [
+            "Muddy pond bottom"
+        ],
+        "Water_Requirement": "Aquatic (Shallow water)",
+        "Humidity_Range_Percent": "90-95%",
+        "Temperature_Range_Celsius": "18-32°C",
+        "Fertilizer_Needs": "Organic matter, Aquatic nut"
+    },
+    {
+        "Plant_Name": "Water Hyacinth",
+        "Scientific_Name": "Eichhornia crassipes",
+        "Category": "Aquatic Crops",
+        "Soil_Types": [
+            "Nutrient-rich water bodies"
+        ],
+        "Water_Requirement": "Aquatic (Floating)",
+        "Humidity_Range_Percent": "95-100%",
+        "Temperature_Range_Celsius": "18-35°C",
+        "Fertilizer_Needs": "High nutrients, Biomass/biogas"
+    },
+    {
+        "Plant_Name": "Oyster Mushroom",
+        "Scientific_Name": "Pleurotus ostreatus",
+        "Category": "Mushrooms",
+        "Soil_Types": [
+            "Organic substrate (straw)"
+        ],
+        "Water_Requirement": "High humidity substrate",
+        "Humidity_Range_Percent": "80-95%",
+        "Temperature_Range_Celsius": "20-30°C",
+        "Fertilizer_Needs": "Organic substrate, No soil needed"
+    },
+    {
+        "Plant_Name": "Shiitake Mushroom",
+        "Scientific_Name": "Lentinula edodes",
+        "Category": "Mushrooms",
+        "Soil_Types": [
+            "Hardwood logs/substrate"
+        ],
+        "Water_Requirement": "Controlled moisture",
+        "Humidity_Range_Percent": "80-90%",
+        "Temperature_Range_Celsius": "12-25°C",
+        "Fertilizer_Needs": "Organic substrate, Hardwood preferred"
+    },
+    {
+        "Plant_Name": "Button Mushroom",
+        "Scientific_Name": "Agaricus bisporus",
+        "Category": "Mushrooms",
+        "Soil_Types": [
+            "Composted organic matter"
+        ],
+        "Water_Requirement": "Controlled environment",
+        "Humidity_Range_Percent": "75-85%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "Compost substrate, Controlled conditions"
+    },
+    {
+        "Plant_Name": "Milky Mushroom",
+        "Scientific_Name": "Calocybe indica",
+        "Category": "Mushrooms",
+        "Soil_Types": [
+            "Paddy straw substrate"
+        ],
+        "Water_Requirement": "High humidity environment",
+        "Humidity_Range_Percent": "80-90%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "Organic substrate, Tropical species"
+    },
+    {
+        "Plant_Name": "Spirulina",
+        "Scientific_Name": "Arthrospira platensis",
+        "Category": "Microalgae",
+        "Soil_Types": [
+            "Alkaline water medium"
+        ],
+        "Water_Requirement": "Aquatic cultivation",
+        "Humidity_Range_Percent": "80-95%",
+        "Temperature_Range_Celsius": "28-35°C",
+        "Fertilizer_Needs": "Mineral nutrients, High protein"
+    },
+    {
+        "Plant_Name": "Chlorella",
+        "Scientific_Name": "Chlorella vulgaris",
+        "Category": "Microalgae",
+        "Soil_Types": [
+            "Freshwater medium"
+        ],
+        "Water_Requirement": "Controlled aquatic environment",
+        "Humidity_Range_Percent": "80-90%",
+        "Temperature_Range_Celsius": "20-30°C",
+        "Fertilizer_Needs": "Mineral solution, Photosynthetic"
+    },
+    {
+        "Plant_Name": "Mucuna (Velvet Bean)",
+        "Scientific_Name": "Mucuna pruriens",
+        "Category": "Medicinal Plants",
+        "Soil_Types": [
+            "Sandy loam",
+            "Forest soils"
+        ],
+        "Water_Requirement": "High (150-200cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "20-35°C",
+        "Fertilizer_Needs": "N:P:K 50:25:50kg/ha, L-DOPA source"
+    },
+    {
+        "Plant_Name": "Guduchi (Giloy)",
+        "Scientific_Name": "Tinospora cordifolia",
+        "Category": "Medicinal Plants",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (75-125cm)",
+        "Humidity_Range_Percent": "60-80%",
+        "Temperature_Range_Celsius": "15-40°C",
+        "Fertilizer_Needs": "N:P:K 50:25:50kg/ha, Climbing shrub"
+    },
+    {
+        "Plant_Name": "Moringa Leaves",
+        "Scientific_Name": "Moringa stenopetala",
+        "Category": "Medicinal Plants",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low-Medium (30-100cm)",
+        "Humidity_Range_Percent": "50-70%",
+        "Temperature_Range_Celsius": "15-40°C",
+        "Fertilizer_Needs": "N:P:K 100:40:140kg/ha, African moringa"
+    },
+    {
+        "Plant_Name": "Ajuga",
+        "Scientific_Name": "Ajuga bracteosa",
+        "Category": "Medicinal Plants",
+        "Soil_Types": [
+            "Mountain soils",
+            "Rocky"
+        ],
+        "Water_Requirement": "Medium (50-100cm)",
+        "Humidity_Range_Percent": "60-75%",
+        "Temperature_Range_Celsius": "10-25°C",
+        "Fertilizer_Needs": "N:P:K 40:20:20kg/ha, Alpine medicinal"
+    },
+    {
+        "Plant_Name": "Cordyceps (Cultivated)",
+        "Scientific_Name": "Cordyceps militaris",
+        "Category": "Medicinal Plants",
+        "Soil_Types": [
+            "Artificial substrate"
+        ],
+        "Water_Requirement": "Controlled environment",
+        "Humidity_Range_Percent": "80-90%",
+        "Temperature_Range_Celsius": "20-25°C",
+        "Fertilizer_Needs": "Specialized substrate, Expensive medicine"
+    },
+    {
+        "Plant_Name": "Dragon Fruit",
+        "Scientific_Name": "Hylocereus undatus",
+        "Category": "Exotic Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low (25-60cm)",
+        "Humidity_Range_Percent": "60-80%",
+        "Temperature_Range_Celsius": "18-35°C",
+        "Fertilizer_Needs": "N:P:K 100:50:150kg/ha, Cactus fruit"
+    },
+    {
+        "Plant_Name": "Rambutan",
+        "Scientific_Name": "Nephelium lappaceum",
+        "Category": "Exotic Fruits",
+        "Soil_Types": [
+            "Deep loamy",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (200-250cm)",
+        "Humidity_Range_Percent": "80-90%",
+        "Temperature_Range_Celsius": "22-32°C",
+        "Fertilizer_Needs": "N:P:K 1:0.8:1.5kg/tree, Tropical"
+    },
+    {
+        "Plant_Name": "Kiwano (Horned Melon)",
+        "Scientific_Name": "Cucumis metuliferus",
+        "Category": "Exotic Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-100cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "20-35°C",
+        "Fertilizer_Needs": "N:P:K 100:50:100kg/ha, African origin"
+    },
+    {
+        "Plant_Name": "Romanesco Broccoli",
+        "Scientific_Name": "Brassica oleracea",
+        "Category": "Exotic Vegetables",
+        "Soil_Types": [
+            "Organic rich loamy"
+        ],
+        "Water_Requirement": "Medium (60-80cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-20°C",
+        "Fertilizer_Needs": "N:P:K 150:75:100kg/ha, Fractal vegetable"
+    },
+    {
+        "Plant_Name": "Kohlrabi",
+        "Scientific_Name": "Brassica oleracea var. gongylodes",
+        "Category": "Exotic Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-70cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 120:60:100kg/ha, Stem vegetable"
+    },
+    {
+        "Plant_Name": "Chayote",
+        "Scientific_Name": "Sechium edule",
+        "Category": "Exotic Vegetables",
+        "Soil_Types": [
+            "Rich organic",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "15-27°C",
+        "Fertilizer_Needs": "N:P:K 100:50:100kg/ha, Perennial vine"
+    },
+    {
+        "Plant_Name": "Quinoa",
+        "Scientific_Name": "Chenopodium quinoa",
+        "Category": "Pseudocereals",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (30-60cm)",
+        "Humidity_Range_Percent": "50-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 80:40:60kg/ha, Complete protein"
+    },
+    {
+        "Plant_Name": "Amaranth Grain",
+        "Scientific_Name": "Amaranthus caudatus",
+        "Category": "Pseudocereals",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-100cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "18-35°C",
+        "Fertilizer_Needs": "N:P:K 80:40:60kg/ha, Gluten-free grain"
+    },
+    {
+        "Plant_Name": "Buckwheat",
+        "Scientific_Name": "Fagopyrum esculentum",
+        "Category": "Pseudocereals",
+        "Soil_Types": [
+            "Sandy loam",
+            "Poor soils"
+        ],
+        "Water_Requirement": "Medium (75-125cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 40:40:40kg/ha, Short season"
+    },
+    {
+        "Plant_Name": "Bamboo Shoots",
+        "Scientific_Name": "Bambusa oldhamii",
+        "Category": "Agroforestry Crops",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (150-300cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "20-35°C",
+        "Fertilizer_Needs": "N:P:K 120:60:60kg/ha, Edible shoots"
+    },
+    {
+        "Plant_Name": "Rattan Palm",
+        "Scientific_Name": "Calamus rotang",
+        "Category": "Agroforestry Crops",
+        "Soil_Types": [
+            "Forest loamy",
+            "Moist"
+        ],
+        "Water_Requirement": "High (200-300cm)",
+        "Humidity_Range_Percent": "75-85%",
+        "Temperature_Range_Celsius": "20-35°C",
+        "Fertilizer_Needs": "N:P:K 100:50:100kg/ha, Climbing palm"
+    },
+    {
+        "Plant_Name": "Sal Seed",
+        "Scientific_Name": "Shorea robusta",
+        "Category": "Agroforestry Crops",
+        "Soil_Types": [
+            "Sandy loam",
+            "Forest soils"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "15-40°C",
+        "Fertilizer_Needs": "N:P:K 50:25:50kg/ha, Forest tree"
+    },
+    {
+        "Plant_Name": "Mahua Flower",
+        "Scientific_Name": "Madhuca longifolia",
+        "Category": "Agroforestry Crops",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red laterite"
+        ],
+        "Water_Requirement": "Medium (75-125cm)",
+        "Humidity_Range_Percent": "60-75%",
+        "Temperature_Range_Celsius": "5-46°C",
+        "Fertilizer_Needs": "N:P:K 10:5:10kg/tree, Tribal food"
+    },
+    {
+        "Plant_Name": "Indigo",
+        "Scientific_Name": "Indigofera tinctoria",
+        "Category": "Dye Crops",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-100cm)",
+        "Humidity_Range_Percent": "60-75%",
+        "Temperature_Range_Celsius": "20-35°C",
+        "Fertilizer_Needs": "N:P:K 60:30:30kg/ha, Blue dye"
+    },
+    {
+        "Plant_Name": "Madder",
+        "Scientific_Name": "Rubia cordifolia",
+        "Category": "Dye Crops",
+        "Soil_Types": [
+            "Sandy loam",
+            "Mountain soils"
+        ],
+        "Water_Requirement": "Medium (60-100cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-30°C",
+        "Fertilizer_Needs": "N:P:K 50:25:25kg/ha, Red dye"
+    },
+    {
+        "Plant_Name": "Henna",
+        "Scientific_Name": "Lawsonia inermis",
+        "Category": "Dye Crops",
+        "Soil_Types": [
+            "Sandy loam",
+            "Arid regions"
+        ],
+        "Water_Requirement": "Low (25-75cm)",
+        "Humidity_Range_Percent": "50-70%",
+        "Temperature_Range_Celsius": "20-40°C",
+        "Fertilizer_Needs": "N:P:K 60:30:60kg/ha, Natural henna"
+    },
+    {
+        "Plant_Name": "Sorghum (Jowar)",
+        "Scientific_Name": "Sorghum bicolor",
+        "Category": "Cereals",
+        "Soil_Types": [
+            "Red",
+            "Black",
+            "Sandy loam"
+        ],
+        "Water_Requirement": "Low-Medium (45-65cm)",
+        "Humidity_Range_Percent": "50-70%",
+        "Temperature_Range_Celsius": "26-37°C",
+        "Fertilizer_Needs": "N:P:K 80:40:40, Drought tolerant"
+    },
+    {
+        "Plant_Name": "Pearl Millet (Bajra)",
+        "Scientific_Name": "Pennisetum glaucum",
+        "Category": "Cereals",
+        "Soil_Types": [
+            "Sandy",
+            "Arid",
+            "Poor soils"
+        ],
+        "Water_Requirement": "Low (25-50cm)",
+        "Humidity_Range_Percent": "40-60%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "N:P:K 50:25:25, Minimal fertilizer"
+    },
+    {
+        "Plant_Name": "Finger Millet (Ragi)",
+        "Scientific_Name": "Eleusine coracana",
+        "Category": "Cereals",
+        "Soil_Types": [
+            "Red",
+            "Sandy loam",
+            "Hill soils"
+        ],
+        "Water_Requirement": "Medium (50-75cm)",
+        "Humidity_Range_Percent": "55-70%",
+        "Temperature_Range_Celsius": "18-29°C",
+        "Fertilizer_Needs": "N:P:K 50:25:25, Organic preferred"
+    },
+    {
+        "Plant_Name": "Oats",
+        "Scientific_Name": "Avena sativa",
+        "Category": "Cereals",
+        "Soil_Types": [
+            "Sandy loam",
+            "Clay loam"
+        ],
+        "Water_Requirement": "Medium (50-75cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-22°C",
+        "Fertilizer_Needs": "N:P:K 60:30:30, FYM 5t/ha"
+    },
+    {
+        "Plant_Name": "Chickpea (Gram)",
+        "Scientific_Name": "Cicer arietinum",
+        "Category": "Pulses",
+        "Soil_Types": [
+            "Loamy",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low-Medium (40-45cm)",
+        "Humidity_Range_Percent": "50-65%",
+        "Temperature_Range_Celsius": "20-25°C",
+        "Fertilizer_Needs": "N:P:K 20:40:20, Rhizobium"
+    },
+    {
+        "Plant_Name": "Lentil (Masoor)",
+        "Scientific_Name": "Lens culinaris",
+        "Category": "Pulses",
+        "Soil_Types": [
+            "Sandy loam",
+            "Clay loam"
+        ],
+        "Water_Requirement": "Low (30-40cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "18-24°C",
+        "Fertilizer_Needs": "N:P:K 20:40:20, Bio-fertilizers"
+    },
+    {
+        "Plant_Name": "Black Gram (Urad)",
+        "Scientific_Name": "Vigna mungo",
+        "Category": "Pulses",
+        "Soil_Types": [
+            "Sandy loam",
+            "Black soil"
+        ],
+        "Water_Requirement": "Medium (50-70cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "N:P:K 25:50:25, Phosphorus rich"
+    },
+    {
+        "Plant_Name": "Green Gram (Moong)",
+        "Scientific_Name": "Vigna radiata",
+        "Category": "Pulses",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low-Medium (35-60cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "28-35°C",
+        "Fertilizer_Needs": "N:P:K 20:40:20, Minimal N"
+    },
+    {
+        "Plant_Name": "Pigeon Pea (Arhar)",
+        "Scientific_Name": "Cajanus cajan",
+        "Category": "Pulses",
+        "Soil_Types": [
+            "Red",
+            "Black",
+            "Sandy loam"
+        ],
+        "Water_Requirement": "Medium (60-100cm)",
+        "Humidity_Range_Percent": "60-80%",
+        "Temperature_Range_Celsius": "20-38°C",
+        "Fertilizer_Needs": "N:P:K 25:50:25, Organic matter"
+    },
+    {
+        "Plant_Name": "Field Pea",
+        "Scientific_Name": "Pisum arvense",
+        "Category": "Pulses",
+        "Soil_Types": [
+            "Loamy",
+            "Clay loam"
+        ],
+        "Water_Requirement": "Medium (50-75cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "10-18°C",
+        "Fertilizer_Needs": "N:P:K 25:50:25, Cool season"
+    },
+    {
+        "Plant_Name": "Groundnut (Peanut)",
+        "Scientific_Name": "Arachis hypogaea",
+        "Category": "Oilseeds",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red",
+            "Alluvial"
+        ],
+        "Water_Requirement": "Medium (50-75cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "22-28°C",
+        "Fertilizer_Needs": "N:P:K 25:50:75, Calcium, Gypsum"
+    },
+    {
+        "Plant_Name": "Sunflower",
+        "Scientific_Name": "Helianthus annuus",
+        "Category": "Oilseeds",
+        "Soil_Types": [
+            "Sandy loam",
+            "Black",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-70cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "20-25°C",
+        "Fertilizer_Needs": "N:P:K 60:40:40, Boron, Sulphur"
+    },
+    {
+        "Plant_Name": "Soybean",
+        "Scientific_Name": "Glycine max",
+        "Category": "Oilseeds",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (45-70cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "25-30°C",
+        "Fertilizer_Needs": "N:P:K 30:60:40, Rhizobium, Zinc"
+    },
+    {
+        "Plant_Name": "Mustard",
+        "Scientific_Name": "Brassica juncea",
+        "Category": "Oilseeds",
+        "Soil_Types": [
+            "Loamy",
+            "Sandy loam"
+        ],
+        "Water_Requirement": "Low-Medium (25-40cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 90:60:40, Sulphur"
+    },
+    {
+        "Plant_Name": "Sesame (Til)",
+        "Scientific_Name": "Sesamum indicum",
+        "Category": "Oilseeds",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red",
+            "Black"
+        ],
+        "Water_Requirement": "Low (40-50cm)",
+        "Humidity_Range_Percent": "50-70%",
+        "Temperature_Range_Celsius": "25-30°C",
+        "Fertilizer_Needs": "N:P:K 40:20:20, Organic compost"
+    },
+    {
+        "Plant_Name": "Niger",
+        "Scientific_Name": "Guizotia abyssinica",
+        "Category": "Oilseeds",
+        "Soil_Types": [
+            "Red",
+            "Laterite",
+            "Hill soils"
+        ],
+        "Water_Requirement": "Medium (75-100cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "20-25°C",
+        "Fertilizer_Needs": "N:P:K 40:20:20, Moderate fertility"
+    },
+    {
+        "Plant_Name": "Castor",
+        "Scientific_Name": "Ricinus communis",
+        "Category": "Oilseeds",
+        "Soil_Types": [
+            "Red",
+            "Black",
+            "Sandy"
+        ],
+        "Water_Requirement": "Low-Medium (50-75cm)",
+        "Humidity_Range_Percent": "50-70%",
+        "Temperature_Range_Celsius": "20-30°C",
+        "Fertilizer_Needs": "N:P:K 60:30:30, Drought tolerant"
+    },
+    {
+        "Plant_Name": "Safflower",
+        "Scientific_Name": "Carthamus tinctorius",
+        "Category": "Oilseeds",
+        "Soil_Types": [
+            "Black",
+            "Red",
+            "Sandy loam"
+        ],
+        "Water_Requirement": "Low (35-60cm)",
+        "Humidity_Range_Percent": "50-65%",
+        "Temperature_Range_Celsius": "16-25°C",
+        "Fertilizer_Needs": "N:P:K 60:30:30, Minimal water"
+    },
+    {
+        "Plant_Name": "Sugarcane",
+        "Scientific_Name": "Saccharum officinarum",
+        "Category": "Cash Crops",
+        "Soil_Types": [
+            "Deep loamy",
+            "Alluvial",
+            "Black"
+        ],
+        "Water_Requirement": "High (75-150cm)",
+        "Humidity_Range_Percent": "75-85%",
+        "Temperature_Range_Celsius": "21-27°C",
+        "Fertilizer_Needs": "N:P:K 150:75:75, Heavy organic, Lime"
+    },
+    {
+        "Plant_Name": "Cotton",
+        "Scientific_Name": "Gossypium hirsutum",
+        "Category": "Cash Crops",
+        "Soil_Types": [
+            "Black",
+            "Alluvial",
+            "Red laterite"
+        ],
+        "Water_Requirement": "Medium (50-100cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "21-30°C",
+        "Fertilizer_Needs": "N:P:K 120:60:60, Organic matter"
+    },
+    {
+        "Plant_Name": "Jute",
+        "Scientific_Name": "Corchorus capsularis",
+        "Category": "Cash Crops",
+        "Soil_Types": [
+            "Alluvial",
+            "Clay loam"
+        ],
+        "Water_Requirement": "High (100-150cm)",
+        "Humidity_Range_Percent": "80-90%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "N:P:K 60:30:30, High organic"
+    },
+    {
+        "Plant_Name": "Tobacco",
+        "Scientific_Name": "Nicotiana tabacum",
+        "Category": "Cash Crops",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red",
+            "Alluvial"
+        ],
+        "Water_Requirement": "Medium (75-125cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "20-30°C",
+        "Fertilizer_Needs": "N:P:K 90:45:90, Balanced nutrition"
+    },
+    {
+        "Plant_Name": "Mango",
+        "Scientific_Name": "Mangifera indica",
+        "Category": "Tropical Fruits",
+        "Soil_Types": [
+            "Well-drained loamy",
+            "Alluvial"
+        ],
+        "Water_Requirement": "Medium (75-250cm)",
+        "Humidity_Range_Percent": "70-85%",
+        "Temperature_Range_Celsius": "24-30°C",
+        "Fertilizer_Needs": "N:P:K 1000:500:1200g/tree, Organic compost"
+    },
+    {
+        "Plant_Name": "Banana",
+        "Scientific_Name": "Musa acuminata",
+        "Category": "Tropical Fruits",
+        "Soil_Types": [
+            "Deep loamy",
+            "Alluvial",
+            "Red"
+        ],
+        "Water_Requirement": "High (100-180cm)",
+        "Humidity_Range_Percent": "75-85%",
+        "Temperature_Range_Celsius": "26-30°C",
+        "Fertilizer_Needs": "N:P:K 200:100:300g/plant, High K, Organic"
+    },
+    {
+        "Plant_Name": "Pineapple",
+        "Scientific_Name": "Ananas comosus",
+        "Category": "Tropical Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red laterite"
+        ],
+        "Water_Requirement": "Medium (100-150cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "23-32°C",
+        "Fertilizer_Needs": "N:P:K 10:4:10g/plant, Acidic soil preferred"
+    },
+    {
+        "Plant_Name": "Papaya",
+        "Scientific_Name": "Carica papaya",
+        "Category": "Tropical Fruits",
+        "Soil_Types": [
+            "Well-drained sandy loam"
+        ],
+        "Water_Requirement": "Medium (100-200cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "22-30°C",
+        "Fertilizer_Needs": "N:P:K 200:200:250g/plant, Organic rich"
+    },
+    {
+        "Plant_Name": "Coconut",
+        "Scientific_Name": "Cocos nucifera",
+        "Category": "Tropical Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Coastal alluvium"
+        ],
+        "Water_Requirement": "High (130-230cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "27-32°C",
+        "Fertilizer_Needs": "N:P:K 1.3:0.5:3.0kg/palm, Salt tolerant"
+    },
+    {
+        "Plant_Name": "Jackfruit",
+        "Scientific_Name": "Artocarpus heterophyllus",
+        "Category": "Tropical Fruits",
+        "Soil_Types": [
+            "Deep loamy",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (150-200cm)",
+        "Humidity_Range_Percent": "75-85%",
+        "Temperature_Range_Celsius": "22-35°C",
+        "Fertilizer_Needs": "N:P:K 1:0.5:2kg/tree, Organic matter"
+    },
+    {
+        "Plant_Name": "Avocado",
+        "Scientific_Name": "Persea americana",
+        "Category": "Tropical Fruits",
+        "Soil_Types": [
+            "Well-drained sandy loam"
+        ],
+        "Water_Requirement": "Medium (100-200cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-29°C",
+        "Fertilizer_Needs": "N:P:K 1:1:1kg/tree, Zinc, Boron"
+    },
+    {
+        "Plant_Name": "Citrus Orange",
+        "Scientific_Name": "Citrus sinensis",
+        "Category": "Subtropical Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (75-150cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-30°C",
+        "Fertilizer_Needs": "N:P:K 1.6:0.4:1.6kg/tree, Micronutrients"
+    },
+    {
+        "Plant_Name": "Lemon",
+        "Scientific_Name": "Citrus limon",
+        "Category": "Subtropical Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-120cm)",
+        "Humidity_Range_Percent": "55-70%",
+        "Temperature_Range_Celsius": "15-30°C",
+        "Fertilizer_Needs": "N:P:K 1.0:0.5:1.2kg/tree, Zinc, Iron"
+    },
+    {
+        "Plant_Name": "Guava",
+        "Scientific_Name": "Psidium guajava",
+        "Category": "Subtropical Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Alluvial"
+        ],
+        "Water_Requirement": "Medium (100-200cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "23-28°C",
+        "Fertilizer_Needs": "N:P:K 1:0.5:1kg/tree, High Vitamin C"
+    },
+    {
+        "Plant_Name": "Pomegranate",
+        "Scientific_Name": "Punica granatum",
+        "Category": "Subtropical Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Black",
+            "Red"
+        ],
+        "Water_Requirement": "Low-Medium (50-75cm)",
+        "Humidity_Range_Percent": "35-55%",
+        "Temperature_Range_Celsius": "15-38°C",
+        "Fertilizer_Needs": "N:P:K 625:312:625g/plant, Drought tolerant"
+    },
+    {
+        "Plant_Name": "Apple",
+        "Scientific_Name": "Malus domestica",
+        "Category": "Temperate Fruits",
+        "Soil_Types": [
+            "Well-drained loamy",
+            "Mountain soils"
+        ],
+        "Water_Requirement": "Medium (100-125cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "1-24°C",
+        "Fertilizer_Needs": "N:P:K 1.8:0.45:1.8kg/tree, Chilling required"
+    },
+    {
+        "Plant_Name": "Grape",
+        "Scientific_Name": "Vitis vinifera",
+        "Category": "Temperate Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-75cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "10-35°C",
+        "Fertilizer_Needs": "N:P:K 115:57:138g/vine, Balanced nutrition"
+    },
+    {
+        "Plant_Name": "Strawberry",
+        "Scientific_Name": "Fragaria × ananassa",
+        "Category": "Temperate Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Organic rich"
+        ],
+        "Water_Requirement": "Medium (60-80cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 80:40:120kg/ha, High organic"
+    },
+    {
+        "Plant_Name": "Tomato",
+        "Scientific_Name": "Solanum lycopersicum",
+        "Category": "Fruit Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-80cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "21-24°C",
+        "Fertilizer_Needs": "N:P:K 150:100:100kg/ha, Calcium"
+    },
+    {
+        "Plant_Name": "Potato",
+        "Scientific_Name": "Solanum tuberosum",
+        "Category": "Tuber Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-70cm)",
+        "Humidity_Range_Percent": "80-90%",
+        "Temperature_Range_Celsius": "15-20°C",
+        "Fertilizer_Needs": "N:P:K 120:80:100kg/ha, Organic matter"
+    },
+    {
+        "Plant_Name": "Onion",
+        "Scientific_Name": "Allium cepa",
+        "Category": "Bulb Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (35-50cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "13-24°C",
+        "Fertilizer_Needs": "N:P:K 100:50:50kg/ha, Sulphur"
+    },
+    {
+        "Plant_Name": "Cabbage",
+        "Scientific_Name": "Brassica oleracea",
+        "Category": "Leafy Vegetables",
+        "Soil_Types": [
+            "Clay loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-75cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-20°C",
+        "Fertilizer_Needs": "N:P:K 150:75:100kg/ha, Organic compost"
+    },
+    {
+        "Plant_Name": "Cauliflower",
+        "Scientific_Name": "Brassica oleracea var. botrytis",
+        "Category": "Leafy Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-75cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-20°C",
+        "Fertilizer_Needs": "N:P:K 120:60:60kg/ha, Boron"
+    },
+    {
+        "Plant_Name": "Carrot",
+        "Scientific_Name": "Daucus carota",
+        "Category": "Root Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Deep soil"
+        ],
+        "Water_Requirement": "Medium (60-70cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "16-20°C",
+        "Fertilizer_Needs": "N:P:K 75:50:100kg/ha, Deep tillage"
+    },
+    {
+        "Plant_Name": "Spinach",
+        "Scientific_Name": "Spinacia oleracea",
+        "Category": "Leafy Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Organic rich"
+        ],
+        "Water_Requirement": "Medium (30-40cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 100:50:50kg/ha, High nitrogen"
+    },
+    {
+        "Plant_Name": "Brinjal (Eggplant)",
+        "Scientific_Name": "Solanum melongena",
+        "Category": "Fruit Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red soil"
+        ],
+        "Water_Requirement": "Medium (75-100cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "22-30°C",
+        "Fertilizer_Needs": "N:P:K 100:50:50kg/ha, Warm season"
+    },
+    {
+        "Plant_Name": "Okra (Ladyfinger)",
+        "Scientific_Name": "Abelmoschus esculentus",
+        "Category": "Fruit Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-80cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "24-27°C",
+        "Fertilizer_Needs": "N:P:K 80:40:40kg/ha, Heat tolerant"
+    },
+    {
+        "Plant_Name": "Bottle Gourd",
+        "Scientific_Name": "Lagenaria siceraria",
+        "Category": "Gourd Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Organic rich"
+        ],
+        "Water_Requirement": "High (75-100cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "24-27°C",
+        "Fertilizer_Needs": "N:P:K 100:50:50kg/ha, Climbing support"
+    },
+    {
+        "Plant_Name": "Bitter Gourd",
+        "Scientific_Name": "Momordica charantia",
+        "Category": "Gourd Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-80cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "24-30°C",
+        "Fertilizer_Needs": "N:P:K 40:20:20kg/ha, Warm humid"
+    },
+    {
+        "Plant_Name": "Cucumber",
+        "Scientific_Name": "Cucumis sativus",
+        "Category": "Gourd Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (75-100cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "18-24°C",
+        "Fertilizer_Needs": "N:P:K 120:60:100kg/ha, High water"
+    },
+    {
+        "Plant_Name": "Pumpkin",
+        "Scientific_Name": "Cucurbita pepo",
+        "Category": "Gourd Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Organic rich"
+        ],
+        "Water_Requirement": "Medium (75-100cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "18-27°C",
+        "Fertilizer_Needs": "N:P:K 100:50:100kg/ha, Space needed"
+    },
+    {
+        "Plant_Name": "Sweet Potato",
+        "Scientific_Name": "Ipomoea batatas",
+        "Category": "Tuber Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red soil"
+        ],
+        "Water_Requirement": "Medium (75-100cm)",
+        "Humidity_Range_Percent": "65-85%",
+        "Temperature_Range_Celsius": "21-26°C",
+        "Fertilizer_Needs": "N:P:K 50:25:100kg/ha, Warm season"
+    },
+    {
+        "Plant_Name": "Garlic",
+        "Scientific_Name": "Allium sativum",
+        "Category": "Bulb Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low-Medium (25-35cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "12-20°C",
+        "Fertilizer_Needs": "N:P:K 40:20:20kg/ha, Cool season"
+    },
+    {
+        "Plant_Name": "Basil",
+        "Scientific_Name": "Ocimum basilicum",
+        "Category": "Culinary Herbs",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-80cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "20-25°C",
+        "Fertilizer_Needs": "N:P:K 120:60:100kg/ha, Warm season"
+    },
+    {
+        "Plant_Name": "Mint",
+        "Scientific_Name": "Mentha spicata",
+        "Category": "Culinary Herbs",
+        "Soil_Types": [
+            "Sandy loam",
+            "Moist soil"
+        ],
+        "Water_Requirement": "High (80-120cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 150:75:100kg/ha, High moisture"
+    },
+    {
+        "Plant_Name": "Coriander",
+        "Scientific_Name": "Coriandrum sativum",
+        "Category": "Culinary Herbs",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (30-50cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "17-27°C",
+        "Fertilizer_Needs": "N:P:K 40:30:20kg/ha, Cool season"
+    },
+    {
+        "Plant_Name": "Turmeric",
+        "Scientific_Name": "Curcuma longa",
+        "Category": "Spices",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red laterite"
+        ],
+        "Water_Requirement": "High (100-150cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "20-30°C",
+        "Fertilizer_Needs": "N:P:K 60:30:120kg/ha, Rhizome crop"
+    },
+    {
+        "Plant_Name": "Ginger",
+        "Scientific_Name": "Zingiber officinale",
+        "Category": "Spices",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (150-300cm)",
+        "Humidity_Range_Percent": "80-90%",
+        "Temperature_Range_Celsius": "25-30°C",
+        "Fertilizer_Needs": "N:P:K 75:50:50kg/ha, High moisture, Shade"
+    },
+    {
+        "Plant_Name": "Black Pepper",
+        "Scientific_Name": "Piper nigrum",
+        "Category": "Spices",
+        "Soil_Types": [
+            "Red laterite",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (200-250cm)",
+        "Humidity_Range_Percent": "75-85%",
+        "Temperature_Range_Celsius": "23-32°C",
+        "Fertilizer_Needs": "N:P:K 50:50:150g/vine, Climbing vine"
+    },
+    {
+        "Plant_Name": "Cardamom",
+        "Scientific_Name": "Elettaria cardamomum",
+        "Category": "Spices",
+        "Soil_Types": [
+            "Forest loamy",
+            "Organic rich"
+        ],
+        "Water_Requirement": "High (150-400cm)",
+        "Humidity_Range_Percent": "75-85%",
+        "Temperature_Range_Celsius": "10-35°C",
+        "Fertilizer_Needs": "N:P:K 75:75:150kg/ha, Shade loving"
+    },
+    {
+        "Plant_Name": "Cumin",
+        "Scientific_Name": "Cuminum cyminum",
+        "Category": "Seed Spices",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low (25-40cm)",
+        "Humidity_Range_Percent": "50-60%",
+        "Temperature_Range_Celsius": "25-30°C",
+        "Fertilizer_Needs": "N:P:K 40:20:20kg/ha, Arid regions"
+    },
+    {
+        "Plant_Name": "Fennel",
+        "Scientific_Name": "Foeniculum vulgare",
+        "Category": "Seed Spices",
+        "Soil_Types": [
+            "Sandy loam",
+            "Clay loam"
+        ],
+        "Water_Requirement": "Medium (50-75cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 100:50:25kg/ha, Cool season"
+    },
+    {
+        "Plant_Name": "Fenugreek Seeds",
+        "Scientific_Name": "Trigonella foenum-graecum",
+        "Category": "Seed Spices",
+        "Soil_Types": [
+            "Sandy loam",
+            "Black soil"
+        ],
+        "Water_Requirement": "Low-Medium (30-50cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "10-27°C",
+        "Fertilizer_Needs": "N:P:K 25:25:25kg/ha, Rabi crop"
+    },
+    {
+        "Plant_Name": "Rose",
+        "Scientific_Name": "Rosa damascena",
+        "Category": "Cut Flowers",
+        "Soil_Types": [
+            "Well-drained loamy",
+            "Clay loam"
+        ],
+        "Water_Requirement": "Medium (60-80cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 100:40:60kg/ha, Organic matter, Calcium"
+    },
+    {
+        "Plant_Name": "Marigold",
+        "Scientific_Name": "Tagetes erecta",
+        "Category": "Loose Flowers",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-80cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "18-29°C",
+        "Fertilizer_Needs": "N:P:K 100:40:40kg/ha, Heat tolerant"
+    },
+    {
+        "Plant_Name": "Chrysanthemum",
+        "Scientific_Name": "Chrysanthemum morifolium",
+        "Category": "Cut Flowers",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-75cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 100:40:40kg/ha, Day length sensitive"
+    },
+    {
+        "Plant_Name": "Jasmine",
+        "Scientific_Name": "Jasminum sambac",
+        "Category": "Loose Flowers",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red soil"
+        ],
+        "Water_Requirement": "Medium (75-125cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "17-35°C",
+        "Fertilizer_Needs": "N:P:K 60:30:30kg/ha, Fragrant"
+    },
+    {
+        "Plant_Name": "Sunflower (Ornamental)",
+        "Scientific_Name": "Helianthus annuus",
+        "Category": "Cut Flowers",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-70cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "20-25°C",
+        "Fertilizer_Needs": "N:P:K 60:40:40kg/ha, Large flowers"
+    },
+    {
+        "Plant_Name": "Aloe Vera",
+        "Scientific_Name": "Aloe barbadensis",
+        "Category": "Medicinal Plants",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low (25-40cm)",
+        "Humidity_Range_Percent": "40-60%",
+        "Temperature_Range_Celsius": "18-27°C",
+        "Fertilizer_Needs": "N:P:K 19:19:19, Drought tolerant, Succulent"
+    },
+    {
+        "Plant_Name": "Neem",
+        "Scientific_Name": "Azadirachta indica",
+        "Category": "Medicinal Plants",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red laterite"
+        ],
+        "Water_Requirement": "Medium (50-100cm)",
+        "Humidity_Range_Percent": "50-70%",
+        "Temperature_Range_Celsius": "21-32°C",
+        "Fertilizer_Needs": "N:P:K 10:5:8kg/tree, Drought tolerant"
+    },
+    {
+        "Plant_Name": "Tulsi (Holy Basil)",
+        "Scientific_Name": "Ocimum tenuiflorum",
+        "Category": "Medicinal Plants",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-80cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "20-35°C",
+        "Fertilizer_Needs": "N:P:K 40:20:40kg/ha, Sacred plant"
+    },
+    {
+        "Plant_Name": "Ashwagandha",
+        "Scientific_Name": "Withania somnifera",
+        "Category": "Medicinal Plants",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red soil"
+        ],
+        "Water_Requirement": "Low-Medium (30-60cm)",
+        "Humidity_Range_Percent": "50-70%",
+        "Temperature_Range_Celsius": "20-38°C",
+        "Fertilizer_Needs": "N:P:K 40:20:20kg/ha, Semi-arid adaptogen"
+    },
+    {
+        "Plant_Name": "Tea",
+        "Scientific_Name": "Camellia sinensis",
+        "Category": "Plantation Crops",
+        "Soil_Types": [
+            "Well-drained acidic",
+            "Hill soils"
+        ],
+        "Water_Requirement": "High (150-300cm)",
+        "Humidity_Range_Percent": "70-90%",
+        "Temperature_Range_Celsius": "20-30°C",
+        "Fertilizer_Needs": "N:P:K 150:75:75kg/ha, Acidic soil, High elevation"
+    },
+    {
+        "Plant_Name": "Coffee (Arabica)",
+        "Scientific_Name": "Coffea arabica",
+        "Category": "Plantation Crops",
+        "Soil_Types": [
+            "Well-drained loamy",
+            "Red laterite"
+        ],
+        "Water_Requirement": "High (150-250cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "15-28°C",
+        "Fertilizer_Needs": "N:P:K 275:100:200kg/ha, Shade required"
+    },
+    {
+        "Plant_Name": "Rubber",
+        "Scientific_Name": "Hevea brasiliensis",
+        "Category": "Plantation Crops",
+        "Soil_Types": [
+            "Well-drained laterite",
+            "Red"
+        ],
+        "Water_Requirement": "High (200-250cm)",
+        "Humidity_Range_Percent": "75-85%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "N:P:K 45:18:54kg/ha, Latex production"
+    },
+    {
+        "Plant_Name": "Cocoa",
+        "Scientific_Name": "Theobroma cacao",
+        "Category": "Plantation Crops",
+        "Soil_Types": [
+            "Deep loamy",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (150-200cm)",
+        "Humidity_Range_Percent": "75-85%",
+        "Temperature_Range_Celsius": "21-32°C",
+        "Fertilizer_Needs": "N:P:K 100:40:140kg/ha, Shade crop"
+    },
+    {
+        "Plant_Name": "Bamboo (Dendrocalamus)",
+        "Scientific_Name": "Dendrocalamus strictus",
+        "Category": "Industrial Plants",
+        "Soil_Types": [
+            "Sandy loam",
+            "Clay loam"
+        ],
+        "Water_Requirement": "Medium (100-200cm)",
+        "Humidity_Range_Percent": "60-80%",
+        "Temperature_Range_Celsius": "16-36°C",
+        "Fertilizer_Needs": "N:P:K 100:50:50kg/ha, Fast growing"
+    },
+    {
+        "Plant_Name": "Jute (White)",
+        "Scientific_Name": "Corchorus capsularis",
+        "Category": "Fiber Crops",
+        "Soil_Types": [
+            "Alluvial",
+            "Clay loam"
+        ],
+        "Water_Requirement": "High (100-150cm)",
+        "Humidity_Range_Percent": "80-90%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "N:P:K 60:30:30kg/ha, Delta regions"
+    },
+    {
+        "Plant_Name": "Hemp",
+        "Scientific_Name": "Cannabis sativa",
+        "Category": "Fiber Crops",
+        "Soil_Types": [
+            "Well-drained loamy",
+            "Alluvial"
+        ],
+        "Water_Requirement": "Medium (60-100cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-27°C",
+        "Fertilizer_Needs": "N:P:K 150:60:40kg/ha, Industrial hemp"
+    },
+    {
+        "Plant_Name": "Flax",
+        "Scientific_Name": "Linum usitatissimum",
+        "Category": "Fiber Crops",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-75cm)",
+        "Humidity_Range_Percent": "65-70%",
+        "Temperature_Range_Celsius": "15-20°C",
+        "Fertilizer_Needs": "N:P:K 60:30:30kg/ha, Cool humid"
+    },
+    {
+        "Plant_Name": "Jatropha",
+        "Scientific_Name": "Jatropha curcas",
+        "Category": "Biofuel Crops",
+        "Soil_Types": [
+            "Sandy",
+            "Marginal soils"
+        ],
+        "Water_Requirement": "Low (40-80cm)",
+        "Humidity_Range_Percent": "50-70%",
+        "Temperature_Range_Celsius": "20-28°C",
+        "Fertilizer_Needs": "N:P:K 10:10:20kg/ha, Drought tolerant"
+    },
+    {
+        "Plant_Name": "Pongamia",
+        "Scientific_Name": "Pongamia pinnata",
+        "Category": "Biofuel Crops",
+        "Soil_Types": [
+            "Sandy loam",
+            "Saline soils"
+        ],
+        "Water_Requirement": "Medium (50-150cm)",
+        "Humidity_Range_Percent": "60-75%",
+        "Temperature_Range_Celsius": "20-40°C",
+        "Fertilizer_Needs": "N:P:K 100:50:100kg/ha, Salt tolerant"
+    },
+    {
+        "Plant_Name": "Napier Grass",
+        "Scientific_Name": "Pennisetum purpureum",
+        "Category": "Fodder Crops",
+        "Soil_Types": [
+            "Sandy loam",
+            "Alluvial"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "25-40°C",
+        "Fertilizer_Needs": "N:P:K 150:75:75kg/ha, High protein"
+    },
+    {
+        "Plant_Name": "Lucerne (Alfalfa)",
+        "Scientific_Name": "Medicago sativa",
+        "Category": "Fodder Crops",
+        "Soil_Types": [
+            "Well-drained loamy",
+            "Alluvial"
+        ],
+        "Water_Requirement": "Medium (60-100cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 25:100:100kg/ha, Nitrogen fixing"
+    },
+    {
+        "Plant_Name": "Berseem",
+        "Scientific_Name": "Trifolium alexandrinum",
+        "Category": "Fodder Crops",
+        "Soil_Types": [
+            "Clay loam",
+            "Alluvial"
+        ],
+        "Water_Requirement": "Medium (50-80cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "10-25°C",
+        "Fertilizer_Needs": "N:P:K 25:60:25kg/ha, Winter fodder"
+    },
+    {
+        "Plant_Name": "Stevia",
+        "Scientific_Name": "Stevia rebaudiana",
+        "Category": "Specialty Crops",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-80cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-30°C",
+        "Fertilizer_Needs": "N:P:K 100:50:150kg/ha, Natural sweetener"
+    },
+    {
+        "Plant_Name": "Chia",
+        "Scientific_Name": "Salvia hispanica",
+        "Category": "Specialty Crops",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low-Medium (30-50cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "18-26°C",
+        "Fertilizer_Needs": "N:P:K 40:40:40kg/ha, Superfood seeds"
+    },
+    {
+        "Plant_Name": "Moringa Seeds",
+        "Scientific_Name": "Moringa oleifera",
+        "Category": "Specialty Crops",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (30-250cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "20-40°C",
+        "Fertilizer_Needs": "N:P:K 100:40:140kg/ha, Oil seeds"
+    },
+    {
+        "Plant_Name": "Brahmi",
+        "Scientific_Name": "Bacopa monnieri",
+        "Category": "Medicinal Plants",
+        "Soil_Types": [
+            "Clay loam",
+            "Wetland soils"
+        ],
+        "Water_Requirement": "High (80-150cm)",
+        "Humidity_Range_Percent": "80-90%",
+        "Temperature_Range_Celsius": "22-35°C",
+        "Fertilizer_Needs": "N:P:K 50:25:25kg/ha, Aquatic/marshy"
+    },
+    {
+        "Plant_Name": "Shatavari",
+        "Scientific_Name": "Asparagus racemosus",
+        "Category": "Medicinal Plants",
+        "Soil_Types": [
+            "Sandy loam",
+            "Rocky soils"
+        ],
+        "Water_Requirement": "Low-Medium (40-75cm)",
+        "Humidity_Range_Percent": "60-75%",
+        "Temperature_Range_Celsius": "20-38°C",
+        "Fertilizer_Needs": "N:P:K 60:30:30kg/ha, Climbing herb"
+    },
+    {
+        "Plant_Name": "Fig",
+        "Scientific_Name": "Ficus carica",
+        "Category": "Subtropical Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low-Medium (40-80cm)",
+        "Humidity_Range_Percent": "50-65%",
+        "Temperature_Range_Celsius": "15-29°C",
+        "Fertilizer_Needs": "N:P:K 0.5:0.2:0.8kg/tree, Calcium"
+    },
+    {
+        "Plant_Name": "Sapota (Chiku)",
+        "Scientific_Name": "Manilkara zapota",
+        "Category": "Subtropical Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red",
+            "Coastal"
+        ],
+        "Water_Requirement": "Medium (125-200cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "10-38°C",
+        "Fertilizer_Needs": "N:P:K 1:0.5:1.5kg/tree, Salt tolerant"
+    },
+    {
+        "Plant_Name": "Custard Apple",
+        "Scientific_Name": "Annona squamosa",
+        "Category": "Subtropical Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red",
+            "Black"
+        ],
+        "Water_Requirement": "Low-Medium (50-100cm)",
+        "Humidity_Range_Percent": "60-75%",
+        "Temperature_Range_Celsius": "18-38°C",
+        "Fertilizer_Needs": "N:P:K 500:250:750g/tree, Moderate fertility"
+    },
+    {
+        "Plant_Name": "Walnut",
+        "Scientific_Name": "Juglans regia",
+        "Category": "Nuts",
+        "Soil_Types": [
+            "Deep loamy",
+            "Alluvial"
+        ],
+        "Water_Requirement": "Medium (100-150cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "1-30°C",
+        "Fertilizer_Needs": "N:P:K 2.0:1.0:2.0kg/tree, Deep rooting"
+    },
+    {
+        "Plant_Name": "Almond",
+        "Scientific_Name": "Prunus dulcis",
+        "Category": "Nuts",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low-Medium (25-60cm)",
+        "Humidity_Range_Percent": "45-65%",
+        "Temperature_Range_Celsius": "7-29°C",
+        "Fertilizer_Needs": "N:P:K 2.3:0.23:1.85kg/tree, Drought tolerant"
+    },
+    {
+        "Plant_Name": "Gladiolus",
+        "Scientific_Name": "Gladiolus hybridus",
+        "Category": "Cut Flowers",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (75-100cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "10-25°C",
+        "Fertilizer_Needs": "N:P:K 120:100:100kg/ha, Corm planting"
+    },
+    {
+        "Plant_Name": "Tuberose",
+        "Scientific_Name": "Polianthes tuberosa",
+        "Category": "Cut Flowers",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red soil"
+        ],
+        "Water_Requirement": "Medium (75-100cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "20-30°C",
+        "Fertilizer_Needs": "N:P:K 200:100:100kg/ha, Fragrant flowers"
+    },
+    {
+        "Plant_Name": "Anthurium",
+        "Scientific_Name": "Anthurium andraeanum",
+        "Category": "Cut Flowers",
+        "Soil_Types": [
+            "Organic rich",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (80-120cm)",
+        "Humidity_Range_Percent": "80-90%",
+        "Temperature_Range_Celsius": "18-28°C",
+        "Fertilizer_Needs": "N:P:K 19:19:19, High humidity, Shade"
+    },
+    {
+        "Plant_Name": "Gerbera",
+        "Scientific_Name": "Gerbera jamesonii",
+        "Category": "Cut Flowers",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-75cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 300:150:200kg/ha, Protected cultivation"
+    },
+    {
+        "Plant_Name": "Carnation",
+        "Scientific_Name": "Dianthus caryophyllus",
+        "Category": "Cut Flowers",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-70cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "10-21°C",
+        "Fertilizer_Needs": "N:P:K 200:100:150kg/ha, Cool season"
+    },
+    {
+        "Plant_Name": "Dahlia",
+        "Scientific_Name": "Dahlia pinnata",
+        "Category": "Bulb Flowers",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (75-100cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-20°C",
+        "Fertilizer_Needs": "N:P:K 120:60:120kg/ha, Tuberous roots"
+    },
+    {
+        "Plant_Name": "Zinnia",
+        "Scientific_Name": "Zinnia elegans",
+        "Category": "Bedding Plants",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-80cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "23-28°C",
+        "Fertilizer_Needs": "N:P:K 120:60:60kg/ha, Heat tolerant"
+    },
+    {
+        "Plant_Name": "Petunia",
+        "Scientific_Name": "Petunia hybrida",
+        "Category": "Bedding Plants",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-75cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "13-18°C",
+        "Fertilizer_Needs": "N:P:K 200:100:200kg/ha, Cool season"
+    },
+    {
+        "Plant_Name": "Lettuce",
+        "Scientific_Name": "Lactuca sativa",
+        "Category": "Leafy Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (25-30cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "15-20°C",
+        "Fertilizer_Needs": "N:P:K 120:60:100kg/ha, Cool season"
+    },
+    {
+        "Plant_Name": "Radish",
+        "Scientific_Name": "Raphanus sativus",
+        "Category": "Root Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (25-30cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "10-18°C",
+        "Fertilizer_Needs": "N:P:K 40:30:30kg/ha, Quick growing"
+    },
+    {
+        "Plant_Name": "Beetroot",
+        "Scientific_Name": "Beta vulgaris",
+        "Category": "Root Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Organic rich"
+        ],
+        "Water_Requirement": "Medium (60-75cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-20°C",
+        "Fertilizer_Needs": "N:P:K 100:50:50kg/ha, Boron"
+    },
+    {
+        "Plant_Name": "Bell Pepper",
+        "Scientific_Name": "Capsicum annuum",
+        "Category": "Fruit Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-80cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "18-27°C",
+        "Fertilizer_Needs": "N:P:K 150:100:100kg/ha, Protected cultivation"
+    },
+    {
+        "Plant_Name": "Chili Pepper",
+        "Scientific_Name": "Capsicum frutescens",
+        "Category": "Fruit Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red soil"
+        ],
+        "Water_Requirement": "Medium (50-75cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "20-30°C",
+        "Fertilizer_Needs": "N:P:K 100:50:50kg/ha, Heat tolerant"
+    },
+    {
+        "Plant_Name": "Green Peas",
+        "Scientific_Name": "Pisum sativum",
+        "Category": "Pod Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (40-60cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "10-18°C",
+        "Fertilizer_Needs": "N:P:K 25:50:50kg/ha, Cool season, Rhizobia"
+    },
+    {
+        "Plant_Name": "French Bean",
+        "Scientific_Name": "Phaseolus vulgaris",
+        "Category": "Pod Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-75cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 25:50:75kg/ha, Nitrogen fixing"
+    },
+    {
+        "Plant_Name": "Watermelon",
+        "Scientific_Name": "Citrullus lanatus",
+        "Category": "Gourd Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (40-60cm)",
+        "Humidity_Range_Percent": "50-60%",
+        "Temperature_Range_Celsius": "21-29°C",
+        "Fertilizer_Needs": "N:P:K 100:50:150kg/ha, Sandy preferred"
+    },
+    {
+        "Plant_Name": "Muskmelon",
+        "Scientific_Name": "Cucumis melo",
+        "Category": "Gourd Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (40-60cm)",
+        "Humidity_Range_Percent": "50-60%",
+        "Temperature_Range_Celsius": "21-27°C",
+        "Fertilizer_Needs": "N:P:K 120:60:100kg/ha, Warm season"
+    },
+    {
+        "Plant_Name": "Lemongrass",
+        "Scientific_Name": "Cymbopogon citratus",
+        "Category": "Aromatic Crops",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red soil"
+        ],
+        "Water_Requirement": "Medium (75-100cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "25-30°C",
+        "Fertilizer_Needs": "N:P:K 120:40:40kg/ha, Perennial grass"
+    },
+    {
+        "Plant_Name": "Oregano",
+        "Scientific_Name": "Origanum vulgare",
+        "Category": "Culinary Herbs",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low (25-40cm)",
+        "Humidity_Range_Percent": "50-60%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 80:40:60kg/ha, Mediterranean"
+    },
+    {
+        "Plant_Name": "Thyme",
+        "Scientific_Name": "Thymus vulgaris",
+        "Category": "Culinary Herbs",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low (20-35cm)",
+        "Humidity_Range_Percent": "50-60%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 60:30:40kg/ha, Dry conditions"
+    },
+    {
+        "Plant_Name": "Rosemary",
+        "Scientific_Name": "Rosmarinus officinalis",
+        "Category": "Culinary Herbs",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low (30-50cm)",
+        "Humidity_Range_Percent": "50-60%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 80:40:60kg/ha, Drought tolerant"
+    },
+    {
+        "Plant_Name": "Teff",
+        "Scientific_Name": "Eragrostis tef",
+        "Category": "Minor Cereals",
+        "Soil_Types": [
+            "Clay loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-100cm)",
+        "Humidity_Range_Percent": "60-75%",
+        "Temperature_Range_Celsius": "10-27°C",
+        "Fertilizer_Needs": "N:P:K 60:30:30kg/ha, Ethiopian grain"
+    },
+    {
+        "Plant_Name": "Triticale",
+        "Scientific_Name": "Triticosecale",
+        "Category": "Cereals",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-75cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "10-25°C",
+        "Fertilizer_Needs": "N:P:K 100:50:50kg/ha, Wheat-rye hybrid"
+    },
+    {
+        "Plant_Name": "Linseed",
+        "Scientific_Name": "Linum usitatissimum",
+        "Category": "Oilseeds",
+        "Soil_Types": [
+            "Sandy loam",
+            "Cool climate"
+        ],
+        "Water_Requirement": "Medium (50-75cm)",
+        "Humidity_Range_Percent": "65-70%",
+        "Temperature_Range_Celsius": "15-20°C",
+        "Fertilizer_Needs": "N:P:K 60:30:30kg/ha, Omega-3 oil"
+    },
+    {
+        "Plant_Name": "Evening Primrose",
+        "Scientific_Name": "Oenothera biennis",
+        "Category": "Oilseeds",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-75cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 80:40:40kg/ha, GLA oil"
+    },
+    {
+        "Plant_Name": "Winged Bean",
+        "Scientific_Name": "Psophocarpus tetragonolobus",
+        "Category": "Pulses",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "75-85%",
+        "Temperature_Range_Celsius": "20-35°C",
+        "Fertilizer_Needs": "N:P:K 30:60:60kg/ha, Tropical legume"
+    },
+    {
+        "Plant_Name": "Velvet Bean",
+        "Scientific_Name": "Mucuna pruriens",
+        "Category": "Pulses",
+        "Soil_Types": [
+            "Sandy loam",
+            "Forest soils"
+        ],
+        "Water_Requirement": "High (150-200cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "20-35°C",
+        "Fertilizer_Needs": "N:P:K 50:25:50kg/ha, Cover crop"
+    },
+    {
+        "Plant_Name": "Lablab Bean",
+        "Scientific_Name": "Lablab purpureus",
+        "Category": "Pulses",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red soil"
+        ],
+        "Water_Requirement": "Medium (75-125cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "20-35°C",
+        "Fertilizer_Needs": "N:P:K 30:60:40kg/ha, Dual purpose"
+    },
+    {
+        "Plant_Name": "Oca",
+        "Scientific_Name": "Oxalis tuberosa",
+        "Category": "Underutilized Tubers",
+        "Soil_Types": [
+            "Sandy loam",
+            "Mountain soils"
+        ],
+        "Water_Requirement": "Medium (60-100cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "8-20°C",
+        "Fertilizer_Needs": "N:P:K 80:40:80kg/ha, Andean crop"
+    },
+    {
+        "Plant_Name": "Ulluco",
+        "Scientific_Name": "Ullucus tuberosus",
+        "Category": "Underutilized Tubers",
+        "Soil_Types": [
+            "Sandy loam",
+            "High altitude"
+        ],
+        "Water_Requirement": "Medium (50-100cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "5-18°C",
+        "Fertilizer_Needs": "N:P:K 70:35:70kg/ha, Colorful tubers"
+    },
+    {
+        "Plant_Name": "Mashua",
+        "Scientific_Name": "Tropaeolum tuberosum",
+        "Category": "Underutilized Tubers",
+        "Soil_Types": [
+            "Sandy loam",
+            "Cool climate"
+        ],
+        "Water_Requirement": "Medium (50-80cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "8-18°C",
+        "Fertilizer_Needs": "N:P:K 60:30:60kg/ha, Nasturtium family"
+    },
+    {
+        "Plant_Name": "Soursop",
+        "Scientific_Name": "Annona muricata",
+        "Category": "Tropical Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "75-85%",
+        "Temperature_Range_Celsius": "25-32°C",
+        "Fertilizer_Needs": "N:P:K 800:400:800g/tree, Cancer research"
+    },
+    {
+        "Plant_Name": "Sugar Apple",
+        "Scientific_Name": "Annona squamosa",
+        "Category": "Tropical Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Red soil"
+        ],
+        "Water_Requirement": "Medium (75-150cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "20-35°C",
+        "Fertilizer_Needs": "N:P:K 600:300:600g/tree, Sweet fruit"
+    },
+    {
+        "Plant_Name": "Cherimoya",
+        "Scientific_Name": "Annona cherimola",
+        "Category": "Subtropical Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (100-150cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 800:400:800g/tree, Custard apple"
+    },
+    {
+        "Plant_Name": "Star Fruit",
+        "Scientific_Name": "Averrhoa carambola",
+        "Category": "Tropical Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "20-35°C",
+        "Fertilizer_Needs": "N:P:K 1000:500:1000g/tree, Oxalic acid"
+    },
+    {
+        "Plant_Name": "Longan",
+        "Scientific_Name": "Dimocarpus longan",
+        "Category": "Tropical Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "75-85%",
+        "Temperature_Range_Celsius": "20-35°C",
+        "Fertilizer_Needs": "N:P:K 1000:500:1500g/tree, Dragon eye"
+    },
+    {
+        "Plant_Name": "Lychee",
+        "Scientific_Name": "Litchi chinensis",
+        "Category": "Subtropical Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (125-200cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "15-35°C",
+        "Fertilizer_Needs": "N:P:K 1200:600:1800g/tree, Delicate fruit"
+    },
+    {
+        "Plant_Name": "Rambai",
+        "Scientific_Name": "Baccaurea motleyana",
+        "Category": "Tropical Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Forest soils"
+        ],
+        "Water_Requirement": "High (150-250cm)",
+        "Humidity_Range_Percent": "80-90%",
+        "Temperature_Range_Celsius": "22-32°C",
+        "Fertilizer_Needs": "N:P:K 500:250:750g/tree, Southeast Asian"
+    },
+    {
+        "Plant_Name": "Langsat",
+        "Scientific_Name": "Lansium domesticum",
+        "Category": "Tropical Fruits",
+        "Soil_Types": [
+            "Clay loam",
+            "Forest soils"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "75-85%",
+        "Temperature_Range_Celsius": "20-32°C",
+        "Fertilizer_Needs": "N:P:K 600:300:900g/tree, Tropical clusters"
+    },
+    {
+        "Plant_Name": "Bok Choy",
+        "Scientific_Name": "Brassica rapa subsp. chinensis",
+        "Category": "Leafy Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Organic rich"
+        ],
+        "Water_Requirement": "Medium (50-70cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "15-20°C",
+        "Fertilizer_Needs": "N:P:K 120:60:80kg/ha, Asian greens"
+    },
+    {
+        "Plant_Name": "Chinese Cabbage",
+        "Scientific_Name": "Brassica rapa subsp. pekinensis",
+        "Category": "Leafy Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-80cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-22°C",
+        "Fertilizer_Needs": "N:P:K 150:75:100kg/ha, Napa cabbage"
+    },
+    {
+        "Plant_Name": "Mustard Greens",
+        "Scientific_Name": "Brassica juncea",
+        "Category": "Leafy Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Alluvial"
+        ],
+        "Water_Requirement": "Medium (40-50cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 100:50:50kg/ha, Peppery leaves"
+    },
+    {
+        "Plant_Name": "Kale",
+        "Scientific_Name": "Brassica oleracea var. acephala",
+        "Category": "Leafy Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Organic rich"
+        ],
+        "Water_Requirement": "Medium (40-50cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 150:75:125kg/ha, Superfood"
+    },
+    {
+        "Plant_Name": "Swiss Chard",
+        "Scientific_Name": "Beta vulgaris subsp. cicla",
+        "Category": "Leafy Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Organic rich"
+        ],
+        "Water_Requirement": "Medium (50-70cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 120:60:100kg/ha, Colorful stems"
+    },
+    {
+        "Plant_Name": "Arugula",
+        "Scientific_Name": "Eruca sativa",
+        "Category": "Leafy Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (30-50cm)",
+        "Humidity_Range_Percent": "65-70%",
+        "Temperature_Range_Celsius": "15-22°C",
+        "Fertilizer_Needs": "N:P:K 100:50:75kg/ha, Peppery rocket"
+    },
+    {
+        "Plant_Name": "Endive",
+        "Scientific_Name": "Cichorium endivia",
+        "Category": "Leafy Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-70cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-20°C",
+        "Fertilizer_Needs": "N:P:K 100:50:75kg/ha, Bitter greens"
+    },
+    {
+        "Plant_Name": "Radicchio",
+        "Scientific_Name": "Cichorium intybus",
+        "Category": "Leafy Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (40-60cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-22°C",
+        "Fertilizer_Needs": "N:P:K 120:60:100kg/ha, Red chicory"
+    },
+    {
+        "Plant_Name": "Parsnip",
+        "Scientific_Name": "Pastinaca sativa",
+        "Category": "Root Vegetables",
+        "Soil_Types": [
+            "Deep sandy loam"
+        ],
+        "Water_Requirement": "Medium (60-80cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-18°C",
+        "Fertilizer_Needs": "N:P:K 80:40:80kg/ha, Sweet root"
+    },
+    {
+        "Plant_Name": "Rutabaga",
+        "Scientific_Name": "Brassica napus",
+        "Category": "Root Vegetables",
+        "Soil_Types": [
+            "Clay loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-80cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-20°C",
+        "Fertilizer_Needs": "N:P:K 100:50:80kg/ha, Swede turnip"
+    },
+    {
+        "Plant_Name": "Celeriac",
+        "Scientific_Name": "Apium graveolens var. rapaceum",
+        "Category": "Root Vegetables",
+        "Soil_Types": [
+            "Organic rich",
+            "Moist soil"
+        ],
+        "Water_Requirement": "High (80-120cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "15-21°C",
+        "Fertilizer_Needs": "N:P:K 150:75:150kg/ha, Celery root"
+    },
+    {
+        "Plant_Name": "Jerusalem Artichoke",
+        "Scientific_Name": "Helianthus tuberosus",
+        "Category": "Root Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (75-125cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 100:50:100kg/ha, Sunchoke"
+    },
+    {
+        "Plant_Name": "Horseradish",
+        "Scientific_Name": "Armoracia rusticana",
+        "Category": "Root Vegetables",
+        "Soil_Types": [
+            "Deep sandy loam"
+        ],
+        "Water_Requirement": "Medium (75-100cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "10-20°C",
+        "Fertilizer_Needs": "N:P:K 120:60:100kg/ha, Pungent root"
+    },
+    {
+        "Plant_Name": "Sponge Gourd",
+        "Scientific_Name": "Luffa aegyptiaca",
+        "Category": "Gourd Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Organic rich"
+        ],
+        "Water_Requirement": "High (100-150cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "N:P:K 100:50:50kg/ha, Natural sponge"
+    },
+    {
+        "Plant_Name": "Wax Gourd",
+        "Scientific_Name": "Benincasa hispida",
+        "Category": "Gourd Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Organic rich"
+        ],
+        "Water_Requirement": "Medium (60-80cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "22-35°C",
+        "Fertilizer_Needs": "N:P:K 40:20:20kg/ha, Winter melon"
+    },
+    {
+        "Plant_Name": "Tinda (Apple Gourd)",
+        "Scientific_Name": "Praecitrullus fistulosus",
+        "Category": "Gourd Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-100cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "N:P:K 80:40:60kg/ha, Round gourd"
+    },
+    {
+        "Plant_Name": "Kakrol (Teasle Gourd)",
+        "Scientific_Name": "Momordica dioica",
+        "Category": "Gourd Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "N:P:K 60:30:60kg/ha, Spiny gourd"
+    },
+    {
+        "Plant_Name": "Lima Bean",
+        "Scientific_Name": "Phaseolus lunatus",
+        "Category": "Pod Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (75-125cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "18-27°C",
+        "Fertilizer_Needs": "N:P:K 30:60:60kg/ha, Butter bean"
+    },
+    {
+        "Plant_Name": "Broad Bean",
+        "Scientific_Name": "Vicia faba",
+        "Category": "Pod Vegetables",
+        "Soil_Types": [
+            "Clay loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (80-120cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "15-20°C",
+        "Fertilizer_Needs": "N:P:K 25:50:50kg/ha, Fava bean"
+    },
+    {
+        "Plant_Name": "Yard Long Bean",
+        "Scientific_Name": "Vigna unguiculata subsp. sesquipedalis",
+        "Category": "Pod Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "N:P:K 30:60:60kg/ha, Snake bean"
+    },
+    {
+        "Plant_Name": "Cluster Bean (Guar)",
+        "Scientific_Name": "Cyamopsis tetragonoloba",
+        "Category": "Pod Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Arid regions"
+        ],
+        "Water_Requirement": "Low-Medium (30-60cm)",
+        "Humidity_Range_Percent": "50-70%",
+        "Temperature_Range_Celsius": "25-35°C",
+        "Fertilizer_Needs": "N:P:K 25:50:25kg/ha, Guar gum"
+    },
+    {
+        "Plant_Name": "Shallot",
+        "Scientific_Name": "Allium cepa var. aggregatum",
+        "Category": "Bulb Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (40-60cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 100:50:60kg/ha, Multiplier onion"
+    },
+    {
+        "Plant_Name": "Spring Onion",
+        "Scientific_Name": "Allium fistulosum",
+        "Category": "Bulb Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Organic rich"
+        ],
+        "Water_Requirement": "Medium (50-70cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 120:60:80kg/ha, Scallion"
+    },
+    {
+        "Plant_Name": "Chinese Chives",
+        "Scientific_Name": "Allium tuberosum",
+        "Category": "Bulb Vegetables",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (40-60cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 100:50:50kg/ha, Garlic chives"
+    },
+    {
+        "Plant_Name": "Tarragon",
+        "Scientific_Name": "Artemisia dracunculus",
+        "Category": "Culinary Herbs",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (40-60cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 80:40:60kg/ha, French herb"
+    },
+    {
+        "Plant_Name": "Marjoram",
+        "Scientific_Name": "Origanum majorana",
+        "Category": "Culinary Herbs",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low (25-40cm)",
+        "Humidity_Range_Percent": "50-65%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 70:35:50kg/ha, Sweet oregano"
+    },
+    {
+        "Plant_Name": "Chervil",
+        "Scientific_Name": "Anthriscus cerefolium",
+        "Category": "Culinary Herbs",
+        "Soil_Types": [
+            "Sandy loam",
+            "Partial shade"
+        ],
+        "Water_Requirement": "Medium (50-70cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-20°C",
+        "Fertilizer_Needs": "N:P:K 80:40:60kg/ha, Delicate herb"
+    },
+    {
+        "Plant_Name": "Summer Savory",
+        "Scientific_Name": "Satureja hortensis",
+        "Category": "Culinary Herbs",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low (30-45cm)",
+        "Humidity_Range_Percent": "55-65%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 60:30:45kg/ha, Bean herb"
+    },
+    {
+        "Plant_Name": "Winter Savory",
+        "Scientific_Name": "Satureja montana",
+        "Category": "Culinary Herbs",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low (20-40cm)",
+        "Humidity_Range_Percent": "50-60%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 60:30:45kg/ha, Perennial savory"
+    },
+    {
+        "Plant_Name": "Sumac",
+        "Scientific_Name": "Rhus coriaria",
+        "Category": "Specialty Spices",
+        "Soil_Types": [
+            "Rocky",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low (25-50cm)",
+        "Humidity_Range_Percent": "50-65%",
+        "Temperature_Range_Celsius": "15-30°C",
+        "Fertilizer_Needs": "N:P:K 50:25:50kg/ha, Tart spice"
+    },
+    {
+        "Plant_Name": "Za'atar",
+        "Scientific_Name": "Origanum syriacum",
+        "Category": "Specialty Spices",
+        "Soil_Types": [
+            "Sandy loam",
+            "Rocky"
+        ],
+        "Water_Requirement": "Low (30-50cm)",
+        "Humidity_Range_Percent": "50-60%",
+        "Temperature_Range_Celsius": "15-30°C",
+        "Fertilizer_Needs": "N:P:K 60:30:45kg/ha, Middle Eastern"
+    },
+    {
+        "Plant_Name": "Long Pepper",
+        "Scientific_Name": "Piper longum",
+        "Category": "Specialty Spices",
+        "Soil_Types": [
+            "Sandy loam",
+            "Humid"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "75-85%",
+        "Temperature_Range_Celsius": "20-35°C",
+        "Fertilizer_Needs": "N:P:K 60:60:120g/vine, Ancient spice"
+    },
+    {
+        "Plant_Name": "Grains of Paradise",
+        "Scientific_Name": "Aframomum melegueta",
+        "Category": "Specialty Spices",
+        "Soil_Types": [
+            "Forest loamy",
+            "Humid"
+        ],
+        "Water_Requirement": "High (150-300cm)",
+        "Humidity_Range_Percent": "80-90%",
+        "Temperature_Range_Celsius": "22-32°C",
+        "Fertilizer_Needs": "N:P:K 80:40:120kg/ha, West African"
+    },
+    {
+        "Plant_Name": "Echinacea",
+        "Scientific_Name": "Echinacea purpurea",
+        "Category": "Medicinal Plants",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-80cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 80:40:60kg/ha, Immune booster"
+    },
+    {
+        "Plant_Name": "Ginkgo",
+        "Scientific_Name": "Ginkgo biloba",
+        "Category": "Medicinal Plants",
+        "Soil_Types": [
+            "Well-drained loamy"
+        ],
+        "Water_Requirement": "Medium (75-150cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-30°C",
+        "Fertilizer_Needs": "N:P:K 100:50:100g/tree, Memory herb"
+    },
+    {
+        "Plant_Name": "Ginseng",
+        "Scientific_Name": "Panax ginseng",
+        "Category": "Medicinal Plants",
+        "Soil_Types": [
+            "Forest loamy",
+            "Shade"
+        ],
+        "Water_Requirement": "Medium (60-120cm)",
+        "Humidity_Range_Percent": "75-85%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 50:25:50kg/ha, Adaptogen"
+    },
+    {
+        "Plant_Name": "Valerian",
+        "Scientific_Name": "Valeriana officinalis",
+        "Category": "Medicinal Plants",
+        "Soil_Types": [
+            "Moist loamy",
+            "Organic"
+        ],
+        "Water_Requirement": "High (80-150cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 100:50:75kg/ha, Sleep herb"
+    },
+    {
+        "Plant_Name": "St. John's Wort",
+        "Scientific_Name": "Hypericum perforatum",
+        "Category": "Medicinal Plants",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-80cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 60:30:45kg/ha, Mood herb"
+    },
+    {
+        "Plant_Name": "Milk Thistle",
+        "Scientific_Name": "Silybum marianum",
+        "Category": "Medicinal Plants",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-100cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 80:40:60kg/ha, Liver support"
+    },
+    {
+        "Plant_Name": "Blueberry",
+        "Scientific_Name": "Vaccinium corymbosum",
+        "Category": "Berry Fruits",
+        "Soil_Types": [
+            "Acidic",
+            "Organic rich"
+        ],
+        "Water_Requirement": "High (100-150cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 100:50:100g/bush, Acidic soil"
+    },
+    {
+        "Plant_Name": "Raspberry",
+        "Scientific_Name": "Rubus idaeus",
+        "Category": "Berry Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (75-125cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 100:50:150g/bush, Cane fruit"
+    },
+    {
+        "Plant_Name": "Blackberry",
+        "Scientific_Name": "Rubus fruticosus",
+        "Category": "Berry Fruits",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (75-150cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-30°C",
+        "Fertilizer_Needs": "N:P:K 120:60:180g/bush, Thorny canes"
+    },
+    {
+        "Plant_Name": "Gooseberry",
+        "Scientific_Name": "Ribes uva-crispa",
+        "Category": "Berry Fruits",
+        "Soil_Types": [
+            "Clay loam",
+            "Cool climate"
+        ],
+        "Water_Requirement": "Medium (75-125cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "10-20°C",
+        "Fertilizer_Needs": "N:P:K 80:40:120g/bush, Tart berries"
+    },
+    {
+        "Plant_Name": "Currant (Red)",
+        "Scientific_Name": "Ribes rubrum",
+        "Category": "Berry Fruits",
+        "Soil_Types": [
+            "Clay loam",
+            "Cool climate"
+        ],
+        "Water_Requirement": "Medium (75-125cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "10-20°C",
+        "Fertilizer_Needs": "N:P:K 80:40:120g/bush, Acid berries"
+    },
+    {
+        "Plant_Name": "Elderberry",
+        "Scientific_Name": "Sambucus canadensis",
+        "Category": "Berry Fruits",
+        "Soil_Types": [
+            "Moist loamy",
+            "Organic"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 100:50:100g/bush, Medicinal berry"
+    },
+    {
+        "Plant_Name": "Sea Buckthorn",
+        "Scientific_Name": "Hippophae rhamnoides",
+        "Category": "Berry Fruits",
+        "Soil_Types": [
+            "Sandy",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low-Medium (40-100cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "10-25°C",
+        "Fertilizer_Needs": "N:P:K 80:40:120g/bush, Vitamin C"
+    },
+    {
+        "Plant_Name": "Brazil Nut",
+        "Scientific_Name": "Bertholletia excelsa",
+        "Category": "Nuts",
+        "Soil_Types": [
+            "Forest clay",
+            "Amazon soils"
+        ],
+        "Water_Requirement": "High (200-400cm)",
+        "Humidity_Range_Percent": "80-90%",
+        "Temperature_Range_Celsius": "24-32°C",
+        "Fertilizer_Needs": "N:P:K 500:250:750g/tree, Rainforest giant"
+    },
+    {
+        "Plant_Name": "Macadamia",
+        "Scientific_Name": "Macadamia integrifolia",
+        "Category": "Nuts",
+        "Soil_Types": [
+            "Well-drained volcanic"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "15-30°C",
+        "Fertilizer_Needs": "N:P:K 200:100:300g/tree, Premium nut"
+    },
+    {
+        "Plant_Name": "Chestnut",
+        "Scientific_Name": "Castanea sativa",
+        "Category": "Nuts",
+        "Soil_Types": [
+            "Acidic",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (100-200cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 300:150:450g/tree, Sweet nut"
+    },
+    {
+        "Plant_Name": "Lotus",
+        "Scientific_Name": "Nelumbo nucifera",
+        "Category": "Aquatic Flowers",
+        "Soil_Types": [
+            "Pond mud",
+            "Standing water"
+        ],
+        "Water_Requirement": "Aquatic",
+        "Humidity_Range_Percent": "90-95%",
+        "Temperature_Range_Celsius": "22-35°C",
+        "Fertilizer_Needs": "Organic sediment, Sacred flower"
+    },
+    {
+        "Plant_Name": "Water Lily",
+        "Scientific_Name": "Nymphaea alba",
+        "Category": "Aquatic Flowers",
+        "Soil_Types": [
+            "Pond mud",
+            "Still water"
+        ],
+        "Water_Requirement": "Aquatic",
+        "Humidity_Range_Percent": "90-95%",
+        "Temperature_Range_Celsius": "18-30°C",
+        "Fertilizer_Needs": "Organic sediment, Floating flowers"
+    },
+    {
+        "Plant_Name": "Iris",
+        "Scientific_Name": "Iris germanica",
+        "Category": "Bulb Flowers",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (60-80cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "N:P:K 100:50:100kg/ha, Rhizomatous"
+    },
+    {
+        "Plant_Name": "Daffodil",
+        "Scientific_Name": "Narcissus pseudonarcissus",
+        "Category": "Bulb Flowers",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (30-50cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "10-15°C",
+        "Fertilizer_Needs": "N:P:K 50:25:50kg/ha, Spring bulb"
+    },
+    {
+        "Plant_Name": "Crocus",
+        "Scientific_Name": "Crocus sativus",
+        "Category": "Bulb Flowers",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low (15-30cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "10-20°C",
+        "Fertilizer_Needs": "N:P:K 60:30:60kg/ha, Saffron source"
+    },
+    {
+        "Plant_Name": "Freesia",
+        "Scientific_Name": "Freesia refracta",
+        "Category": "Bulb Flowers",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (40-60cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "15-20°C",
+        "Fertilizer_Needs": "N:P:K 100:50:100kg/ha, Fragrant"
+    },
+    {
+        "Plant_Name": "Bird of Paradise",
+        "Scientific_Name": "Strelitzia reginae",
+        "Category": "Ornamental Plants",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (75-150cm)",
+        "Humidity_Range_Percent": "65-75%",
+        "Temperature_Range_Celsius": "18-30°C",
+        "Fertilizer_Needs": "N:P:K 150:75:225g/plant, Exotic flower"
+    },
+    {
+        "Plant_Name": "Protea",
+        "Scientific_Name": "Protea cynaroides",
+        "Category": "Ornamental Plants",
+        "Soil_Types": [
+            "Sandy",
+            "Acidic",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low-Medium (25-75cm)",
+        "Humidity_Range_Percent": "50-65%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "Low phosphorus, South African"
+    },
+    {
+        "Plant_Name": "Plumeria",
+        "Scientific_Name": "Plumeria rubra",
+        "Category": "Ornamental Plants",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low-Medium (30-100cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "20-35°C",
+        "Fertilizer_Needs": "N:P:K 100:50:150g/plant, Frangipani"
+    },
+    {
+        "Plant_Name": "Watercress",
+        "Scientific_Name": "Nasturtium officinale",
+        "Category": "Aquatic Vegetables",
+        "Soil_Types": [
+            "Clean flowing water"
+        ],
+        "Water_Requirement": "Aquatic/Semi-aquatic",
+        "Humidity_Range_Percent": "90-95%",
+        "Temperature_Range_Celsius": "10-25°C",
+        "Fertilizer_Needs": "Nutrient-rich water, Peppery greens"
+    },
+    {
+        "Plant_Name": "Duckweed",
+        "Scientific_Name": "Lemna minor",
+        "Category": "Aquatic Plants",
+        "Soil_Types": [
+            "Still water",
+            "Nutrient rich"
+        ],
+        "Water_Requirement": "Aquatic floating",
+        "Humidity_Range_Percent": "95-100%",
+        "Temperature_Range_Celsius": "15-30°C",
+        "Fertilizer_Needs": "High nutrients, Protein source"
+    },
+    {
+        "Plant_Name": "Water Spinach (Kangkong)",
+        "Scientific_Name": "Ipomoea aquatica",
+        "Category": "Aquatic Vegetables",
+        "Soil_Types": [
+            "Muddy water",
+            "Wetlands"
+        ],
+        "Water_Requirement": "Aquatic/Semi-aquatic",
+        "Humidity_Range_Percent": "85-95%",
+        "Temperature_Range_Celsius": "22-35°C",
+        "Fertilizer_Needs": "N:P:K 120:60:100kg/ha, Asian vegetable"
+    },
+    {
+        "Plant_Name": "Wasabi",
+        "Scientific_Name": "Eutrema japonicum",
+        "Category": "Specialty Crops",
+        "Soil_Types": [
+            "Cool",
+            "Moist",
+            "Shaded"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "85-95%",
+        "Temperature_Range_Celsius": "8-20°C",
+        "Fertilizer_Needs": "Organic rich, Expensive crop"
+    },
+    {
+        "Plant_Name": "Saffron",
+        "Scientific_Name": "Crocus sativus",
+        "Category": "Specialty Spices",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Low (15-30cm)",
+        "Humidity_Range_Percent": "60-70%",
+        "Temperature_Range_Celsius": "10-20°C",
+        "Fertilizer_Needs": "N:P:K 60:30:60kg/ha, Most expensive spice"
+    },
+    {
+        "Plant_Name": "Vanilla Orchid",
+        "Scientific_Name": "Vanilla planifolia",
+        "Category": "Specialty Spices",
+        "Soil_Types": [
+            "Organic rich",
+            "Support trees"
+        ],
+        "Water_Requirement": "High (200-400cm)",
+        "Humidity_Range_Percent": "80-90%",
+        "Temperature_Range_Celsius": "21-32°C",
+        "Fertilizer_Needs": "N:P:K 100:50:100kg/ha, Hand pollinated"
+    },
+    {
+        "Plant_Name": "Black Truffle (Cultivated)",
+        "Scientific_Name": "Tuber melanosporum",
+        "Category": "Specialty Crops",
+        "Soil_Types": [
+            "Calcareous",
+            "Oak roots"
+        ],
+        "Water_Requirement": "Depends on host tree",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "15-25°C",
+        "Fertilizer_Needs": "Mycorrhizal, Expensive fungus"
+    },
+    {
+        "Plant_Name": "Miscanthus",
+        "Scientific_Name": "Miscanthus × giganteus",
+        "Category": "Biomass Crops",
+        "Soil_Types": [
+            "Sandy loam",
+            "Well-drained"
+        ],
+        "Water_Requirement": "Medium (50-100cm)",
+        "Humidity_Range_Percent": "60-75%",
+        "Temperature_Range_Celsius": "10-30°C",
+        "Fertilizer_Needs": "N:P:K 100:50:150kg/ha, Perennial grass"
+    },
+    {
+        "Plant_Name": "Willow (Energy)",
+        "Scientific_Name": "Salix viminalis",
+        "Category": "Biomass Crops",
+        "Soil_Types": [
+            "Moist soils",
+            "Various"
+        ],
+        "Water_Requirement": "High (100-200cm)",
+        "Humidity_Range_Percent": "70-80%",
+        "Temperature_Range_Celsius": "5-25°C",
+        "Fertilizer_Needs": "N:P:K 150:75:225kg/ha, Fast growing"
+    }
+]
