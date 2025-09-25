@@ -108,8 +108,8 @@ const PlantsPage = () => {
       if (error) throw error;
       setZones((prevZones) =>
         prevZones.map((zone) =>
-          zone.id === zoneId ? { ...zone, pump_on: !currentStatus } : zone
-        )
+          zone.id === zoneId ? { ...zone, pump_on: !currentStatus } : zone,
+        ),
       );
     } catch (err) {
       console.error('Pump toggle failed:', err);
@@ -121,13 +121,23 @@ const PlantsPage = () => {
     <div className="p-6 space-y-6 text-gray-800 dark:text-white">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Plant Zones</h1>
-        <button 
+        <button
           onClick={handleRefresh}
           className="p-2 rounded-lg transition-colors bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
           title="Refresh zones"
         >
-          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+            />
           </svg>
         </button>
       </div>
@@ -156,7 +166,9 @@ const PlantsPage = () => {
             <input
               className="w-full border dark:border-gray-600 rounded p-2 bg-white dark:bg-gray-900 dark:text-white"
               value={newZone.description}
-              onChange={(e) => setNewZone({ ...newZone, description: e.target.value })}
+              onChange={(e) =>
+                setNewZone({ ...newZone, description: e.target.value })
+              }
               placeholder="Enter description"
             />
           </div>
@@ -165,7 +177,9 @@ const PlantsPage = () => {
             <select
               className="w-full border dark:border-gray-600 rounded p-2 bg-white dark:bg-gray-900 dark:text-white"
               value={newZone.soil_type}
-              onChange={(e) => setNewZone({ ...newZone, soil_type: e.target.value })}
+              onChange={(e) =>
+                setNewZone({ ...newZone, soil_type: e.target.value })
+              }
             >
               <option value="Loamy">Loamy</option>
               <option value="Sandy">Sandy</option>
@@ -182,7 +196,9 @@ const PlantsPage = () => {
               onChange={(e) =>
                 setNewZone({
                   ...newZone,
-                  moisture_threshold: e.target.value ? parseInt(e.target.value) : 0,
+                  moisture_threshold: e.target.value
+                    ? parseInt(e.target.value)
+                    : 0,
                 })
               }
               placeholder="Enter moisture threshold"
@@ -232,19 +248,25 @@ const PlantsPage = () => {
                       zone.moisture_threshold < 30
                         ? 'bg-red-500'
                         : zone.moisture_threshold < 40
-                        ? 'bg-yellow-500'
-                        : 'bg-green-500'
+                          ? 'bg-yellow-500'
+                          : 'bg-green-500'
                     }`}
                     style={{ width: `${zone.moisture_threshold}%` }}
                   ></div>
                 </div>
-                <div className="text-xs text-right mt-1">{zone.moisture_threshold}%</div>
+                <div className="text-xs text-right mt-1">
+                  {zone.moisture_threshold}%
+                </div>
               </div>
               <div className="mt-2">
                 {zone.pump_on ? (
-                  <span className="text-green-500 text-sm font-bold">🚿 Pump is ON</span>
+                  <span className="text-green-500 text-sm font-bold">
+                    🚿 Pump is ON
+                  </span>
                 ) : (
-                  <span className="text-gray-500 text-sm font-semibold">Pump is OFF</span>
+                  <span className="text-gray-500 text-sm font-semibold">
+                    Pump is OFF
+                  </span>
                 )}
               </div>
               <div className="flex justify-between items-center gap-2">

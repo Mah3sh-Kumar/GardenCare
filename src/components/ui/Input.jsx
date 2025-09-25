@@ -1,15 +1,15 @@
 import React from 'react';
 import { useTheme } from '../../contexts/ThemeContext';
 
-const Input = ({ 
-  label, 
-  id, 
-  error, 
-  helperText, 
-  className = '', 
+const Input = ({
+  label,
+  id,
+  error,
+  helperText,
+  className = '',
   disabled = false,
   fullWidth = false,
-  ...props 
+  ...props
 }) => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
@@ -20,13 +20,17 @@ const Input = ({
     transition-colors
     ${fullWidth ? 'w-full' : ''}
     ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
-    ${isDark 
-      ? 'border-gray-600 bg-gray-700 text-white placeholder-gray-400' 
-      : 'border-gray-300 bg-white text-gray-900 placeholder-gray-500'
+    ${
+      isDark
+        ? 'border-gray-600 bg-gray-700 text-white placeholder-gray-400'
+        : 'border-gray-300 bg-white text-gray-900 placeholder-gray-500'
     }
-    ${error 
-      ? (isDark ? 'border-red-500 focus:ring-red-500' : 'border-red-500 focus:ring-red-500') 
-      : ''
+    ${
+      error
+        ? isDark
+          ? 'border-red-500 focus:ring-red-500'
+          : 'border-red-500 focus:ring-red-500'
+        : ''
     }
   `.trim();
 
@@ -35,8 +39,8 @@ const Input = ({
   return (
     <div className={wrapperClasses}>
       {label && (
-        <label 
-          htmlFor={id} 
+        <label
+          htmlFor={id}
           className={`block text-sm font-semibold mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}
         >
           {label}
@@ -49,12 +53,16 @@ const Input = ({
         {...props}
       />
       {helperText && (
-        <p className={`mt-2 text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+        <p
+          className={`mt-2 text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
+        >
           {helperText}
         </p>
       )}
       {error && (
-        <p className={`mt-2 text-sm ${isDark ? 'text-red-400' : 'text-red-600'}`}>
+        <p
+          className={`mt-2 text-sm ${isDark ? 'text-red-400' : 'text-red-600'}`}
+        >
           {error}
         </p>
       )}

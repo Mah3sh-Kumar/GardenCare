@@ -1,12 +1,12 @@
 import React from 'react';
 import { useTheme } from '../../contexts/ThemeContext';
 
-const Skeleton = ({ 
+const Skeleton = ({
   className = '',
   variant = 'rectangular',
   width,
   height,
-  ...props 
+  ...props
 }) => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
@@ -21,7 +21,7 @@ const Skeleton = ({
   const variantClasses = {
     rectangular: 'rounded-lg',
     circular: 'rounded-full',
-    text: 'rounded-full'
+    text: 'rounded-full',
   };
 
   // Size styles
@@ -35,13 +35,7 @@ const Skeleton = ({
     ${className}
   `.trim();
 
-  return (
-    <div 
-      className={skeletonClasses}
-      style={sizeStyles}
-      {...props}
-    />
-  );
+  return <div className={skeletonClasses} style={sizeStyles} {...props} />;
 };
 
 export default Skeleton;

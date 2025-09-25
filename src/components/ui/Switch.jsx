@@ -1,13 +1,13 @@
 import React from 'react';
 import { useTheme } from '../../contexts/ThemeContext';
 
-const Switch = ({ 
-  checked, 
-  onChange, 
-  label, 
+const Switch = ({
+  checked,
+  onChange,
+  label,
   id,
   disabled = false,
-  ...props 
+  ...props
 }) => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
@@ -18,7 +18,7 @@ const Switch = ({
     focus:ring-2 focus:ring-offset-2 focus:ring-green-500
     ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
     ${isDark ? 'focus:ring-offset-gray-900' : 'focus:ring-offset-white'}
-    ${checked ? 'bg-green-600' : (isDark ? 'bg-gray-600' : 'bg-gray-200')}
+    ${checked ? 'bg-green-600' : isDark ? 'bg-gray-600' : 'bg-gray-200'}
   `.trim();
 
   const thumbClasses = `
@@ -39,13 +39,10 @@ const Switch = ({
         disabled={disabled}
         {...props}
       >
-        <span
-          className={thumbClasses}
-          aria-hidden="true"
-        />
+        <span className={thumbClasses} aria-hidden="true" />
       </button>
       {label && (
-        <span 
+        <span
           id={`${id}-label`}
           className={`ml-3 text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}
         >

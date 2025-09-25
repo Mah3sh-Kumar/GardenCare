@@ -6,38 +6,47 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 // Validate environment variables
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('Missing Supabase environment variables. Please check your .env file.');
-  console.error('Required variables: VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY');
+  console.error(
+    'Missing Supabase environment variables. Please check your .env file.',
+  );
+  console.error(
+    'Required variables: VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY',
+  );
 }
 
 // Create Supabase client with enhanced configuration for v2 compatibility
-export const supabase = supabaseUrl && supabaseAnonKey ? createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: true,
-    flowType: 'pkce'
-  },
-  db: {
-    schema: 'public'
-  },
-  global: {
-    headers: {
-      'X-Client-Info': 'farmflow-dashboard/1.0.0'
-    }
-  },
-  realtime: {
-    params: {
-      eventsPerSecond: 20
-    }
-  }
-}) : null;
+export const supabase =
+  supabaseUrl && supabaseAnonKey
+    ? createClient(supabaseUrl, supabaseAnonKey, {
+        auth: {
+          autoRefreshToken: true,
+          persistSession: true,
+          detectSessionInUrl: true,
+          flowType: 'pkce',
+        },
+        db: {
+          schema: 'public',
+        },
+        global: {
+          headers: {
+            'X-Client-Info': 'farmflow-dashboard/1.0.0',
+          },
+        },
+        realtime: {
+          params: {
+            eventsPerSecond: 20,
+          },
+        },
+      })
+    : null;
 
 // Function to create a fresh Supabase client for special cases
 // This is needed for components that need a separate client instance
 export const createFreshClient = () => {
   if (!supabaseUrl || !supabaseAnonKey) {
-    console.error('Cannot create fresh client: Missing Supabase environment variables');
+    console.error(
+      'Cannot create fresh client: Missing Supabase environment variables',
+    );
     return null;
   }
 
@@ -46,28 +55,33 @@ export const createFreshClient = () => {
       autoRefreshToken: true,
       persistSession: true,
       detectSessionInUrl: true,
-      flowType: 'pkce'
+      flowType: 'pkce',
     },
     db: {
-      schema: 'public'
+      schema: 'public',
     },
     global: {
       headers: {
-        'X-Client-Info': 'farmflow-dashboard/1.0.0'
-      }
+        'X-Client-Info': 'farmflow-dashboard/1.0.0',
+      },
     },
     realtime: {
       params: {
-        eventsPerSecond: 20
-      }
-    }
+        eventsPerSecond: 20,
+      },
+    },
   });
 };
 
 // Authentication functions
 export const signIn = async (email, password) => {
   if (!supabase) {
-    return { data: null, error: new Error('Supabase client not initialized. Check your environment variables.') };
+    return {
+      data: null,
+      error: new Error(
+        'Supabase client not initialized. Check your environment variables.',
+      ),
+    };
   }
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
@@ -78,7 +92,12 @@ export const signIn = async (email, password) => {
 
 export const signUp = async (email, password) => {
   if (!supabase) {
-    return { data: null, error: new Error('Supabase client not initialized. Check your environment variables.') };
+    return {
+      data: null,
+      error: new Error(
+        'Supabase client not initialized. Check your environment variables.',
+      ),
+    };
   }
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -89,7 +108,11 @@ export const signUp = async (email, password) => {
 
 export const signOut = async () => {
   if (!supabase) {
-    return { error: new Error('Supabase client not initialized. Check your environment variables.') };
+    return {
+      error: new Error(
+        'Supabase client not initialized. Check your environment variables.',
+      ),
+    };
   }
   const { error } = await supabase.auth.signOut();
   return { error };
@@ -97,7 +120,12 @@ export const signOut = async () => {
 
 export const getCurrentUser = async () => {
   if (!supabase) {
-    return { user: null, error: new Error('Supabase client not initialized. Check your environment variables.') };
+    return {
+      user: null,
+      error: new Error(
+        'Supabase client not initialized. Check your environment variables.',
+      ),
+    };
   }
   const { data, error } = await supabase.auth.getUser();
   return { user: data?.user, error };
@@ -106,7 +134,9 @@ export const getCurrentUser = async () => {
 // Real-time subscription helpers
 export const createRealtimeSubscription = (table, callback, filter = null) => {
   if (!supabase) {
-    console.error('Cannot create subscription: Supabase client not initialized');
+    console.error(
+      'Cannot create subscription: Supabase client not initialized',
+    );
     return null;
   }
 
@@ -118,12 +148,12 @@ export const createRealtimeSubscription = (table, callback, filter = null) => {
         event: '*',
         schema: 'public',
         table: table,
-        ...(filter && { filter: filter })
+        ...(filter && { filter: filter }),
       },
       (payload) => {
         console.log(`Real-time update for ${table}:`, payload);
         callback(payload);
-      }
+      },
     )
     .subscribe();
 
@@ -143,7 +173,9 @@ export const queryWithAuth = async (tableName, query) => {
     return { data: null, error: new Error('Supabase client not initialized') };
   }
 
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   if (!user) {
     return { data: null, error: new Error('User not authenticated') };
   }
@@ -162,7 +194,8 @@ export const handleSupabaseError = (error) => {
     'Invalid JWT': 'Authentication error. Please sign in again.',
     'Row Level Security': 'You do not have permission to access this data.',
     'column does not exist': 'Database schema error. Please contact support.',
-    'relation does not exist': 'Database table not found. Please contact support.'
+    'relation does not exist':
+      'Database table not found. Please contact support.',
   };
 
   for (const [pattern, message] of Object.entries(errorPatterns)) {
@@ -171,7 +204,10 @@ export const handleSupabaseError = (error) => {
     }
   }
 
-  return { ...error, userMessage: 'An unexpected error occurred. Please try again.' };
+  return {
+    ...error,
+    userMessage: 'An unexpected error occurred. Please try again.',
+  };
 };
 
 // Function to force schema refresh by creating a fresh client
@@ -180,9 +216,12 @@ export const forceSchemaRefresh = async () => {
   try {
     // Create a fresh client to bypass schema cache
     const freshClient = createFreshClient();
-    
+
     if (!freshClient) {
-      return { success: false, error: new Error('Failed to create fresh client') };
+      return {
+        success: false,
+        error: new Error('Failed to create fresh client'),
+      };
     }
 
     // Test the fresh client by querying a simple table

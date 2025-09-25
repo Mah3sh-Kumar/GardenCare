@@ -4,7 +4,22 @@ import { useTheme } from '../contexts/ThemeContext';
 import { supabase } from '../lib/supabase';
 import { ProfileService } from '../services/profileService';
 import { DeviceService } from '../services/deviceService';
-import { FiUser, FiBell, FiSettings, FiLogOut, FiX, FiCheck, FiAlertCircle, FiWifi, FiSun, FiMoon, FiDroplet, FiRefreshCw, FiKey, FiSave } from 'react-icons/fi';
+import {
+  FiUser,
+  FiBell,
+  FiSettings,
+  FiLogOut,
+  FiX,
+  FiCheck,
+  FiAlertCircle,
+  FiWifi,
+  FiSun,
+  FiMoon,
+  FiDroplet,
+  FiRefreshCw,
+  FiKey,
+  FiSave,
+} from 'react-icons/fi';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
 import Input from '../components/ui/Input';
@@ -15,25 +30,25 @@ const SettingsPage = () => {
   const { user, logout } = useAuth();
   const { theme, setThemeDirectly } = useTheme();
   const isDark = theme === 'dark';
-  
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
   const [devices, setDevices] = useState([]);
-  
+
   const [notificationSettings, setNotificationSettings] = useState({
     emailAlerts: true,
     wateringReminders: true,
-    systemUpdates: false
+    systemUpdates: false,
   });
-  
+
   const [systemSettings, setSystemSettings] = useState({
     darkMode: isDark,
     autoWatering: true,
     temperatureUnit: 'celsius',
-    dataRefreshInterval: 30
+    dataRefreshInterval: 30,
   });
 
   // Auto-dismiss success messages after 3 seconds
@@ -67,36 +82,43 @@ const SettingsPage = () => {
   }, [user]);
 
   useEffect(() => {
-    setSystemSettings(prev => ({
+    setSystemSettings((prev) => ({
       ...prev,
-      darkMode: isDark
+      darkMode: isDark,
     }));
   }, [isDark]);
 
   const fetchUserProfile = async () => {
     try {
-      const { data: { user }, error } = await supabase.auth.getUser();
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.getUser();
       if (error) throw error;
-      
+
       if (user) {
         // Use the ProfileService to fetch or create profile
         try {
           const profile = await ProfileService.fetchProfile();
-          setName(profile?.name || user.email?.split('@')[0] || 'Garden Enthusiast');
+          setName(
+            profile?.name || user.email?.split('@')[0] || 'Garden Enthusiast',
+          );
         } catch (profileError) {
           console.error('Error with ProfileService:', profileError);
           // Fallback to default name
           setName(user.email?.split('@')[0] || 'Garden Enthusiast');
         }
-        
+
         // Load settings from localStorage or use defaults
-        const savedNotificationSettings = localStorage.getItem('notificationSettings');
+        const savedNotificationSettings = localStorage.getItem(
+          'notificationSettings',
+        );
         const savedSystemSettings = localStorage.getItem('systemSettings');
-        
+
         if (savedNotificationSettings) {
           setNotificationSettings(JSON.parse(savedNotificationSettings));
         }
-        
+
         if (savedSystemSettings) {
           const parsedSettings = JSON.parse(savedSystemSettings);
           setSystemSettings(parsedSettings);
@@ -117,7 +139,7 @@ const SettingsPage = () => {
     setLoading(true);
     setError(null);
     setMessage(null);
-    
+
     try {
       const result = await ProfileService.updateProfile(name);
       setMessage('Profile updated successfully');
@@ -140,14 +162,14 @@ const SettingsPage = () => {
     setLoading(true);
     setError(null);
     setMessage(null);
-    
+
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
         redirectTo: window.location.origin + '/reset-password',
       });
-      
+
       if (error) throw error;
-      
+
       setMessage('Password reset email sent. Please check your inbox.');
     } catch (err) {
       setError('Failed to send password reset email: ' + err.message);
@@ -159,14 +181,16 @@ const SettingsPage = () => {
   const handleNotificationChange = (setting) => {
     const newSettings = {
       ...notificationSettings,
-      [setting]: !notificationSettings[setting]
+      [setting]: !notificationSettings[setting],
     };
-    
+
     setNotificationSettings(newSettings);
     localStorage.setItem('notificationSettings', JSON.stringify(newSettings));
-    
+
     // Show feedback that setting was changed (without auto-clear to prevent layout shifts)
-    setMessage(`${setting.charAt(0).toUpperCase() + setting.slice(1)} notifications ${!notificationSettings[setting] ? 'enabled' : 'disabled'}`);
+    setMessage(
+      `${setting.charAt(0).toUpperCase() + setting.slice(1)} notifications ${!notificationSettings[setting] ? 'enabled' : 'disabled'}`,
+    );
   };
 
   const handleSystemSettingChange = (setting) => {
@@ -174,19 +198,30 @@ const SettingsPage = () => {
     if (setting === 'darkMode') {
       const newTheme = systemSettings.darkMode ? 'light' : 'dark';
       setThemeDirectly(newTheme);
-      setSystemSettings(prev => ({ ...prev, darkMode: !prev.darkMode }));
-      localStorage.setItem('systemSettings', JSON.stringify({ ...systemSettings, darkMode: !systemSettings.darkMode }));
-      setMessage(`Dark mode ${!systemSettings.darkMode ? 'enabled' : 'disabled'}`);
+      setSystemSettings((prev) => ({ ...prev, darkMode: !prev.darkMode }));
+      localStorage.setItem(
+        'systemSettings',
+        JSON.stringify({
+          ...systemSettings,
+          darkMode: !systemSettings.darkMode,
+        }),
+      );
+      setMessage(
+        `Dark mode ${!systemSettings.darkMode ? 'enabled' : 'disabled'}`,
+      );
       return;
     }
 
     // Special handling for temperature unit
     if (setting === 'temperatureUnit') {
-      const newValue = systemSettings.temperatureUnit === 'celsius' ? 'fahrenheit' : 'celsius';
+      const newValue =
+        systemSettings.temperatureUnit === 'celsius' ? 'fahrenheit' : 'celsius';
       const newSettings = { ...systemSettings, temperatureUnit: newValue };
       setSystemSettings(newSettings);
       localStorage.setItem('systemSettings', JSON.stringify(newSettings));
-      setMessage(`Temperature unit changed to ${newValue === 'celsius' ? 'Celsius' : 'Fahrenheit'}`);
+      setMessage(
+        `Temperature unit changed to ${newValue === 'celsius' ? 'Celsius' : 'Fahrenheit'}`,
+      );
       return;
     }
 
@@ -194,13 +229,13 @@ const SettingsPage = () => {
     const newValue = !systemSettings[setting];
     const newSettings = {
       ...systemSettings,
-      [setting]: newValue
+      [setting]: newValue,
     };
-    
+
     // Update system settings
     setSystemSettings(newSettings);
     localStorage.setItem('systemSettings', JSON.stringify(newSettings));
-    
+
     if (setting === 'autoWatering') {
       setMessage(`Automatic watering ${newValue ? 'enabled' : 'disabled'}`);
     }
@@ -210,7 +245,7 @@ const SettingsPage = () => {
     setLoading(true);
     setError(null);
     setMessage(null);
-    
+
     try {
       await logout();
       setMessage('Logged out successfully');
@@ -222,20 +257,24 @@ const SettingsPage = () => {
   };
 
   const handleDeleteAccount = async () => {
-    if (!window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
+    if (
+      !window.confirm(
+        'Are you sure you want to delete your account? This action cannot be undone.',
+      )
+    ) {
       return;
     }
-    
+
     setLoading(true);
     setError(null);
     setMessage(null);
-    
+
     try {
       // Delete user account from Supabase
       const { error } = await supabase.auth.admin.deleteUser(user.id);
-      
+
       if (error) throw error;
-      
+
       setMessage('Account deleted successfully');
       // Log out the user after deletion
       await logout();
@@ -251,8 +290,14 @@ const SettingsPage = () => {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>Settings</h1>
-          <p className={`mt-2 text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+          <h1
+            className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}
+          >
+            Settings
+          </h1>
+          <p
+            className={`mt-2 text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'}`}
+          >
             Manage your account preferences and system settings
           </p>
         </div>
@@ -286,7 +331,10 @@ const SettingsPage = () => {
               />
 
               <div>
-                <label htmlFor="email" className={`block text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
+                <label
+                  htmlFor="email"
+                  className={`block text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}
+                >
                   Email Address
                 </label>
                 <input
@@ -295,23 +343,25 @@ const SettingsPage = () => {
                   id="email"
                   value={email}
                   className={`w-full px-4 py-3 border rounded-lg ${
-                    isDark ? 'border-gray-600 bg-gray-700 text-gray-400' : 'border-gray-300 bg-gray-100 text-gray-600'
+                    isDark
+                      ? 'border-gray-600 bg-gray-700 text-gray-400'
+                      : 'border-gray-300 bg-gray-100 text-gray-600'
                   }`}
                   disabled
                   aria-describedby="email-disabled"
                 />
-                <p id="email-disabled" className={`mt-2 text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                  Email cannot be changed from this page. Contact support for email changes.
+                <p
+                  id="email-disabled"
+                  className={`mt-2 text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
+                >
+                  Email cannot be changed from this page. Contact support for
+                  email changes.
                 </p>
               </div>
             </div>
 
             <div className="flex flex-col sm:flex-row justify-between gap-4 mt-8">
-              <Button
-                type="submit"
-                disabled={loading}
-                variant="primary"
-              >
+              <Button type="submit" disabled={loading} variant="primary">
                 {loading ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
@@ -341,10 +391,20 @@ const SettingsPage = () => {
         {/* Notification Settings */}
         <Card header="Notification Settings">
           <div className="space-y-6">
-            <div className={`flex items-center justify-between p-4 rounded-lg border ${isDark ? 'border-gray-700 bg-gray-700' : 'border-gray-200 bg-gray-50'}`}>
+            <div
+              className={`flex items-center justify-between p-4 rounded-lg border ${isDark ? 'border-gray-700 bg-gray-700' : 'border-gray-200 bg-gray-50'}`}
+            >
               <div className="flex-1">
-                <h3 className={`text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Email Alerts</h3>
-                <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Receive notifications via email</p>
+                <h3
+                  className={`text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}
+                >
+                  Email Alerts
+                </h3>
+                <p
+                  className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
+                >
+                  Receive notifications via email
+                </p>
               </div>
               <Switch
                 checked={notificationSettings.emailAlerts}
@@ -352,11 +412,21 @@ const SettingsPage = () => {
                 id="email-alerts"
               />
             </div>
-            
-            <div className={`flex items-center justify-between p-4 rounded-lg border ${isDark ? 'border-gray-700 bg-gray-700' : 'border-gray-200 bg-gray-50'}`}>
+
+            <div
+              className={`flex items-center justify-between p-4 rounded-lg border ${isDark ? 'border-gray-700 bg-gray-700' : 'border-gray-200 bg-gray-50'}`}
+            >
               <div className="flex-1">
-                <h3 className={`text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Watering Reminders</h3>
-                <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Get reminders for scheduled watering</p>
+                <h3
+                  className={`text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}
+                >
+                  Watering Reminders
+                </h3>
+                <p
+                  className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
+                >
+                  Get reminders for scheduled watering
+                </p>
               </div>
               <Switch
                 checked={notificationSettings.wateringReminders}
@@ -364,11 +434,21 @@ const SettingsPage = () => {
                 id="watering-reminders"
               />
             </div>
-            
-            <div className={`flex items-center justify-between p-4 rounded-lg border ${isDark ? 'border-gray-700 bg-gray-700' : 'border-gray-200 bg-gray-50'}`}>
+
+            <div
+              className={`flex items-center justify-between p-4 rounded-lg border ${isDark ? 'border-gray-700 bg-gray-700' : 'border-gray-200 bg-gray-50'}`}
+            >
               <div className="flex-1">
-                <h3 className={`text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>System Updates</h3>
-                <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Receive notifications about system updates</p>
+                <h3
+                  className={`text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}
+                >
+                  System Updates
+                </h3>
+                <p
+                  className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
+                >
+                  Receive notifications about system updates
+                </p>
               </div>
               <Switch
                 checked={notificationSettings.systemUpdates}
@@ -382,10 +462,20 @@ const SettingsPage = () => {
         {/* System Settings */}
         <Card header="System Settings">
           <div className="space-y-6">
-            <div className={`flex items-center justify-between p-4 rounded-lg border ${isDark ? 'border-gray-700 bg-gray-700' : 'border-gray-200 bg-gray-50'}`}>
+            <div
+              className={`flex items-center justify-between p-4 rounded-lg border ${isDark ? 'border-gray-700 bg-gray-700' : 'border-gray-200 bg-gray-50'}`}
+            >
               <div className="flex-1">
-                <h3 className={`text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Dark Mode</h3>
-                <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Enable dark theme for the dashboard</p>
+                <h3
+                  className={`text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}
+                >
+                  Dark Mode
+                </h3>
+                <p
+                  className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
+                >
+                  Enable dark theme for the dashboard
+                </p>
               </div>
               <Switch
                 checked={systemSettings.darkMode}
@@ -393,11 +483,21 @@ const SettingsPage = () => {
                 id="dark-mode"
               />
             </div>
-            
-            <div className={`flex items-center justify-between p-4 rounded-lg border ${isDark ? 'border-gray-700 bg-gray-700' : 'border-gray-200 bg-gray-50'}`}>
+
+            <div
+              className={`flex items-center justify-between p-4 rounded-lg border ${isDark ? 'border-gray-700 bg-gray-700' : 'border-gray-200 bg-gray-50'}`}
+            >
               <div className="flex-1">
-                <h3 className={`text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Automatic Watering</h3>
-                <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Enable automatic watering based on soil moisture</p>
+                <h3
+                  className={`text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}
+                >
+                  Automatic Watering
+                </h3>
+                <p
+                  className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
+                >
+                  Enable automatic watering based on soil moisture
+                </p>
               </div>
               <Switch
                 checked={systemSettings.autoWatering}
@@ -405,19 +505,33 @@ const SettingsPage = () => {
                 id="auto-watering"
               />
             </div>
-            
-            <div className={`flex items-center justify-between p-4 rounded-lg border ${isDark ? 'border-gray-700 bg-gray-700' : 'border-gray-200 bg-gray-50'}`}>
+
+            <div
+              className={`flex items-center justify-between p-4 rounded-lg border ${isDark ? 'border-gray-700 bg-gray-700' : 'border-gray-200 bg-gray-50'}`}
+            >
               <div className="flex-1">
-                <h3 className={`text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>Temperature Unit</h3>
-                <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Display temperature in Celsius or Fahrenheit</p>
+                <h3
+                  className={`text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}
+                >
+                  Temperature Unit
+                </h3>
+                <p
+                  className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
+                >
+                  Display temperature in Celsius or Fahrenheit
+                </p>
               </div>
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => handleSystemSettingChange('temperatureUnit')}
                   className={`px-4 py-2 text-sm rounded-lg transition-colors ${
                     systemSettings.temperatureUnit === 'celsius'
-                      ? (isDark ? 'bg-green-600 text-white' : 'bg-green-500 text-white')
-                      : (isDark ? 'bg-gray-700 text-gray-300' : 'bg-gray-200 text-gray-700')
+                      ? isDark
+                        ? 'bg-green-600 text-white'
+                        : 'bg-green-500 text-white'
+                      : isDark
+                        ? 'bg-gray-700 text-gray-300'
+                        : 'bg-gray-200 text-gray-700'
                   }`}
                 >
                   °C
@@ -426,17 +540,23 @@ const SettingsPage = () => {
                   onClick={() => handleSystemSettingChange('temperatureUnit')}
                   className={`px-4 py-2 text-sm rounded-lg transition-colors ${
                     systemSettings.temperatureUnit === 'fahrenheit'
-                      ? (isDark ? 'bg-green-600 text-white' : 'bg-green-500 text-white')
-                      : (isDark ? 'bg-gray-700 text-gray-300' : 'bg-gray-200 text-gray-700')
+                      ? isDark
+                        ? 'bg-green-600 text-white'
+                        : 'bg-green-500 text-white'
+                      : isDark
+                        ? 'bg-gray-700 text-gray-300'
+                        : 'bg-gray-200 text-gray-700'
                   }`}
                 >
                   °F
                 </button>
               </div>
             </div>
-            
+
             <div>
-              <label className={`block text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
+              <label
+                className={`block text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}
+              >
                 Data Refresh Interval
               </label>
               <div className="flex items-center space-x-4">
@@ -446,14 +566,23 @@ const SettingsPage = () => {
                   max="300"
                   step="10"
                   value={systemSettings.dataRefreshInterval}
-                  onChange={(e) => setSystemSettings({...systemSettings, dataRefreshInterval: parseInt(e.target.value)})}
+                  onChange={(e) =>
+                    setSystemSettings({
+                      ...systemSettings,
+                      dataRefreshInterval: parseInt(e.target.value),
+                    })
+                  }
                   className="w-full max-w-xs"
                 />
-                <span className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                <span
+                  className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}
+                >
                   {systemSettings.dataRefreshInterval} seconds
                 </span>
               </div>
-              <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              <p
+                className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
+              >
                 How often to refresh sensor data (10-300 seconds)
               </p>
             </div>
@@ -464,7 +593,10 @@ const SettingsPage = () => {
         <Card header="ESP32 Configuration">
           <div className="space-y-6">
             <div>
-              <label htmlFor="api-key" className={`block text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
+              <label
+                htmlFor="api-key"
+                className={`block text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}
+              >
                 API Key
               </label>
               <div className="flex">
@@ -473,26 +605,36 @@ const SettingsPage = () => {
                   id="api-key"
                   value=""
                   className={`flex-1 px-4 py-3 border rounded-l-lg ${
-                    isDark ? 'border-gray-600 bg-gray-700 text-gray-400' : 'border-gray-300 bg-gray-100 text-gray-600'
+                    isDark
+                      ? 'border-gray-600 bg-gray-700 text-gray-400'
+                      : 'border-gray-300 bg-gray-100 text-gray-600'
                   }`}
                   disabled
                 />
                 <button
                   className={`px-4 py-3 rounded-r-lg font-medium ${
-                    isDark ? 'bg-gray-700 text-white hover:bg-gray-600' : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
+                    isDark
+                      ? 'bg-gray-700 text-white hover:bg-gray-600'
+                      : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
                   }`}
                 >
                   Regenerate
                 </button>
               </div>
-              <p className={`text-sm mt-2 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                Use this key to authenticate your ESP32 devices with the GardenCare API
+              <p
+                className={`text-sm mt-2 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
+              >
+                Use this key to authenticate your ESP32 devices with the
+                GardenCare API
               </p>
             </div>
-            
+
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <div>
-                <label htmlFor="mqtt-server" className={`block text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
+                <label
+                  htmlFor="mqtt-server"
+                  className={`block text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}
+                >
                   MQTT Server
                 </label>
                 <input
@@ -500,14 +642,19 @@ const SettingsPage = () => {
                   id="mqtt-server"
                   value="mqtt.farmflow.example.com"
                   className={`w-full px-4 py-3 border rounded-lg ${
-                    isDark ? 'border-gray-600 bg-gray-700 text-white' : 'border-gray-300 bg-white text-gray-900'
+                    isDark
+                      ? 'border-gray-600 bg-gray-700 text-white'
+                      : 'border-gray-300 bg-white text-gray-900'
                   }`}
                   disabled
                 />
               </div>
-              
+
               <div>
-                <label htmlFor="mqtt-port" className={`block text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}>
+                <label
+                  htmlFor="mqtt-port"
+                  className={`block text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}
+                >
                   MQTT Port
                 </label>
                 <input
@@ -515,16 +662,20 @@ const SettingsPage = () => {
                   id="mqtt-port"
                   value="8883"
                   className={`w-full px-4 py-3 border rounded-lg ${
-                    isDark ? 'border-gray-600 bg-gray-700 text-white' : 'border-gray-300 bg-white text-gray-900'
+                    isDark
+                      ? 'border-gray-600 bg-gray-700 text-white'
+                      : 'border-gray-300 bg-white text-gray-900'
                   }`}
                   disabled
                 />
               </div>
             </div>
-            
+
             <div>
               <div className="flex items-center justify-between mb-3">
-                <h3 className={`text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>
+                <h3
+                  className={`text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'}`}
+                >
                   Connected Devices
                 </h3>
                 <button
@@ -532,44 +683,67 @@ const SettingsPage = () => {
                   disabled={loading}
                   className="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
                 >
-                  <FiRefreshCw className={`inline mr-1 ${loading ? 'animate-spin' : ''}`} />
+                  <FiRefreshCw
+                    className={`inline mr-1 ${loading ? 'animate-spin' : ''}`}
+                  />
                   Refresh
                 </button>
               </div>
-              
+
               {devices.length > 0 ? (
                 <div className="overflow-hidden border rounded-lg">
                   <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                     <thead className={isDark ? 'bg-gray-700' : 'bg-gray-50'}>
                       <tr>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400"
+                        >
                           Device Name
                         </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400"
+                        >
                           Status
                         </th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400"
+                        >
                           Last Seen
                         </th>
                       </tr>
                     </thead>
 
-                    <tbody className={`divide-y ${isDark ? 'divide-gray-700 bg-gray-800' : 'divide-gray-200 bg-white'}`}>
+                    <tbody
+                      className={`divide-y ${isDark ? 'divide-gray-700 bg-gray-800' : 'divide-gray-200 bg-white'}`}
+                    >
                       {devices.map((device) => (
                         <tr key={device.id}>
-                          <td className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                          <td
+                            className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}
+                          >
                             {device.name}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                              device.status === 'online' 
-                                ? (isDark ? 'bg-green-900 text-green-400' : 'bg-green-100 text-green-800') 
-                                : (isDark ? 'bg-red-900 text-red-400' : 'bg-red-100 text-red-800')
-                            }`}>
+                            <span
+                              className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                                device.status === 'online'
+                                  ? isDark
+                                    ? 'bg-green-900 text-green-400'
+                                    : 'bg-green-100 text-green-800'
+                                  : isDark
+                                    ? 'bg-red-900 text-red-400'
+                                    : 'bg-red-100 text-red-800'
+                              }`}
+                            >
                               {device.status}
                             </span>
                           </td>
-                          <td className={`px-6 py-4 whitespace-nowrap text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                          <td
+                            className={`px-6 py-4 whitespace-nowrap text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
+                          >
                             {new Date(device.last_seen).toLocaleString()}
                           </td>
                         </tr>
@@ -579,14 +753,23 @@ const SettingsPage = () => {
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <FiWifi className={`mx-auto h-12 w-12 ${isDark ? 'text-gray-500' : 'text-gray-400'}`} />
-                  <h3 className={`mt-2 text-sm font-medium ${isDark ? 'text-gray-200' : 'text-gray-900'}`}>No devices connected</h3>
-                  <p className={`mt-1 text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                    Your ESP32 devices will appear here once connected. Visit the System page to register devices.
+                  <FiWifi
+                    className={`mx-auto h-12 w-12 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}
+                  />
+                  <h3
+                    className={`mt-2 text-sm font-medium ${isDark ? 'text-gray-200' : 'text-gray-900'}`}
+                  >
+                    No devices connected
+                  </h3>
+                  <p
+                    className={`mt-1 text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
+                  >
+                    Your ESP32 devices will appear here once connected. Visit
+                    the System page to register devices.
                   </p>
                   <div className="mt-4">
-                    <a 
-                      href="/system" 
+                    <a
+                      href="/system"
                       className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     >
                       <FiSettings className="mr-2 -ml-1 h-4 w-4" />
@@ -599,7 +782,6 @@ const SettingsPage = () => {
           </div>
         </Card>
 
-
         {/* Account Actions */}
         <Card header="Account Management">
           <div className="flex justify-between items-center mb-4">
@@ -611,7 +793,7 @@ const SettingsPage = () => {
               <FiLogOut className="w-4 h-4 mr-2" />
               Sign Out
             </Button>
-            
+
             <Button
               variant="danger"
               className="flex items-center px-4 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded focus:ring-2 focus:ring-red-500"
@@ -624,12 +806,13 @@ const SettingsPage = () => {
 
           <div className="bg-red-900/30 border border-red-700 text-red-200 text-sm rounded p-4">
             <p>
-              <span className="font-semibold">Warning:</span> Deleting your account will permanently remove all your data, including plant information, sensor data, and settings. This action cannot be undone.
+              <span className="font-semibold">Warning:</span> Deleting your
+              account will permanently remove all your data, including plant
+              information, sensor data, and settings. This action cannot be
+              undone.
             </p>
           </div>
         </Card>
-
-
       </div>
     </div>
   );

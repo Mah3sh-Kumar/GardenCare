@@ -2,14 +2,7 @@ import React, { useEffect } from 'react';
 import { useTheme } from '../../contexts/ThemeContext';
 import { FiX } from 'react-icons/fi';
 
-const Modal = ({ 
-  children, 
-  isOpen, 
-  onClose, 
-  title,
-  size = 'md',
-  ...props 
-}) => {
+const Modal = ({ children, isOpen, onClose, title, size = 'md', ...props }) => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
@@ -42,7 +35,7 @@ const Modal = ({
     md: 'max-w-xl',
     lg: 'max-w-3xl',
     xl: 'max-w-5xl',
-    full: 'max-w-full mx-4'
+    full: 'max-w-full mx-4',
   };
 
   const modalClasses = `
@@ -67,23 +60,21 @@ const Modal = ({
 
   return (
     <div className={modalClasses} {...props}>
-      <div 
-        className={backdropClasses}
-        onClick={onClose}
-        aria-hidden="true"
-      />
-      
+      <div className={backdropClasses} onClick={onClose} aria-hidden="true" />
+
       <div className={dialogClasses}>
-        <div 
+        <div
           className={contentClasses}
           role="dialog"
           aria-modal="true"
-          aria-labelledby={title ? "modal-title" : undefined}
+          aria-labelledby={title ? 'modal-title' : undefined}
         >
           {/* Header */}
-          <div className={`flex items-center justify-between px-6 py-4 border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+          <div
+            className={`flex items-center justify-between px-6 py-4 border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}`}
+          >
             {title && (
-              <h3 
+              <h3
                 id="modal-title"
                 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}
               >
@@ -99,11 +90,9 @@ const Modal = ({
               <FiX className="h-5 w-5" />
             </button>
           </div>
-          
+
           {/* Content */}
-          <div className="p-6">
-            {children}
-          </div>
+          <div className="p-6">{children}</div>
         </div>
       </div>
     </div>

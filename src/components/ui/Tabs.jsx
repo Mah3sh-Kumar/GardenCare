@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
 import { useTheme } from '../../contexts/ThemeContext';
 
-const Tabs = ({ 
-  children, 
-  defaultActiveKey,
-  className = '',
-  ...props 
-}) => {
+const Tabs = ({ children, defaultActiveKey, className = '', ...props }) => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
-  
+
   const [activeKey, setActiveKey] = useState(defaultActiveKey);
 
   const tabsClasses = `
@@ -19,7 +14,7 @@ const Tabs = ({
   // Filter children to separate tabs and tab panels
   const tabs = [];
   const tabPanels = [];
-  
+
   React.Children.forEach(children, (child) => {
     if (child.type === Tab) {
       tabs.push(child);
@@ -31,7 +26,9 @@ const Tabs = ({
   return (
     <div className={tabsClasses} {...props}>
       {/* Tab List */}
-      <div className={`border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}`}>
+      <div
+        className={`border-b ${isDark ? 'border-gray-700' : 'border-gray-200'}`}
+      >
         <nav className="-mb-px flex space-x-8" aria-label="Tabs">
           {tabs.map((tab) => (
             <button
@@ -52,16 +49,15 @@ const Tabs = ({
           ))}
         </nav>
       </div>
-      
+
       {/* Tab Panels */}
       <div className="mt-6">
-        {tabPanels.map((panel) => (
-          activeKey === panel.props.tabId && (
-            <div key={panel.props.tabId}>
-              {panel.props.children}
-            </div>
-          )
-        ))}
+        {tabPanels.map(
+          (panel) =>
+            activeKey === panel.props.tabId && (
+              <div key={panel.props.tabId}>{panel.props.children}</div>
+            ),
+        )}
       </div>
     </div>
   );

@@ -2,18 +2,23 @@ import { supabase, queryWithAuth, handleSupabaseError } from '../lib/supabase';
 
 // Enhanced Data Service with optimized Supabase v2 queries and RLS support
 export class DataService {
-  
   // Utility function to validate user authentication
   static async validateAuth() {
     try {
-      const { data: { user }, error } = await supabase.auth.getUser();
+      const {
+        data: { user },
+        error,
+      } = await supabase.auth.getUser();
       if (error || !user) {
         throw new Error('User not authenticated');
       }
       return user;
     } catch (error) {
       console.error('Authentication validation failed:', error);
-      throw new Error('Authentication required: ' + (error.message || 'Please sign in to continue'));
+      throw new Error(
+        'Authentication required: ' +
+          (error.message || 'Please sign in to continue'),
+      );
     }
   }
 
@@ -21,7 +26,7 @@ export class DataService {
   static async getLatestSensorData() {
     try {
       const user = await this.validateAuth();
-      
+
       // Use a more efficient query with proper RLS
       const { data, error } = await supabase
         .from('sensor_data')
@@ -34,9 +39,11 @@ export class DataService {
       if (error) {
         const handledError = handleSupabaseError(error);
         console.error('Error fetching latest sensor data:', handledError);
-        throw new Error(handledError.userMessage || 'Failed to fetch sensor data');
+        throw new Error(
+          handledError.userMessage || 'Failed to fetch sensor data',
+        );
       }
-      
+
       return data;
     } catch (error) {
       console.error('Error in getLatestSensorData:', error);
@@ -48,9 +55,11 @@ export class DataService {
   static async getSensorDataForCharts(hours = 24) {
     try {
       const user = await this.validateAuth();
-      
-      const startTime = new Date(Date.now() - hours * 60 * 60 * 1000).toISOString();
-      
+
+      const startTime = new Date(
+        Date.now() - hours * 60 * 60 * 1000,
+      ).toISOString();
+
       // Optimized query with proper RLS and indexing considerations
       const { data, error } = await supabase
         .from('sensor_data')
@@ -62,9 +71,11 @@ export class DataService {
       if (error) {
         const handledError = handleSupabaseError(error);
         console.error('Error fetching sensor data for charts:', handledError);
-        throw new Error(handledError.userMessage || 'Failed to fetch chart data');
+        throw new Error(
+          handledError.userMessage || 'Failed to fetch chart data',
+        );
       }
-      
+
       return data || [];
     } catch (error) {
       console.error('Error in getSensorDataForCharts:', error);
@@ -111,7 +122,9 @@ export class DataService {
 
       if (fetchError) {
         const handledError = handleSupabaseError(fetchError);
-        throw new Error(handledError.userMessage || 'Failed to verify alert ownership');
+        throw new Error(
+          handledError.userMessage || 'Failed to verify alert ownership',
+        );
       }
 
       if (!alertData) {
@@ -127,9 +140,11 @@ export class DataService {
 
       if (updateError) {
         const handledError = handleSupabaseError(updateError);
-        throw new Error(handledError.userMessage || 'Failed to mark alert as read');
+        throw new Error(
+          handledError.userMessage || 'Failed to mark alert as read',
+        );
       }
-      
+
       return true;
     } catch (error) {
       console.error('Error in markAlertAsRead:', error);
@@ -144,7 +159,9 @@ export class DataService {
 
       const { data, error } = await supabase
         .from('zones')
-        .select('id, name, plant_type, soil_type, optimal_moisture_min, optimal_moisture_max, created_at')
+        .select(
+          'id, name, plant_type, soil_type, optimal_moisture_min, optimal_moisture_max, created_at',
+        )
         .eq('user_id', user.id)
         .order('name');
 
@@ -188,16 +205,20 @@ export class DataService {
 
       const { data, error } = await supabase
         .from('watering_controls')
-        .select(`
+        .select(
+          `
           *,
           zones(name),
           devices(name)
-        `)
+        `,
+        )
         .eq('user_id', user.id);
 
       if (error) {
         const handledError = handleSupabaseError(error);
-        throw new Error(handledError.userMessage || 'Failed to fetch watering controls');
+        throw new Error(
+          handledError.userMessage || 'Failed to fetch watering controls',
+        );
       }
       return data || [];
     } catch (error) {
@@ -221,7 +242,9 @@ export class DataService {
 
       if (deviceError) {
         const handledError = handleSupabaseError(deviceError);
-        throw new Error(handledError.userMessage || 'Failed to verify device ownership');
+        throw new Error(
+          handledError.userMessage || 'Failed to verify device ownership',
+        );
       }
 
       if (!deviceData) {
@@ -229,17 +252,22 @@ export class DataService {
       }
 
       // Use Supabase function for secure command execution
-      const { data, error } = await supabase.functions.invoke('esp32-commands', {
-        body: {
-          device_id: deviceId,
-          command_type: commandType,
-          parameters,
-        }
-      });
+      const { data, error } = await supabase.functions.invoke(
+        'esp32-commands',
+        {
+          body: {
+            device_id: deviceId,
+            command_type: commandType,
+            parameters,
+          },
+        },
+      );
 
       if (error) {
         const handledError = handleSupabaseError(error);
-        throw new Error(handledError.userMessage || 'Failed to send command to device');
+        throw new Error(
+          handledError.userMessage || 'Failed to send command to device',
+        );
       }
 
       return data;
@@ -256,17 +284,21 @@ export class DataService {
 
       const { data, error } = await supabase
         .from('commands')
-        .select(`
+        .select(
+          `
           *,
           devices(name)
-        `)
+        `,
+        )
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
         .limit(limit);
 
       if (error) {
         const handledError = handleSupabaseError(error);
-        throw new Error(handledError.userMessage || 'Failed to fetch command history');
+        throw new Error(
+          handledError.userMessage || 'Failed to fetch command history',
+        );
       }
       return data || [];
     } catch (error) {
@@ -313,19 +345,43 @@ export class DataService {
   static async getDashboardStats() {
     try {
       const latestData = await this.getLatestSensorData();
-      
+
       // Default stats when no data available
       const defaultIcon = {
         path: 'M9.5 3.25a2.25 2.25 0 1 1 3 2.122V6A2.5 2.5 0 0 1 10 8.5H6a1 1 0 0 0-1 1v1.128a2.251 2.251 0 1 1-1.5 0V5.372a2.25 2.25 0 1 1 1.5 0v1.836A2.493 2.493 0 0 1 6 7h4a1 1 0 0 0 1-1v-.628A2.25 2.25 0 0 1 9.5 3.25Zm-6 0a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Zm8.25-.75a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5ZM4.25 12a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Z',
-        bgColor: 'bg-gray-500'
+        bgColor: 'bg-gray-500',
       };
 
       if (!latestData) {
         return [
-          { title: 'Temperature', value: 'N/A', change: '--', trend: 'neutral', icon: { ...defaultIcon, bgColor: 'bg-orange-500' } },
-          { title: 'Humidity', value: 'N/A', change: '--', trend: 'neutral', icon: { ...defaultIcon, bgColor: 'bg-purple-500' } },
-          { title: 'Soil Moisture', value: 'N/A', change: '--', trend: 'neutral', icon: { ...defaultIcon, bgColor: 'bg-blue-500' } },
-          { title: 'Active Devices', value: 'N/A', change: '--', trend: 'neutral', icon: { ...defaultIcon, bgColor: 'bg-green-500' } }
+          {
+            title: 'Temperature',
+            value: 'N/A',
+            change: '--',
+            trend: 'neutral',
+            icon: { ...defaultIcon, bgColor: 'bg-orange-500' },
+          },
+          {
+            title: 'Humidity',
+            value: 'N/A',
+            change: '--',
+            trend: 'neutral',
+            icon: { ...defaultIcon, bgColor: 'bg-purple-500' },
+          },
+          {
+            title: 'Soil Moisture',
+            value: 'N/A',
+            change: '--',
+            trend: 'neutral',
+            icon: { ...defaultIcon, bgColor: 'bg-blue-500' },
+          },
+          {
+            title: 'Active Devices',
+            value: 'N/A',
+            change: '--',
+            trend: 'neutral',
+            icon: { ...defaultIcon, bgColor: 'bg-green-500' },
+          },
         ];
       }
 
@@ -339,30 +395,32 @@ export class DataService {
           title: 'Temperature',
           value: `${temperature.toFixed(1)} °C`,
           change: temperature > 25 ? '+2%' : temperature < 15 ? '-1%' : '+0.5%',
-          trend: temperature > 25 ? 'up' : temperature < 15 ? 'down' : 'neutral',
-          icon: { ...defaultIcon, bgColor: 'bg-orange-500' }
+          trend:
+            temperature > 25 ? 'up' : temperature < 15 ? 'down' : 'neutral',
+          icon: { ...defaultIcon, bgColor: 'bg-orange-500' },
         },
         {
           title: 'Humidity',
           value: `${humidity.toFixed(0)}%`,
           change: humidity > 70 ? '+5%' : humidity < 40 ? '-3%' : '+1%',
           trend: humidity > 70 ? 'up' : humidity < 40 ? 'down' : 'neutral',
-          icon: { ...defaultIcon, bgColor: 'bg-purple-500' }
+          icon: { ...defaultIcon, bgColor: 'bg-purple-500' },
         },
         {
           title: 'Soil Moisture',
           value: `${soilMoisture.toFixed(0)}%`,
           change: soilMoisture > 80 ? '+3%' : soilMoisture < 30 ? '-2%' : '+1%',
-          trend: soilMoisture > 80 ? 'up' : soilMoisture < 30 ? 'down' : 'neutral',
-          icon: { ...defaultIcon, bgColor: 'bg-blue-500' }
+          trend:
+            soilMoisture > 80 ? 'up' : soilMoisture < 30 ? 'down' : 'neutral',
+          icon: { ...defaultIcon, bgColor: 'bg-blue-500' },
         },
         {
           title: 'Active Devices',
           value: '1',
           change: '--',
           trend: 'neutral',
-          icon: { ...defaultIcon, bgColor: 'bg-green-500' }
-        }
+          icon: { ...defaultIcon, bgColor: 'bg-green-500' },
+        },
       ];
     } catch (error) {
       console.error('Error in getDashboardStats:', error);
@@ -375,13 +433,18 @@ export class DataService {
     try {
       const user = await this.validateAuth();
 
-      const { data, error } = await supabase.functions.invoke('simulate-sensor-data', {
-        body: {}
-      });
+      const { data, error } = await supabase.functions.invoke(
+        'simulate-sensor-data',
+        {
+          body: {},
+        },
+      );
 
       if (error) {
         const handledError = handleSupabaseError(error);
-        throw new Error(handledError.userMessage || 'Failed to simulate sensor data');
+        throw new Error(
+          handledError.userMessage || 'Failed to simulate sensor data',
+        );
       }
       return data;
     } catch (error) {
@@ -393,7 +456,9 @@ export class DataService {
   // Real-time subscription for sensor data with proper channel management
   static subscribeToSensorData(callback) {
     if (!supabase) {
-      console.error('Cannot create subscription: Supabase client not initialized');
+      console.error(
+        'Cannot create subscription: Supabase client not initialized',
+      );
       return null;
     }
 
@@ -404,12 +469,12 @@ export class DataService {
         {
           event: 'INSERT',
           schema: 'public',
-          table: 'sensor_data'
+          table: 'sensor_data',
         },
         (payload) => {
           console.log('Sensor data change:', payload);
           callback(payload);
-        }
+        },
       )
       .subscribe((status) => {
         if (status === 'SUBSCRIBED') {
@@ -425,7 +490,9 @@ export class DataService {
   // Real-time subscription for alerts with proper channel management
   static subscribeToAlerts(callback) {
     if (!supabase) {
-      console.error('Cannot create subscription: Supabase client not initialized');
+      console.error(
+        'Cannot create subscription: Supabase client not initialized',
+      );
       return null;
     }
 
@@ -436,12 +503,12 @@ export class DataService {
         {
           event: '*',
           schema: 'public',
-          table: 'alerts'
+          table: 'alerts',
         },
         (payload) => {
           console.log('Alert change:', payload);
           callback(payload);
-        }
+        },
       )
       .subscribe((status) => {
         if (status === 'SUBSCRIBED') {
@@ -457,7 +524,9 @@ export class DataService {
   // Real-time subscription for zones with proper channel management
   static subscribeToZones(callback) {
     if (!supabase) {
-      console.error('Cannot create subscription: Supabase client not initialized');
+      console.error(
+        'Cannot create subscription: Supabase client not initialized',
+      );
       return null;
     }
 
@@ -468,12 +537,12 @@ export class DataService {
         {
           event: '*',
           schema: 'public',
-          table: 'zones'
+          table: 'zones',
         },
         (payload) => {
           console.log('Zone change:', payload);
           callback(payload);
-        }
+        },
       )
       .subscribe((status) => {
         if (status === 'SUBSCRIBED') {

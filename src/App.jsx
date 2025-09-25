@@ -1,5 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -23,7 +28,7 @@ function App() {
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
-              
+
               <Route path="/" element={<AuthenticatedLayout />}>
                 <Route index element={<Navigate to="/dashboard" replace />} />
                 <Route path="dashboard" element={<Dashboard />} />
@@ -34,7 +39,7 @@ function App() {
                 <Route path="system" element={<SystemPage />} />
                 <Route path="settings" element={<SettingsPage />} />
               </Route>
-              
+
               <Route path="*" element={<Navigate to="/dashboard" replace />} />
             </Routes>
           </Router>

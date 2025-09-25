@@ -2,16 +2,17 @@ import { supabase, handleSupabaseError } from '../lib/supabase';
 
 // Analytics Service for advanced data analysis and insights with real-time capabilities
 export class AnalyticsService {
-  
   // Get analytics data for a specific time period
   static async getAnalyticsData(period = 'month') {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       const endDate = new Date();
       const startDate = this.getStartDate(period);
-      
+
       // Get sensor data for the period
       const { data: sensorData, error: sensorError } = await supabase
         .from('sensor_data')
@@ -72,7 +73,7 @@ export class AnalyticsService {
         commands: commands || [],
         period,
         startDate,
-        endDate
+        endDate,
       };
     } catch (error) {
       console.error('Error fetching analytics data:', error);
@@ -83,31 +84,33 @@ export class AnalyticsService {
   // Calculate water usage by zone
   static calculateWaterUsageByZone(commands, zones, period) {
     const waterUsage = {};
-    
+
     // Initialize zones
-    zones.forEach(zone => {
+    zones.forEach((zone) => {
       waterUsage[zone.name] = {
         name: zone.name,
         usage: 0,
         sessions: 0,
-        avgDuration: 0
+        avgDuration: 0,
       };
     });
 
     // Calculate from pump commands
-    const pumpCommands = commands.filter(cmd => cmd.command_type === 'pump_on');
-    
-    pumpCommands.forEach(cmd => {
+    const pumpCommands = commands.filter(
+      (cmd) => cmd.command_type === 'pump_on',
+    );
+
+    pumpCommands.forEach((cmd) => {
       const duration = cmd.parameters?.duration || 30; // seconds
       const waterPerSecond = 0.5; // liters per second (adjust based on your pump)
-      const waterUsed = (duration * waterPerSecond);
-      
+      const waterUsed = duration * waterPerSecond;
+
       // Find zone by device (simplified - you might need to enhance this mapping)
-      const zone = zones.find(z => z.id === cmd.device_id);
+      const zone = zones.find((z) => z.id === cmd.device_id);
       if (zone) {
         waterUsage[zone.name].usage += waterUsed;
         waterUsage[zone.name].sessions += 1;
-        waterUsage[zone.name].avgDuration = 
+        waterUsage[zone.name].avgDuration =
           (waterUsage[zone.name].avgDuration + duration) / 2;
       }
     });
@@ -118,24 +121,39 @@ export class AnalyticsService {
   // Calculate water savings
   static calculateWaterSavings(commands, period) {
     const monthlyData = [];
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+
     // Calculate for last 6 months
     for (let i = 5; i >= 0; i--) {
       const date = new Date();
       date.setMonth(date.getMonth() - i);
       const monthStart = new Date(date.getFullYear(), date.getMonth(), 1);
       const monthEnd = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-      
-      const monthCommands = commands.filter(cmd => {
+
+      const monthCommands = commands.filter((cmd) => {
         const cmdDate = new Date(cmd.created_at);
         return cmdDate >= monthStart && cmdDate <= monthEnd;
       });
 
-      const pumpCommands = monthCommands.filter(cmd => cmd.command_type === 'pump_on');
+      const pumpCommands = monthCommands.filter(
+        (cmd) => cmd.command_type === 'pump_on',
+      );
       const totalWaterUsed = pumpCommands.reduce((sum, cmd) => {
         const duration = cmd.parameters?.duration || 30;
-        return sum + (duration * 0.5); // 0.5L per second
+        return sum + duration * 0.5; // 0.5L per second
       }, 0);
 
       // Estimate regular usage (without smart system)
@@ -145,7 +163,7 @@ export class AnalyticsService {
       monthlyData.push({
         month: months[date.getMonth()],
         saved: Math.round(waterSaved * 10) / 10,
-        regular: Math.round(estimatedRegularUsage * 10) / 10
+        regular: Math.round(estimatedRegularUsage * 10) / 10,
       });
     }
 
@@ -154,14 +172,14 @@ export class AnalyticsService {
 
   // Calculate moisture level distribution
   static calculateMoistureDistribution(sensorData) {
-    const moistureLevels = sensorData.map(data => data.soil_moisture);
-    
+    const moistureLevels = sensorData.map((data) => data.soil_moisture);
+
     let optimal = 0;
     let slightlyDry = 0;
     let tooDry = 0;
     let tooWet = 0;
 
-    moistureLevels.forEach(level => {
+    moistureLevels.forEach((level) => {
       if (level >= 40 && level <= 60) optimal++;
       else if (level >= 30 && level < 40) slightlyDry++;
       else if (level < 30) tooDry++;
@@ -169,36 +187,58 @@ export class AnalyticsService {
     });
 
     const total = moistureLevels.length;
-    
+
     return [
-      { name: 'Optimal', value: total > 0 ? Math.round((optimal / total) * 100) : 0, color: '#22c55e' },
-      { name: 'Slightly Dry', value: total > 0 ? Math.round((slightlyDry / total) * 100) : 0, color: '#eab308' },
-      { name: 'Too Dry', value: total > 0 ? Math.round((tooDry / total) * 100) : 0, color: '#ef4444' },
-      { name: 'Too Wet', value: total > 0 ? Math.round((tooWet / total) * 100) : 0, color: '#3b82f6' }
-    ].filter(item => item.value > 0);
+      {
+        name: 'Optimal',
+        value: total > 0 ? Math.round((optimal / total) * 100) : 0,
+        color: '#22c55e',
+      },
+      {
+        name: 'Slightly Dry',
+        value: total > 0 ? Math.round((slightlyDry / total) * 100) : 0,
+        color: '#eab308',
+      },
+      {
+        name: 'Too Dry',
+        value: total > 0 ? Math.round((tooDry / total) * 100) : 0,
+        color: '#ef4444',
+      },
+      {
+        name: 'Too Wet',
+        value: total > 0 ? Math.round((tooWet / total) * 100) : 0,
+        color: '#3b82f6',
+      },
+    ].filter((item) => item.value > 0);
   }
 
   // Calculate plant health scores
   static calculatePlantHealthScores(sensorData, zones) {
     const healthScores = [];
-    
-    zones.forEach(zone => {
-      const zoneData = sensorData.filter(data => data.zone_id === zone.id);
-      
+
+    zones.forEach((zone) => {
+      const zoneData = sensorData.filter((data) => data.zone_id === zone.id);
+
       if (zoneData.length === 0) {
         healthScores.push({
           zone: zone.name,
           score: 0,
-          dataPoints: 0
+          dataPoints: 0,
         });
         return;
       }
 
       // Calculate health score based on multiple factors
-      const avgMoisture = zoneData.reduce((sum, data) => sum + data.soil_moisture, 0) / zoneData.length;
-      const avgTemperature = zoneData.reduce((sum, data) => sum + data.temperature, 0) / zoneData.length;
-      const avgHumidity = zoneData.reduce((sum, data) => sum + data.humidity, 0) / zoneData.length;
-      
+      const avgMoisture =
+        zoneData.reduce((sum, data) => sum + data.soil_moisture, 0) /
+        zoneData.length;
+      const avgTemperature =
+        zoneData.reduce((sum, data) => sum + data.temperature, 0) /
+        zoneData.length;
+      const avgHumidity =
+        zoneData.reduce((sum, data) => sum + data.humidity, 0) /
+        zoneData.length;
+
       // Moisture score (0-40 points)
       let moistureScore = 0;
       if (avgMoisture >= 40 && avgMoisture <= 60) moistureScore = 40;
@@ -222,14 +262,14 @@ export class AnalyticsService {
       else humidityScore = 15;
 
       const totalScore = moistureScore + tempScore + humidityScore;
-      
+
       healthScores.push({
         zone: zone.name,
         score: Math.round(totalScore),
         dataPoints: zoneData.length,
         avgMoisture: Math.round(avgMoisture * 10) / 10,
         avgTemperature: Math.round(avgTemperature * 10) / 10,
-        avgHumidity: Math.round(avgHumidity * 10) / 10
+        avgHumidity: Math.round(avgHumidity * 10) / 10,
       });
     });
 
@@ -241,77 +281,101 @@ export class AnalyticsService {
     const insights = [];
 
     // Analyze watering patterns
-    const pumpCommands = commands.filter(cmd => cmd.command_type === 'pump_on');
+    const pumpCommands = commands.filter(
+      (cmd) => cmd.command_type === 'pump_on',
+    );
     if (pumpCommands.length > 0) {
-      const wateringTimes = pumpCommands.map(cmd => new Date(cmd.created_at).getHours());
-      const morningWatering = wateringTimes.filter(hour => hour >= 5 && hour <= 9).length;
-      const afternoonWatering = wateringTimes.filter(hour => hour >= 12 && hour <= 16).length;
-      const eveningWatering = wateringTimes.filter(hour => hour >= 18 && hour <= 22).length;
+      const wateringTimes = pumpCommands.map((cmd) =>
+        new Date(cmd.created_at).getHours(),
+      );
+      const morningWatering = wateringTimes.filter(
+        (hour) => hour >= 5 && hour <= 9,
+      ).length;
+      const afternoonWatering = wateringTimes.filter(
+        (hour) => hour >= 12 && hour <= 16,
+      ).length;
+      const eveningWatering = wateringTimes.filter(
+        (hour) => hour >= 18 && hour <= 22,
+      ).length;
 
-      if (morningWatering > afternoonWatering && morningWatering > eveningWatering) {
+      if (
+        morningWatering > afternoonWatering &&
+        morningWatering > eveningWatering
+      ) {
         insights.push({
           id: 1,
           title: 'Optimal Watering Time',
-          description: 'Your morning watering schedule (5-9 AM) is optimal for plant health and water efficiency',
+          description:
+            'Your morning watering schedule (5-9 AM) is optimal for plant health and water efficiency',
           icon: '⏰',
-          type: 'positive'
+          type: 'positive',
         });
       } else {
         insights.push({
           id: 1,
           title: 'Watering Time Optimization',
-          description: 'Consider watering in early morning (5-7 AM) to reduce evaporation and maximize efficiency',
+          description:
+            'Consider watering in early morning (5-7 AM) to reduce evaporation and maximize efficiency',
           icon: '⏰',
-          type: 'recommendation'
+          type: 'recommendation',
         });
       }
     }
 
     // Analyze moisture patterns
-    const avgMoisture = sensorData.reduce((sum, data) => sum + data.soil_moisture, 0) / sensorData.length;
+    const avgMoisture =
+      sensorData.reduce((sum, data) => sum + data.soil_moisture, 0) /
+      sensorData.length;
     if (avgMoisture < 30) {
       insights.push({
         id: 2,
         title: 'Low Moisture Alert',
-        description: 'Average soil moisture is below optimal levels. Consider adjusting watering frequency or duration',
+        description:
+          'Average soil moisture is below optimal levels. Consider adjusting watering frequency or duration',
         icon: '💧',
-        type: 'warning'
+        type: 'warning',
       });
     } else if (avgMoisture > 60) {
       insights.push({
         id: 2,
         title: 'Overwatering Detected',
-        description: 'Soil moisture levels are high. Consider reducing watering frequency to prevent root rot',
+        description:
+          'Soil moisture levels are high. Consider reducing watering frequency to prevent root rot',
         icon: '💧',
-        type: 'warning'
+        type: 'warning',
       });
     }
 
     // Analyze temperature patterns
-    const avgTemperature = sensorData.reduce((sum, data) => sum + data.temperature, 0) / sensorData.length;
+    const avgTemperature =
+      sensorData.reduce((sum, data) => sum + data.temperature, 0) /
+      sensorData.length;
     if (avgTemperature > 30) {
       insights.push({
         id: 3,
         title: 'High Temperature Alert',
-        description: 'Average temperature is above optimal range. Consider providing shade or increasing watering',
+        description:
+          'Average temperature is above optimal range. Consider providing shade or increasing watering',
         icon: '🌡️',
-        type: 'warning'
+        type: 'warning',
       });
     }
 
     // Zone-specific insights
-    zones.forEach(zone => {
-      const zoneData = sensorData.filter(data => data.zone_id === zone.id);
+    zones.forEach((zone) => {
+      const zoneData = sensorData.filter((data) => data.zone_id === zone.id);
       if (zoneData.length > 0) {
-        const zoneAvgMoisture = zoneData.reduce((sum, data) => sum + data.soil_moisture, 0) / zoneData.length;
-        
+        const zoneAvgMoisture =
+          zoneData.reduce((sum, data) => sum + data.soil_moisture, 0) /
+          zoneData.length;
+
         if (zoneAvgMoisture < 25) {
           insights.push({
             id: insights.length + 1,
             title: `${zone.name} Needs Attention`,
             description: `${zone.name} has consistently low moisture levels. Check sensor placement and watering system`,
             icon: '🌱',
-            type: 'warning'
+            type: 'warning',
           });
         }
       }
@@ -320,18 +384,21 @@ export class AnalyticsService {
     // Water efficiency insight
     const totalWaterUsed = pumpCommands.reduce((sum, cmd) => {
       const duration = cmd.parameters?.duration || 30;
-      return sum + (duration * 0.5);
+      return sum + duration * 0.5;
     }, 0);
 
     if (totalWaterUsed > 0) {
-      const efficiency = this.calculateWaterEfficiency(sensorData, totalWaterUsed);
+      const efficiency = this.calculateWaterEfficiency(
+        sensorData,
+        totalWaterUsed,
+      );
       if (efficiency > 0.8) {
         insights.push({
           id: insights.length + 1,
           title: 'Excellent Water Efficiency',
           description: `Your system is ${Math.round(efficiency * 100)}% efficient. Great job optimizing water usage!`,
           icon: '🏆',
-          type: 'positive'
+          type: 'positive',
         });
       }
     }
@@ -342,11 +409,11 @@ export class AnalyticsService {
   // Calculate water efficiency
   static calculateWaterEfficiency(sensorData, totalWaterUsed) {
     if (sensorData.length === 0 || totalWaterUsed === 0) return 0;
-    
-    const optimalReadings = sensorData.filter(data => 
-      data.soil_moisture >= 40 && data.soil_moisture <= 60
+
+    const optimalReadings = sensorData.filter(
+      (data) => data.soil_moisture >= 40 && data.soil_moisture <= 60,
     ).length;
-    
+
     return optimalReadings / sensorData.length;
   }
 
@@ -354,22 +421,45 @@ export class AnalyticsService {
   static async getPerformanceMetrics(period = 'month') {
     try {
       const data = await this.getAnalyticsData(period);
-      
-      const waterUsageByZone = this.calculateWaterUsageByZone(data.commands, data.zones, period);
+
+      const waterUsageByZone = this.calculateWaterUsageByZone(
+        data.commands,
+        data.zones,
+        period,
+      );
       const waterSavings = this.calculateWaterSavings(data.commands, period);
-      const moistureDistribution = this.calculateMoistureDistribution(data.sensorData);
-      const healthScores = this.calculatePlantHealthScores(data.sensorData, data.zones);
-      const insights = this.generateInsights(data.sensorData, data.zones, data.commands);
+      const moistureDistribution = this.calculateMoistureDistribution(
+        data.sensorData,
+      );
+      const healthScores = this.calculatePlantHealthScores(
+        data.sensorData,
+        data.zones,
+      );
+      const insights = this.generateInsights(
+        data.sensorData,
+        data.zones,
+        data.commands,
+      );
 
       // Calculate summary metrics
-      const totalWaterUsage = waterUsageByZone.reduce((sum, zone) => sum + zone.usage, 0);
-      const totalWaterSaved = waterSavings.reduce((sum, month) => sum + month.saved, 0);
-      const avgMoisture = data.sensorData.length > 0 
-        ? data.sensorData.reduce((sum, data) => sum + data.soil_moisture, 0) / data.sensorData.length 
-        : 0;
-      const avgHealthScore = healthScores.length > 0 
-        ? healthScores.reduce((sum, zone) => sum + zone.score, 0) / healthScores.length 
-        : 0;
+      const totalWaterUsage = waterUsageByZone.reduce(
+        (sum, zone) => sum + zone.usage,
+        0,
+      );
+      const totalWaterSaved = waterSavings.reduce(
+        (sum, month) => sum + month.saved,
+        0,
+      );
+      const avgMoisture =
+        data.sensorData.length > 0
+          ? data.sensorData.reduce((sum, data) => sum + data.soil_moisture, 0) /
+            data.sensorData.length
+          : 0;
+      const avgHealthScore =
+        healthScores.length > 0
+          ? healthScores.reduce((sum, zone) => sum + zone.score, 0) /
+            healthScores.length
+          : 0;
 
       return {
         summary: {
@@ -378,14 +468,14 @@ export class AnalyticsService {
           avgMoisture: Math.round(avgMoisture * 10) / 10,
           avgHealthScore: Math.round(avgHealthScore),
           dataPoints: data.sensorData.length,
-          zones: data.zones.length
+          zones: data.zones.length,
         },
         waterUsageByZone,
         waterSavings,
         moistureDistribution,
         healthScores,
         insights,
-        period
+        period,
       };
     } catch (error) {
       console.error('Error calculating performance metrics:', error);
@@ -413,12 +503,14 @@ export class AnalyticsService {
   // Get trend data for charts
   static async getTrendData(period = 'month') {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
       const endDate = new Date();
       const startDate = this.getStartDate(period);
-      
+
       const { data: sensorData, error } = await supabase
         .from('sensor_data')
         .select('*')
@@ -435,7 +527,7 @@ export class AnalyticsService {
 
       // Group data by day/hour based on period
       const groupedData = this.groupDataByTime(sensorData, period);
-      
+
       return groupedData;
     } catch (error) {
       console.error('Error fetching trend data:', error);
@@ -446,54 +538,63 @@ export class AnalyticsService {
   // Group sensor data by time intervals
   static groupDataByTime(sensorData, period) {
     const grouped = {};
-    
-    sensorData.forEach(data => {
+
+    sensorData.forEach((data) => {
       const date = new Date(data.timestamp);
       let key;
-      
+
       if (period === 'week') {
         key = date.toLocaleDateString('en-US', { weekday: 'short' });
       } else if (period === 'month') {
-        key = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        key = date.toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+        });
       } else {
         key = date.toLocaleDateString('en-US', { month: 'short' });
       }
-      
+
       if (!grouped[key]) {
         grouped[key] = {
           temperature: [],
           humidity: [],
           soil_moisture: [],
-          count: 0
+          count: 0,
         };
       }
-      
+
       grouped[key].temperature.push(data.temperature);
       grouped[key].humidity.push(data.humidity);
       grouped[key].soil_moisture.push(data.soil_moisture);
       grouped[key].count++;
     });
-    
+
     // Calculate averages
     const result = [];
-    Object.keys(grouped).forEach(key => {
+    Object.keys(grouped).forEach((key) => {
       const item = grouped[key];
       result.push({
         date: key,
-        temperature: item.temperature.reduce((a, b) => a + b, 0) / item.temperature.length,
-        humidity: item.humidity.reduce((a, b) => a + b, 0) / item.humidity.length,
-        soil_moisture: item.soil_moisture.reduce((a, b) => a + b, 0) / item.soil_moisture.length,
-        count: item.count
+        temperature:
+          item.temperature.reduce((a, b) => a + b, 0) / item.temperature.length,
+        humidity:
+          item.humidity.reduce((a, b) => a + b, 0) / item.humidity.length,
+        soil_moisture:
+          item.soil_moisture.reduce((a, b) => a + b, 0) /
+          item.soil_moisture.length,
+        count: item.count,
       });
     });
-    
+
     return result;
   }
 
   // Real-time subscription for analytics data
   static subscribeToAnalyticsData(callback) {
     if (!supabase) {
-      console.error('Cannot create subscription: Supabase client not initialized');
+      console.error(
+        'Cannot create subscription: Supabase client not initialized',
+      );
       return null;
     }
 
@@ -504,24 +605,24 @@ export class AnalyticsService {
         {
           event: 'INSERT',
           schema: 'public',
-          table: 'sensor_data'
+          table: 'sensor_data',
         },
         (payload) => {
           console.log('Analytics data change:', payload);
           callback(payload);
-        }
+        },
       )
       .on(
         'postgres_changes',
         {
           event: 'INSERT',
           schema: 'public',
-          table: 'commands'
+          table: 'commands',
         },
         (payload) => {
           console.log('Command data change:', payload);
           callback(payload);
-        }
+        },
       )
       .subscribe();
 
@@ -536,4 +637,4 @@ export class AnalyticsService {
   }
 }
 
-export default AnalyticsService; 
+export default AnalyticsService;

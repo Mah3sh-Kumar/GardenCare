@@ -8,7 +8,9 @@ export const ThemeProvider = ({ children }) => {
   const getInitialTheme = () => {
     const saved = localStorage.getItem('farmflow-theme');
     if (saved) return saved;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
   };
 
   const [theme, setTheme] = useState(getInitialTheme);

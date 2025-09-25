@@ -19,9 +19,11 @@ export function AuthProvider({ children }) {
       try {
         // Check if supabase client is initialized
         if (!supabase) {
-          throw new Error('Supabase client not initialized. Check your environment variables.');
+          throw new Error(
+            'Supabase client not initialized. Check your environment variables.',
+          );
         }
-        
+
         const { user: currentUser, error } = await getCurrentUser();
         if (error) throw error;
         setUser(currentUser);
@@ -47,7 +49,7 @@ export function AuthProvider({ children }) {
             setUser(null);
           }
           setLoading(false);
-        }
+        },
       );
 
       // Cleanup subscription
@@ -66,9 +68,11 @@ export function AuthProvider({ children }) {
     try {
       // Check if supabase client is initialized
       if (!supabase) {
-        throw new Error('Supabase client not initialized. Check your environment variables.');
+        throw new Error(
+          'Supabase client not initialized. Check your environment variables.',
+        );
       }
-      
+
       setLoading(true);
       setError(null);
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -89,9 +93,11 @@ export function AuthProvider({ children }) {
     try {
       // Check if supabase client is initialized
       if (!supabase) {
-        throw new Error('Supabase client not initialized. Check your environment variables.');
+        throw new Error(
+          'Supabase client not initialized. Check your environment variables.',
+        );
       }
-      
+
       setLoading(true);
       setError(null);
       const { data, error } = await supabase.auth.signUp({
@@ -112,9 +118,11 @@ export function AuthProvider({ children }) {
     try {
       // Check if supabase client is initialized
       if (!supabase) {
-        throw new Error('Supabase client not initialized. Check your environment variables.');
+        throw new Error(
+          'Supabase client not initialized. Check your environment variables.',
+        );
       }
-      
+
       setLoading(true);
       setError(null);
       const { error } = await supabase.auth.signOut();
@@ -133,12 +141,8 @@ export function AuthProvider({ children }) {
     error,
     login,
     signup,
-    logout
+    logout,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

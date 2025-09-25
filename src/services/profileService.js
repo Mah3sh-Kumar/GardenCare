@@ -2,13 +2,15 @@ import { supabase } from '../lib/supabase';
 
 // Profile Service for managing user profiles
 export class ProfileService {
-  
   // Fetch user profile
   static async fetchProfile() {
     try {
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
       if (userError) throw userError;
-      
+
       if (!user) {
         throw new Error('User not authenticated');
       }
@@ -29,7 +31,7 @@ export class ProfileService {
           .insert({
             id: user.id,
             name: defaultName,
-            updated_at: new Date().toISOString()
+            updated_at: new Date().toISOString(),
           })
           .select()
           .single();
@@ -50,9 +52,12 @@ export class ProfileService {
   // Update user profile
   static async updateProfile(name) {
     try {
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
       if (userError) throw userError;
-      
+
       if (!user) {
         throw new Error('User not authenticated');
       }
@@ -69,32 +74,32 @@ export class ProfileService {
         // Update existing profile
         const { data, error } = await supabase
           .from('profiles')
-          .update({ 
-            name, 
-            updated_at: new Date().toISOString() 
+          .update({
+            name,
+            updated_at: new Date().toISOString(),
           })
           .eq('id', user.id)
           .select()
           .single();
-          
+
         if (error) throw error;
         result = data;
       } else {
         // Create new profile
         const { data, error } = await supabase
           .from('profiles')
-          .insert({ 
-            id: user.id, 
-            name, 
-            updated_at: new Date().toISOString() 
+          .insert({
+            id: user.id,
+            name,
+            updated_at: new Date().toISOString(),
           })
           .select()
           .single();
-          
+
         if (error) throw error;
         result = data;
       }
-      
+
       return result;
     } catch (error) {
       console.error('Error in updateProfile:', error);
@@ -105,9 +110,12 @@ export class ProfileService {
   // Ensure profile exists (create if it doesn't)
   static async ensureProfile() {
     try {
-      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser();
       if (userError) throw userError;
-      
+
       if (!user) {
         throw new Error('User not authenticated');
       }
@@ -124,10 +132,10 @@ export class ProfileService {
         const defaultName = user.email?.split('@')[0] || 'Garden Enthusiast';
         const { data, error: insertError } = await supabase
           .from('profiles')
-          .insert({ 
-            id: user.id, 
-            name: defaultName, 
-            updated_at: new Date().toISOString() 
+          .insert({
+            id: user.id,
+            name: defaultName,
+            updated_at: new Date().toISOString(),
           })
           .select()
           .single();
