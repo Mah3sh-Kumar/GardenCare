@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext';
 import { ThemeProvider } from './contexts/ThemeContext';
+import { NotificationProvider } from './contexts/NotificationContext';
 import { ToastProvider } from './components/ui/Toast';
 import ErrorBoundary from './components/ErrorBoundary';
 import AuthenticatedLayout from './components/layout/AuthenticatedLayout';
@@ -42,8 +43,9 @@ function App() {
     <ErrorBoundary>
       <AuthProvider>
         <ThemeProvider>
-          <ToastProvider>
-            <Router>
+          <NotificationProvider>
+            <ToastProvider>
+              <Router>
               <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
@@ -108,10 +110,11 @@ function App() {
               </Routes>
             </Router>
           </ToastProvider>
-        </ThemeProvider>
-      </AuthProvider>
-    </ErrorBoundary>
-  );
+        </NotificationProvider>
+      </ThemeProvider>
+    </AuthProvider>
+  </ErrorBoundary>
+);
 }
 
 export default App;

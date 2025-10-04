@@ -328,37 +328,55 @@ const Header = ({ toggleSidebar }) => {
                     notifications.map((notif, idx) => (
                       <li
                         key={notif.id || idx}
-                        className={`px-4 py-3 flex items-start gap-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition cursor-pointer ${
-                          !notif.read ? 'bg-blue-50 dark:bg-blue-900/20' : ''
+                        className={`px-4 py-3 flex items-start gap-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition cursor-pointer border-l-4 ${
+                          !notif.read 
+                            ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' 
+                            : 'border-transparent'
                         }`}
                       >
-                        <span className="mt-1 text-lg" aria-hidden="true">
+                        <span className="mt-1 text-lg flex-shrink-0" aria-hidden="true">
                           {notif.icon}
                         </span>
                         <div className="flex-1 min-w-0">
-                          <div
-                            className={`text-sm ${notif.read ? 'text-gray-400 dark:text-gray-500' : theme === 'dark' ? 'text-white' : 'text-gray-900'} font-medium truncate`}
-                          >
-                            {notif.title}
+                          <div className="flex items-start justify-between">
+                            <div
+                              className={`text-sm font-medium truncate pr-2 ${
+                                notif.read 
+                                  ? 'text-gray-500 dark:text-gray-400' 
+                                  : theme === 'dark' ? 'text-white' : 'text-gray-900'
+                              }`}
+                            >
+                              {notif.title}
+                            </div>
+                            <div className="text-xs text-gray-400 whitespace-nowrap">
+                              {notif.time}
+                            </div>
                           </div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400 mt-1 truncate">
+                          <div className="text-xs text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">
                             {notif.description}
-                          </div>
-                          <div className="text-xs text-gray-400 mt-1">
-                            {notif.time}
                           </div>
                         </div>
                         {!notif.read && (
                           <span
-                            className="ml-2 mt-1 h-2 w-2 rounded-full bg-blue-500 inline-block"
+                            className="ml-1 mt-2 h-2 w-2 rounded-full bg-blue-500 flex-shrink-0"
                             aria-hidden="true"
                           ></span>
                         )}
                       </li>
                     ))
                   ) : (
-                    <li className="px-4 py-6 text-center text-gray-400 dark:text-gray-500 text-sm">
-                      No new notifications.
+                    <li className="px-4 py-8 text-center">
+                      <div className="flex flex-col items-center space-y-3">
+                        <span className="text-4xl" aria-hidden="true">🌿</span>
+                        <div className="text-center">
+                          <p className="text-gray-500 dark:text-gray-400 text-sm font-medium">
+                            All caught up!
+                          </p>
+                          <p className="text-gray-400 dark:text-gray-500 text-xs mt-1">
+                            No new notifications at the moment
+                          </p>
+                        </div>
+                      </div>
                     </li>
                   )}
                 </ul>

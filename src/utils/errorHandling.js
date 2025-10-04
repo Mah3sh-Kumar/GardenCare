@@ -4,7 +4,7 @@
 
 // Debug logging utility
 export const debugLog = (...args) => {
-  if (import.meta.env.VITE_DEBUG === '1' || process.env.NODE_ENV === 'development') {
+  if (import.meta.env.VITE_DEBUG === '1' || import.meta.env.DEV) {
     console.group('🐛 Debug Log');
     console.log(...args);
     console.trace('Call stack:');

@@ -1,18 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
-import realtimeManager from './realtimeManager';
+// Removed realtimeManager import since subscriptions are disabled
 import DataService from '../services/dataService';
 
 /**
- * Custom hook for managing realtime data with automatic subscription management
- * @param {string} table - Table name to subscribe to
+ * Custom hook for managing data with polling instead of realtime subscriptions
+ * @param {string} table - Table name (for logging purposes)
  * @param {Function} dataFetcher - Function to fetch initial data
- * @param {Object} options - Subscription options
+ * @param {Object} options - Options including polling interval
  */
 export function useRealtimeData(table, dataFetcher, options = {}) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const subscriptionRef = useRef(null);
+  const pollingIntervalRef = useRef(null);
 
   // Load initial data
   const loadData = async () => {
@@ -32,55 +32,21 @@ export function useRealtimeData(table, dataFetcher, options = {}) {
   useEffect(() => {
     loadData();
 
-    // Set up realtime subscription
-    const subscription = realtimeManager.subscribe(
-      table,
-      (payload) => {
-        const { eventType, new: newRecord, old: oldRecord } = payload;
-        
-        switch (eventType) {
-          case 'INSERT':
-            if (newRecord) {
-              setData((prev) => {
-                // Check if record already exists (prevent duplicates)
-                const exists = prev.some(item => item.id === newRecord.id);
-                return exists ? prev : [newRecord, ...prev];
-              });
-            }
-            break;
-          case 'UPDATE':
-            if (newRecord) {
-              setData((prev) => 
-                prev.map((item) => 
-                  item.id === newRecord.id ? newRecord : item
-                )
-              );
-            }
-            break;
-          case 'DELETE':
-            if (oldRecord) {
-              setData((prev) => prev.filter((item) => item.id !== oldRecord.id));
-            }
-            break;
-        }
+    // Set up polling instead of realtime subscription due to transport issues
+    console.log(`useRealtimeData: Setting up polling for ${table} (every 30 seconds)`);
+    const interval = setInterval(() => {
+      console.log(`Polling for ${table} updates...`);
+      loadData();
+    }, options.pollingInterval || 30000); // Default to 30 seconds
 
-        // Call custom handler if provided
-        if (options.onRealtimeEvent) {
-          options.onRealtimeEvent(payload);
-        }
-      },
-      {
-        event: options.event || '*',
-        filter: options.filter,
-      }
-    );
-
-    subscriptionRef.current = subscription;
+    pollingIntervalRef.current = interval;
 
     return () => {
-      realtimeManager.unsubscribe(table, { filter: options.filter });
+      if (pollingIntervalRef.current) {
+        clearInterval(pollingIntervalRef.current);
+      }
     };
-  }, [table, options.event, options.filter, dataFetcher]);
+  }, [table, dataFetcher, options.pollingInterval]);
 
   return {
     data,
@@ -91,30 +57,14 @@ export function useRealtimeData(table, dataFetcher, options = {}) {
 }
 
 /**
- * Hook for optimistic updates with automatic rollback on error
- */
-export function useOptimisticUpdate(table) {
-  const performUpdate = async (operation, data, localUpdateFn, revertFn) => {
-    return realtimeManager.optimisticUpdate(
-      table,
-      operation,
-      data,
-      localUpdateFn,
-      revertFn
-    );
-  };
-
-  return performUpdate;
-}
-
-/**
- * Hook for managing sensor data with realtime updates
+ * Hook for managing sensor data with polling instead of realtime updates
  */
 export function useSensorData(hours = 24) {
   const [sensorData, setSensorData] = useState([]);
   const [latestReading, setLatestReading] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const pollingIntervalRef = useRef(null);
 
   const loadSensorData = async () => {
     try {
@@ -139,34 +89,21 @@ export function useSensorData(hours = 24) {
   useEffect(() => {
     loadSensorData();
 
-    // Subscribe to new sensor data
-    const subscription = realtimeManager.subscribe(
-      'sensor_data',
-      (payload) => {
-        if (payload.eventType === 'INSERT' && payload.new) {
-          const newReading = payload.new;
-          
-          // Update latest reading
-          setLatestReading(newReading);
-          
-          // Add to chart data if within time range
-          const cutoffTime = new Date(Date.now() - hours * 60 * 60 * 1000);
-          if (new Date(newReading.timestamp) > cutoffTime) {
-            setSensorData((prev) => {
-              const updated = [...prev, newReading];
-              // Keep only data within time window and sort by timestamp
-              return updated
-                .filter(item => new Date(item.timestamp) > cutoffTime)
-                .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
-            });
-          }
-        }
-      },
-      { event: 'INSERT' }
-    );
+    // Enable more frequent polling for better dashboard updates
+    console.log('useSensorData: Setting up polling (every 15 seconds)');
+    
+    // Set up polling for sensor data updates
+    const pollingInterval = setInterval(() => {
+      console.log('Polling for sensor data updates...');
+      loadSensorData();
+    }, 15000); // Poll every 15 seconds for faster updates
+
+    pollingIntervalRef.current = pollingInterval;
 
     return () => {
-      realtimeManager.unsubscribe('sensor_data');
+      if (pollingIntervalRef.current) {
+        clearInterval(pollingIntervalRef.current);
+      }
     };
   }, [hours]);
 

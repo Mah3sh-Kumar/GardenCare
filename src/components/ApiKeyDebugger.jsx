@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { supabase, createFreshClient } from '../lib/supabaseClient';
 
 export default function ApiKeyDebugger() {

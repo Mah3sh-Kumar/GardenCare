@@ -102,10 +102,13 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         aria-label="Main navigation"
       >
         {/* Mobile Header (Sticky) */}
-        <div className="lg:hidden sticky top-0 z-50 flex items-center justify-between p-3.5 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+        <div className="lg:hidden sticky top-0 z-50 flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
           {/* Project Name / Logo */}
           <h1 className="text-lg font-bold text-gray-800 dark:text-gray-100 flex items-center gap-2">
-            <FaLeaf className="text-green-500" /> GardenCare
+            <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-lg flex items-center justify-center">
+              <FaLeaf className="text-white text-sm" />
+            </div>
+            <span className="bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent">GardenCare</span>
           </h1>
 
           {/* Mobile Close Button */}
@@ -123,14 +126,15 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
         </div>
 
         {/* Navigation Links */}
-        <nav className="flex-1 px-4 py-5 space-y-2" role="navigation">
+        <nav className="flex-1 px-4 py-6 space-y-2" role="navigation">
           <div className="mb-6">
             <h2
               className={`text-xs font-semibold uppercase tracking-wider ${
                 darkMode ? 'text-gray-400' : 'text-gray-500'
-              } mb-3`}
+              } mb-4 flex items-center`}
             >
-              Navigation
+              <span className="mr-2">📊</span>
+              Smart Garden Control
             </h2>
           </div>
 
@@ -141,51 +145,59 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
                 key={link.to}
                 to={link.to}
                 onClick={() => setIsOpen(false)} // Close sidebar on mobile when link is clicked
-                className={`group flex items-center gap-3 p-2.5 rounded-lg transition-all duration-200 relative min-h-[48px] ${
+                className={`group flex items-center gap-3 p-3 rounded-xl transition-all duration-200 relative min-h-[52px] ${
                   isActive
                     ? darkMode
-                      ? 'bg-green-900/50 text-green-400 font-semibold shadow-sm border border-green-700/50'
-                      : 'bg-green-50 text-green-700 font-semibold shadow-sm border border-green-200'
+                      ? 'bg-gradient-to-r from-green-900/60 to-green-800/40 text-green-300 font-semibold shadow-lg border border-green-700/50 transform scale-[1.02]'
+                      : 'bg-gradient-to-r from-green-50 to-green-100 text-green-700 font-semibold shadow-md border border-green-200 transform scale-[1.02]'
                     : darkMode
-                      ? 'text-gray-300 hover:bg-gray-700 hover:text-gray-100'
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                      ? 'text-gray-300 hover:bg-gray-700/80 hover:text-gray-100 hover:transform hover:scale-[1.01]'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 hover:transform hover:scale-[1.01]'
                 }`}
                 aria-current={isActive ? 'page' : undefined}
                 title={link.description}
               >
                 {/* Active indicator */}
                 {isActive && (
-                  <div
-                    className={`absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-8 rounded-r-full ${
-                      darkMode ? 'bg-green-400' : 'bg-green-500'
-                    }`}
-                    aria-hidden="true"
-                  ></div>
+                  <>
+                    <div
+                      className={`absolute left-0 top-1/2 transform -translate-y-1/2 w-1 h-10 rounded-r-full ${
+                        darkMode ? 'bg-green-400' : 'bg-green-500'
+                      }`}
+                      aria-hidden="true"
+                    ></div>
+                    <div
+                      className={`absolute inset-0 rounded-xl opacity-20 ${
+                        darkMode ? 'bg-green-400' : 'bg-green-500'
+                      }`}
+                      aria-hidden="true"
+                    ></div>
+                  </>
                 )}
 
                 <span
-                  className={`text-xl transition-colors flex-shrink-0 ${
+                  className={`text-xl transition-all duration-200 flex-shrink-0 ${
                     isActive
                       ? darkMode
-                        ? 'text-green-400'
-                        : 'text-green-500'
+                        ? 'text-green-300 transform scale-110'
+                        : 'text-green-600 transform scale-110'
                       : darkMode
-                        ? 'text-gray-300 group-hover:text-gray-100'
-                        : 'text-gray-400 group-hover:text-gray-600'
+                        ? 'text-gray-300 group-hover:text-gray-100 group-hover:transform group-hover:scale-105'
+                        : 'text-gray-400 group-hover:text-gray-600 group-hover:transform group-hover:scale-105'
                   }`}
                 >
                   {link.icon}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <span className="font-medium block truncate">
+                  <span className="font-semibold block truncate text-sm">
                     {link.label}
                   </span>
                   <p
-                    className={`text-xs mt-0.5 truncate ${
+                    className={`text-xs mt-0.5 truncate leading-tight ${
                       isActive
                         ? darkMode
-                          ? 'text-green-300'
-                          : 'text-green-600'
+                          ? 'text-green-200/80'
+                          : 'text-green-600/80'
                         : darkMode
                           ? 'text-gray-400'
                           : 'text-gray-500'

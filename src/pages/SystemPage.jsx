@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import {
   FiCpu,
@@ -17,6 +17,7 @@ import {
 import { DeviceService } from '../services/deviceService';
 import { useTheme } from '../contexts/ThemeContext';
 import { supabase, forceSchemaRefresh } from '../lib/supabaseClient';
+import Button from '../components/ui/Button';
 
 // Get Supabase config values
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -25,8 +26,6 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 export default function SystemPage() {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
-  // Only show debug info in development
-  const isDevelopment = import.meta.env.DEV;
 
   // State variables
   const [devices, setDevices] = useState([]);
@@ -45,7 +44,6 @@ export default function SystemPage() {
     firmware_version: 'v1.0.0',
     zone_id: '',
   });
-  const [showDebugInfo, setShowDebugInfo] = useState(false);
 
   // Load data when component mounts
   useEffect(() => {
@@ -80,7 +78,21 @@ export default function SystemPage() {
       console.log('Loading devices...');
       const devices = await DeviceService.fetchDevices();
       console.log('Devices loaded:', devices);
-      setDevices(devices);
+      
+      // Validate and process device data
+      const processedDevices = devices.map(device => ({
+        ...device,
+        // Ensure status has a default value
+        status: device.status || 'offline',
+        // Format last_seen properly
+        last_seen: device.last_seen ? new Date(device.last_seen).toISOString() : new Date().toISOString(),
+        // Ensure other fields have defaults
+        firmware_version: device.firmware_version || 'Unknown',
+        ip_address: device.ip_address || null
+      }));
+      
+      console.log('Processed devices:', processedDevices);
+      setDevices(processedDevices);
     } catch (err) {
       console.error('Error loading devices:', err);
       throw err;
@@ -443,37 +455,55 @@ export default function SystemPage() {
       </Helmet>
 
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold">System</h1>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h1 className="text-3xl font-bold flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <FiCpu className="text-white text-xl" />
+              </div>
+              System Management
+            </h1>
+            <p className={`text-lg mt-2 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
+              Configure and monitor your ESP32 devices and API connections
+            </p>
+          </div>
+        </div>
 
         {/* Error Display */}
         {error && (
           <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-            <div className="flex items-center">
-              <FiAlertCircle className="h-5 w-5 text-red-400 mr-2" />
-              <p className="text-red-800 dark:text-red-200">{error}</p>
+            <div className="flex items-start">
+              <FiAlertCircle className="h-5 w-5 text-red-400 mr-3 mt-0.5 flex-shrink-0" />
+              <div className="flex-1">
+                <p className="text-red-800 dark:text-red-200 text-sm font-medium mb-1">Something went wrong</p>
+                <p className="text-red-700 dark:text-red-300 text-sm">{error}</p>
+                <button
+                  onClick={() => setError(null)}
+                  className="mt-2 text-sm text-red-600 dark:text-red-400 hover:underline"
+                >
+                  Dismiss
+                </button>
+              </div>
             </div>
-            <button
-              onClick={() => setError(null)}
-              className="mt-2 text-sm text-red-600 dark:text-red-400 hover:underline"
-            >
-              Dismiss
-            </button>
           </div>
         )}
 
         {/* Success Display */}
         {success && (
           <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <div className="flex items-center">
-              <FiCheck className="h-5 w-5 text-green-400 mr-2" />
-              <p className="text-green-800 dark:text-green-200">{success}</p>
+            <div className="flex items-start">
+              <FiCheck className="h-5 w-5 text-green-400 mr-3 mt-0.5 flex-shrink-0" />
+              <div className="flex-1">
+                <p className="text-green-800 dark:text-green-200 text-sm font-medium mb-1">Success!</p>
+                <p className="text-green-700 dark:text-green-300 text-sm">{success}</p>
+                <button
+                  onClick={() => setSuccess(null)}
+                  className="mt-2 text-sm text-green-600 dark:text-green-400 hover:underline"
+                >
+                  Dismiss
+                </button>
+              </div>
             </div>
-            <button
-              onClick={() => setSuccess(null)}
-              className="mt-2 text-sm text-green-600 dark:text-green-400 hover:underline"
-            >
-              Dismiss
-            </button>
           </div>
         )}
 
@@ -487,94 +517,37 @@ export default function SystemPage() {
           </div>
         )}
 
-        {/* Debug Toggle Button - Only show in development */}
-        {isDevelopment && (
-          <div className="flex justify-end">
-            <button
-              onClick={() => setShowDebugInfo(!showDebugInfo)}
-              className="flex items-center px-3 py-1 text-xs font-medium text-white bg-yellow-500 hover:bg-yellow-600 rounded-md transition"
-            >
-              <FiInfo className="mr-1 h-3 w-3" />
-              {showDebugInfo ? 'Hide' : 'Show'} Debug
-            </button>
-          </div>
-        )}
 
-        {/* Debug Info - Only show in development and when toggled */}
-        {isDevelopment && showDebugInfo && (
-          <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
-            <h3 className="font-semibold text-yellow-800 dark:text-yellow-200 mb-2">
-              Debug Information
-            </h3>
-            <div className="text-sm text-yellow-700 dark:text-yellow-300 space-y-1">
-              <p>Zones loaded: {zones.length}</p>
-              <p>Devices loaded: {devices.length}</p>
-              <p>API Keys loaded: {apiKeys.length}</p>
-              <p>Modal open: {showAddDevice ? 'Yes' : 'No'}</p>
-              <p>Zone names: {zones.map((z) => z.name).join(', ') || 'None'}</p>
-              <p>
-                API Key names: {apiKeys.map((k) => k.name).join(', ') || 'None'}
-              </p>
-            </div>
-            <div className="mt-2 space-x-2">
-              <button
-                onClick={loadZones}
-                className="px-2 py-1 bg-blue-500 text-white rounded text-xs"
-              >
-                Reload Zones
-              </button>
-              <button
-                onClick={loadApiKeys}
-                className="px-2 py-1 bg-green-500 text-white rounded text-xs"
-              >
-                Reload API Keys
-              </button>
-              <button
-                onClick={handleRefreshSchema}
-                className="px-2 py-1 bg-purple-500 text-white rounded text-xs"
-              >
-                Refresh Schema
-              </button>
-              <button
-                onClick={() => setShowAddDevice(true)}
-                className="px-2 py-1 bg-purple-500 text-white rounded text-xs"
-              >
-                Open Modal
-              </button>
-              <button
-                onClick={handleCreateZone}
-                className="px-2 py-1 bg-orange-500 text-white rounded text-xs"
-              >
-                Create Test Zone
-              </button>
-              <button
-                onClick={handleCreateTestDevice}
-                className="px-2 py-1 bg-red-500 text-white rounded text-xs"
-              >
-                Create Test Device
-              </button>
-            </div>
-          </div>
-        )}
 
         {/* Add Device Button */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-lg font-semibold">Device Management</h2>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Add and manage your ESP32 devices
+              <h2 className="text-xl font-semibold flex items-center gap-2">
+                <FiWifi className="text-blue-500" />
+                Device Management
+              </h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                Add, configure, and monitor your ESP32 smart garden devices
               </p>
             </div>
-            <button
+            <Button
               onClick={() => setShowAddDevice(true)}
               disabled={loading}
-              className="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition disabled:opacity-50"
+              variant="primary"
+              className="flex items-center px-4 py-2 text-sm font-medium"
             >
               <FiPlus className="mr-2 h-4 w-4" />
               Add Device
-            </button>
+            </Button>
           </div>
+          
+          {devices.length > 0 && (
+            <div className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'} flex items-center gap-2`}>
+              <FiCheck className="text-green-500" />
+              <span>{devices.length} device{devices.length !== 1 ? 's' : ''} configured</span>
+            </div>
+          )}
         </div>
 
         {/* Add Device Modal */}
@@ -921,13 +894,13 @@ export default function SystemPage() {
                           : 'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400'
                       }`}
                     >
-                      {device.status}
+                      {device.status || 'offline'}
                     </span>
                   </div>
                   <div className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
                     <p>ID: {device.device_id}</p>
                     <p>
-                      Last seen: {new Date(device.last_seen).toLocaleString()}
+                      Last seen: {device.last_seen ? new Date(device.last_seen).toLocaleString() : 'Never'}
                     </p>
                     {device.firmware_version && (
                       <p>Firmware: {device.firmware_version}</p>

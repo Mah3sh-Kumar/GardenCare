@@ -2,21 +2,25 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useAuth } from '../contexts/AuthContext';
+import { useNotifications } from '../contexts/NotificationContext';
 import StatsCard from '../components/StatsCard';
 import WeatherPanel from '../components/WeatherPanel';
 import AlertsPanel from '../components/AlertsPanel';
 import TemperatureChart from '../components/charts/TemperatureChart';
 import MoistureHumidityChart from '../components/charts/MoistureHumidityChart';
+import LightSensorChart from '../components/charts/LightSensorChart';
 import PlantZonesPanel from '../components/PlantZonesPanel';
 import PlantRecommendationsPanel from '../components/PlantRecommendationsPanel';
 import DataService from '../services/dataService';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
-import realtimeManager, { sensorDataSubscription, alertsSubscription } from '../lib/realtimeManager';
+import realtimeManager, { sensorDataSubscription, alertsSubscription, createCompatibleSubscription } from '../lib/realtimeManager';
+import { supabase } from '../lib/supabaseClient';
 
 const Dashboard = () => {
   const { theme } = useTheme();
   const { user, loading: authLoading } = useAuth();
+  const { unreadCount } = useNotifications();
   const isDark = theme === 'dark';
 
   const [stats, setStats] = useState([]);
@@ -54,29 +58,18 @@ const Dashboard = () => {
   useEffect(() => {
     loadDashboardData();
 
-    // Set up realtime subscriptions for sensor data and alerts
-    const sensorSub = sensorDataSubscription((payload) => {
-      // New sensor data received, refresh stats
-      setRefreshCount((prev) => prev + 1);
-      loadDashboardData();
-    });
-
-    const alertsSub = alertsSubscription((payload) => {
-      // New alert received, refresh dashboard to update notifications
-      setRefreshCount((prev) => prev + 1);
-      loadDashboardData();
-    });
-
-    // Fallback refresh every 5 minutes (reduced from 30s due to realtime)
+    // More frequent polling for dashboard updates
+    console.log('Dashboard: Setting up polling (every 20 seconds)');
+    
     const interval = setInterval(() => {
+      console.log('Dashboard: Polling for data updates...');
       setRefreshCount((prev) => prev + 1);
       loadDashboardData();
-    }, 300000);
+    }, 20000); // Poll every 20 seconds
 
     return () => {
       clearInterval(interval);
-      realtimeManager.unsubscribe('sensor_data');
-      realtimeManager.unsubscribe('alerts');
+      // No realtime subscriptions to clean up since they're disabled
     };
   }, [loadDashboardData]);
 
@@ -200,9 +193,9 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Stats Cards */}
+      {/* Stats Cards - Single Line */}
       <section aria-label="Garden Statistics">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 sm:gap-6">
           {stats.length > 0 ? (
             stats.map((stat, index) => (
               <StatsCard
@@ -217,39 +210,47 @@ const Dashboard = () => {
             ))
           ) : (
             <div
-              className={`col-span-full ${isDark ? 'bg-gray-800' : 'bg-white'} p-6 sm:p-8 rounded-lg shadow-soft border ${isDark ? 'border-gray-700' : 'border-gray-200'} text-center`}
+              className={`col-span-full ${isDark ? 'bg-gradient-to-br from-gray-800 to-gray-700' : 'bg-gradient-to-br from-green-50 to-blue-50'} p-8 sm:p-12 rounded-xl shadow-sm border-2 border-dashed ${isDark ? 'border-gray-600' : 'border-green-200'} text-center`}
             >
-              <svg
-                className={`h-16 w-16 mx-auto ${isDark ? 'text-gray-600' : 'text-gray-300'} mb-4`}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                />
-              </svg>
+              <div className={`inline-flex items-center justify-center w-20 h-20 rounded-full mb-6 ${isDark ? 'bg-green-900/30' : 'bg-green-100'} shadow-lg`}>
+                <svg
+                  className={`h-10 w-10 ${isDark ? 'text-green-400' : 'text-green-600'}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                  />
+                </svg>
+              </div>
               <h3
-                className={`text-lg font-medium mb-2 ${isDark ? 'text-gray-300' : 'text-gray-700'}`}
+                className={`text-xl font-bold mb-3 ${isDark ? 'text-white' : 'text-gray-800'}`}
               >
-                No sensor data available
+                🌱 Welcome to Your Smart Garden!
               </h3>
               <p
-                className={`${isDark ? 'text-gray-400' : 'text-gray-500'} mb-4`}
+                className={`${isDark ? 'text-gray-300' : 'text-gray-600'} mb-6 max-w-md mx-auto leading-relaxed`}
               >
-                Connect your ESP32 devices to see real-time data
+                Connect your ESP32 sensors to start monitoring temperature, humidity, soil moisture, and more in real-time.
               </p>
-              <Button
-                onClick={handleRefresh}
-                variant="primary"
-                aria-label="Check for new sensor data"
-              >
-                Check for Data
-              </Button>
+              <div className="space-y-3">
+                <Button
+                  onClick={handleRefresh}
+                  variant="primary"
+                  className="px-6 py-3 text-base"
+                  aria-label="Check for new sensor data"
+                >
+                  🔍 Discover Sensors
+                </Button>
+                <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+                  💡 <strong>Getting started:</strong> Visit the System page to register your ESP32 devices
+                </p>
+              </div>
             </div>
           )}
         </div>
@@ -262,12 +263,22 @@ const Dashboard = () => {
 
       {/* Alerts */}
       <section aria-label="System Alerts">
-        <AlertsPanel />
+        <div className="relative">
+          {unreadCount > 0 && (
+            <div className="absolute -top-2 -right-2 z-10">
+              <span className="inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 rounded-full animate-pulse">
+                {unreadCount > 99 ? '99+' : unreadCount}
+              </span>
+            </div>
+          )}
+          <AlertsPanel />
+        </div>
       </section>
 
-      {/* Charts Section - Improved Responsive Layout */}
+      {/* Charts Section - Modified Layout */}
       <section aria-label="Sensor Data Charts">
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+          {/* First Row: Temperature and Moisture & Humidity Charts */}
           <Card>
             <h2
               className={`text-lg font-medium mb-4 ${isDark ? 'text-white' : 'text-gray-800'} flex items-center`}
@@ -295,13 +306,38 @@ const Dashboard = () => {
             </div>
           </Card>
         </div>
-      </section>
-
-      {/* Plant Zones & Recommendations - Same Column Layout */}
-      <section aria-label="Plant Management">
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
-          <PlantZonesPanel />
-          <PlantRecommendationsPanel />
+        
+        {/* Second and Third Rows */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mt-4 sm:mt-6 h-full">
+          {/* Left Column: Light Card (Row 2) and Plant Zone (Row 3) */}
+          <div className="flex flex-col gap-4 sm:gap-6 h-full">
+            {/* Light Card - Same height as Temperature card */}
+            <Card>
+              <h2
+                className={`text-lg font-medium mb-4 ${isDark ? 'text-white' : 'text-gray-800'} flex items-center`}
+              >
+                <span className="mr-2" aria-hidden="true">
+                  ☀️
+                </span>
+                Light Sensor Trends (24h)
+              </h2>
+              <div className="h-64 sm:h-80"> {/* Same as Temperature card */}
+                <LightSensorChart />
+              </div>
+            </Card>
+            
+            {/* Plant Zone - Takes remaining height with scroll */}
+            <div className="flex-grow min-h-0"> {/* min-h-0 allows flex-grow to work properly */}
+              <PlantZonesPanel />
+            </div>
+          </div>
+          
+          {/* Right Column: Plant Recommendation (Row 2 and Row 3) */}
+          <div className="flex flex-col h-full">
+            <div className="flex-grow overflow-hidden">
+              <PlantRecommendationsPanel />
+            </div>
+          </div>
         </div>
       </section>
     </div>

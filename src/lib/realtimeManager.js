@@ -22,6 +22,15 @@ class RealtimeManager {
    * @param {Object} options - Subscription options
    */
   subscribe(table, callback, options = {}) {
+    // Temporarily disable realtime subscriptions due to transport issues
+    console.warn(`Realtime subscriptions temporarily disabled for ${table} due to transport issues`);
+    return null;
+    
+    // Skip realtime subscriptions if Supabase client is not properly initialized
+    if (!supabase || !supabase.realtime) {
+      console.warn(`Realtime not available for ${table}, skipping subscription`);
+      return null;
+    }
     const subscriptionKey = this.getSubscriptionKey(table, options.filter);
 
     // Return existing subscription if it exists and is active
@@ -41,6 +50,8 @@ class RealtimeManager {
     this.log(`Creating subscription for ${table}`, options);
 
     const channelName = `${table}_changes_${Date.now()}`;
+    
+    // Create subscription with simple, compatible configuration
     const subscription = supabase
       .channel(channelName)
       .on(
@@ -52,14 +63,18 @@ class RealtimeManager {
           ...(options.filter && { filter: options.filter }),
         },
         (payload) => {
-          logRealtimeEvent(payload, table);
-          debugLog(`Realtime event for ${table}:`, payload);
-          
-          // Reset reconnect attempts on successful event
-          this.reconnectAttempts.set(subscriptionKey, 0);
-          
-          // Call the provided callback
-          callback(payload);
+          try {
+            logRealtimeEvent(payload, table);
+            debugLog(`Realtime event for ${table}:`, payload);
+            
+            // Reset reconnect attempts on successful event
+            this.reconnectAttempts.set(subscriptionKey, 0);
+            
+            // Call the provided callback
+            callback(payload);
+          } catch (error) {
+            console.error(`Error processing realtime event for ${table}:`, error);
+          }
         },
       )
       .subscribe((status, err) => {
@@ -67,12 +82,34 @@ class RealtimeManager {
         
         if (status === 'SUBSCRIBED') {
           this.reconnectAttempts.set(subscriptionKey, 0);
+          // Update subscription state
+          const subscriptionData = this.subscriptions.get(subscriptionKey);
+          if (subscriptionData) {
+            subscriptionData.state = 'subscribed';
+          }
         } else if (status === 'CHANNEL_ERROR') {
           console.error(`Subscription error for ${table}:`, err);
+          // Update subscription state
+          const subscriptionData = this.subscriptions.get(subscriptionKey);
+          if (subscriptionData) {
+            subscriptionData.state = 'error';
+          }
           this.handleReconnection(table, callback, options);
         } else if (status === 'TIMED_OUT') {
           console.warn(`Subscription timeout for ${table}`);
+          // Update subscription state
+          const subscriptionData = this.subscriptions.get(subscriptionKey);
+          if (subscriptionData) {
+            subscriptionData.state = 'timeout';
+          }
           this.handleReconnection(table, callback, options);
+        } else if (status === 'CLOSED') {
+          console.log(`Subscription closed for ${table}`);
+          // Update subscription state
+          const subscriptionData = this.subscriptions.get(subscriptionKey);
+          if (subscriptionData) {
+            subscriptionData.state = 'closed';
+          }
         }
       });
 
@@ -233,6 +270,49 @@ export const sensorDataSubscription = (callback) => {
   return realtimeManager.subscribe('sensor_data', callback, {
     event: 'INSERT', // Only listen for new sensor data
   });
+};
+
+// Alternative subscription method for better compatibility
+export const createCompatibleSubscription = (table, callback, options = {}) => {
+  // Temporarily disabled due to transport issues
+  console.warn(`Compatible subscription temporarily disabled for ${table} due to transport issues`);
+  return null;
+  
+  if (!supabase || !supabase.realtime) {
+    console.warn(`Realtime not available for ${table}, skipping subscription`);
+    return null;
+  }
+
+  const channelName = `${table}_compatible_${Date.now()}`;
+  
+  try {
+    const subscription = supabase
+      .channel(channelName)
+      .on(
+        'postgres_changes',
+        {
+          event: options.event || '*',
+          schema: 'public',
+          table: table,
+          ...(options.filter && { filter: options.filter }),
+        },
+        (payload) => {
+          console.log(`Compatible subscription event for ${table}:`, payload);
+          callback(payload);
+        }
+      )
+      .subscribe((status, err) => {
+        console.log(`Compatible subscription status for ${table}:`, status);
+        if (status === 'CHANNEL_ERROR') {
+          console.error(`Compatible subscription error for ${table}:`, err);
+        }
+      });
+
+    return subscription;
+  } catch (error) {
+    console.error(`Error creating compatible subscription for ${table}:`, error);
+    return null;
+  }
 };
 
 export const zonesSubscription = (callback) => {

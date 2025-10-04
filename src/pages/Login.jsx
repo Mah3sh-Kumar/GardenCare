@@ -62,20 +62,20 @@ const Login = () => {
         }`}
       >
         <div className="text-center">
-          <div className="mx-auto h-16 w-16 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-4">
-            <span className="text-3xl" aria-hidden="true">
+          <div className="mx-auto h-20 w-20 bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30 rounded-full flex items-center justify-center mb-6 shadow-lg">
+            <span className="text-4xl animate-pulse" aria-hidden="true">
               🌿
             </span>
           </div>
           <h1
-            className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}
+            className={`text-3xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mb-2`}
           >
-            Welcome Back
+            Welcome Back to GardenCare
           </h1>
           <h2
-            className={`mt-2 text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'}`}
+            className={`text-lg ${isDark ? 'text-gray-300' : 'text-gray-600'}`}
           >
-            Sign in to your GardenCare account
+            Sign in to monitor your smart garden 🌱
           </h2>
         </div>
 
@@ -217,11 +217,11 @@ const Login = () => {
           <div>
             <button
               type="submit"
-              disabled={loading}
-              className={`w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white transition-colors ${
-                loading
+              disabled={loading || !email || !password}
+              className={`w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white transition-all duration-200 ${
+                loading || !email || !password
                   ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'
+                  : 'bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transform hover:-translate-y-0.5 hover:shadow-lg'
               }`}
               aria-describedby={displayError ? 'login-error' : undefined}
             >
@@ -231,31 +231,38 @@ const Login = () => {
                     className="animate-spin rounded-full h-4 w-4 border-t-2 border-b-2 border-white mr-2"
                     aria-hidden="true"
                   ></div>
-                  Signing in...
+                  Signing you in...
                 </>
               ) : (
-                'Sign in'
+                <>
+                  <span className="mr-2">🔑</span>
+                  Sign in to Dashboard
+                </>
               )}
             </button>
           </div>
         </form>
 
-        <div className="text-center">
+        <div className="text-center space-y-4">
           <p
             className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}
           >
             Don't have an account?{' '}
             <RouterLink
               to="/signup"
-              className={`font-medium transition-colors ${
-                isDark
+              className={`font-medium transition-colors ${isDark
                   ? 'text-green-400 hover:text-green-300'
                   : 'text-green-600 hover:text-green-500'
-              }`}
+                } underline underline-offset-2`}
             >
-              Sign up
+              Create your garden account 🌱
             </RouterLink>
           </p>
+          <div className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-400'} space-y-1`}>
+            <p>📊 Monitor sensors in real-time</p>
+            <p>💧 Automate watering schedules</p>
+            <p>🌿 Track plant health & growth</p>
+          </div>
         </div>
       </div>
     </div>

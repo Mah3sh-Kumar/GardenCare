@@ -19,6 +19,7 @@ import {
   FiRefreshCw,
   FiKey,
   FiSave,
+  FiCpu,
 } from 'react-icons/fi';
 import Button from '../components/ui/Button';
 import Card from '../components/ui/Card';
@@ -319,7 +320,16 @@ const SettingsPage = () => {
       {/* Settings Sections */}
       <div className="space-y-8">
         {/* Profile Settings */}
-        <Card header="Profile Settings">
+        <Card>
+          <div className="border-b border-gray-200 dark:border-gray-700 pb-4 mb-6">
+            <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'} flex items-center`}>
+              <FiUser className="mr-2" />
+              Profile Settings
+            </h3>
+            <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              Manage your personal information and account details
+            </p>
+          </div>
           <form onSubmit={handleProfileUpdate}>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
               <Input
@@ -389,7 +399,16 @@ const SettingsPage = () => {
         </Card>
 
         {/* Notification Settings */}
-        <Card header="Notification Settings">
+        <Card>
+          <div className="border-b border-gray-200 dark:border-gray-700 pb-4 mb-6">
+            <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'} flex items-center`}>
+              <FiBell className="mr-2" />
+              Notification Preferences
+            </h3>
+            <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              Control how and when you receive notifications about your garden
+            </p>
+          </div>
           <div className="space-y-6">
             <div
               className={`flex items-center justify-between p-4 rounded-lg border ${isDark ? 'border-gray-700 bg-gray-700' : 'border-gray-200 bg-gray-50'}`}
@@ -460,7 +479,16 @@ const SettingsPage = () => {
         </Card>
 
         {/* System Settings */}
-        <Card header="System Settings">
+        <Card>
+          <div className="border-b border-gray-200 dark:border-gray-700 pb-4 mb-6">
+            <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'} flex items-center`}>
+              <FiSettings className="mr-2" />
+              System Preferences
+            </h3>
+            <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              Customize your dashboard experience and system behavior
+            </p>
+          </div>
           <div className="space-y-6">
             <div
               className={`flex items-center justify-between p-4 rounded-lg border ${isDark ? 'border-gray-700 bg-gray-700' : 'border-gray-200 bg-gray-50'}`}
@@ -590,7 +618,16 @@ const SettingsPage = () => {
         </Card>
 
         {/* ESP32 Configuration */}
-        <Card header="ESP32 Configuration">
+        <Card>
+          <div className="border-b border-gray-200 dark:border-gray-700 pb-4 mb-6">
+            <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'} flex items-center`}>
+              <FiCpu className="mr-2" />
+              Device Configuration
+            </h3>
+            <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              Manage your ESP32 devices and connection settings
+            </p>
+          </div>
           <div className="space-y-6">
             <div>
               <label
@@ -783,7 +820,16 @@ const SettingsPage = () => {
         </Card>
 
         {/* Account Actions */}
-        <Card header="Account Management">
+        <Card>
+          <div className="border-b border-gray-200 dark:border-gray-700 pb-4 mb-6">
+            <h3 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'} flex items-center`}>
+              <FiAlertCircle className="mr-2" />
+              Account Management
+            </h3>
+            <p className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+              Manage your account security and data
+            </p>
+          </div>
           <div className="flex justify-between items-center mb-4">
             <Button
               variant="secondary"

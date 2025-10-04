@@ -63,7 +63,7 @@ export class DataService {
       // Optimized query with proper RLS and indexing considerations
       const { data, error } = await supabase
         .from('sensor_data')
-        .select('timestamp, temperature, humidity, soil_moisture, zone_id')
+        .select('timestamp, temperature, humidity, soil_moisture, light_level, device_id, zone_id')
         .eq('user_id', user.id)
         .gte('timestamp', startTime)
         .order('timestamp', { ascending: true });
@@ -92,7 +92,7 @@ export class DataService {
         .from('alerts')
         .select('*')
         .eq('user_id', user.id)
-        .eq('read', false)
+        .eq('is_read', false)
         .order('timestamp', { ascending: false })
         .limit(10);
 
@@ -134,7 +134,7 @@ export class DataService {
       // Update the alert
       const { error: updateError } = await supabase
         .from('alerts')
-        .update({ read: true })
+        .update({ is_read: true })
         .eq('id', alertId)
         .eq('user_id', user.id);
 
@@ -160,7 +160,7 @@ export class DataService {
       const { data, error } = await supabase
         .from('zones')
         .select(
-          'id, name, plant_type, soil_type, optimal_moisture_min, optimal_moisture_max, created_at',
+          'id, name, description, soil_type, moisture_threshold, pump_on, created_at',
         )
         .eq('user_id', user.id)
         .order('name');
@@ -313,18 +313,18 @@ export class DataService {
       const user = await this.validateAuth();
 
       // Validate required fields
-      if (!zoneData.name || !zoneData.plant_type) {
-        throw new Error('Zone name and plant type are required');
+      if (!zoneData.name) {
+        throw new Error('Zone name is required');
       }
 
       const { data, error } = await supabase
         .from('zones')
         .insert({
           name: zoneData.name,
-          plant_type: zoneData.plant_type,
+          description: zoneData.description || '',
           soil_type: zoneData.soil_type || 'loam',
-          optimal_moisture_min: zoneData.optimal_moisture_min || 40,
-          optimal_moisture_max: zoneData.optimal_moisture_max || 80,
+          moisture_threshold: zoneData.moisture_threshold || 30.0,
+          pump_on: zoneData.pump_on || false,
           user_id: user.id,
         })
         .select()
@@ -376,6 +376,13 @@ export class DataService {
             icon: { ...defaultIcon, bgColor: 'bg-blue-500' },
           },
           {
+            title: 'Light Level',
+            value: 'N/A',
+            change: '--',
+            trend: 'neutral',
+            icon: { ...defaultIcon, bgColor: 'bg-yellow-500' },
+          },
+          {
             title: 'Active Devices',
             value: 'N/A',
             change: '--',
@@ -389,6 +396,7 @@ export class DataService {
       const temperature = latestData.temperature || 0;
       const humidity = latestData.humidity || 0;
       const soilMoisture = latestData.soil_moisture || 0;
+      const lightLevel = latestData.light_level || 0;
 
       return [
         {
@@ -413,6 +421,13 @@ export class DataService {
           trend:
             soilMoisture > 80 ? 'up' : soilMoisture < 30 ? 'down' : 'neutral',
           icon: { ...defaultIcon, bgColor: 'bg-blue-500' },
+        },
+        {
+          title: 'Light Level',
+          value: `${lightLevel.toFixed(0)}`,
+          change: lightLevel > 3000 ? 'Bright' : lightLevel < 1000 ? 'Dim' : 'Normal',
+          trend: lightLevel > 3000 ? 'up' : lightLevel < 1000 ? 'down' : 'neutral',
+          icon: { ...defaultIcon, bgColor: 'bg-yellow-500' },
         },
         {
           title: 'Active Devices',
