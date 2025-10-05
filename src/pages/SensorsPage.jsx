@@ -9,6 +9,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  Brush
 } from 'recharts';
 import { useTheme } from '../contexts/ThemeContext';
 import Button from '../components/ui/Button';
@@ -347,12 +348,20 @@ const SensorsPage = () => {
 
               {/* Charts */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <Card>
-                  <h3
-                    className={`text-lg font-medium mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}
-                  >
-                    Temperature
-                  </h3>
+                <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className={`text-lg font-semibold flex items-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      <svg className="w-5 h-5 mr-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                      </svg>
+                      Temperature
+                    </h3>
+                    <div className="flex items-center">
+                      <span className={`text-sm px-2 py-1 rounded-full ${isDark ? 'bg-orange-900 text-orange-200' : 'bg-orange-100 text-orange-800'}`}>
+                        °C
+                      </span>
+                    </div>
+                  </div>
                   <div className="h-80">
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart
@@ -387,35 +396,56 @@ const SensorsPage = () => {
                                   backgroundColor: '#1f2937',
                                   borderColor: '#374151',
                                   color: 'white',
+                                  borderRadius: '0.5rem',
                                 }
-                              : {}
+                              : {
+                                  borderRadius: '0.5rem',
+                                }
                           }
                           cursor={{
                             stroke: isDark ? '#6b7280' : '#d1d5db',
                             strokeWidth: 1,
                             strokeDasharray: '3 3',
                           }}
+                          formatter={(value) => [`${value}°C`, 'Temperature']}
+                          labelFormatter={(label) => `Time: ${label}`}
                         />
                         <Legend />
                         <Line
                           type="monotone"
                           dataKey="temperature"
                           stroke="#f97316"
-                          strokeWidth={2}
-                          activeDot={{ r: 8 }}
+                          strokeWidth={3}
+                          activeDot={{ r: 8, stroke: '#fff', strokeWidth: 2 }}
+                          dot={{ r: 4, strokeWidth: 2 }}
                           name="Temperature (°C)"
+                        />
+                        <Brush 
+                          dataKey="time" 
+                          height={30} 
+                          stroke={isDark ? "#9ca3af" : "#6b7280"}
+                          travellerWidth={10}
+                          startIndex={Math.max(0, sensorData.length - 10)}
                         />
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
                 </Card>
 
-                <Card>
-                  <h3
-                    className={`text-lg font-medium mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}
-                  >
-                    Humidity
-                  </h3>
+                <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className={`text-lg font-semibold flex items-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      <svg className="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4 4 0 003 15z" />
+                      </svg>
+                      Humidity
+                    </h3>
+                    <div className="flex items-center">
+                      <span className={`text-sm px-2 py-1 rounded-full ${isDark ? 'bg-blue-900 text-blue-200' : 'bg-blue-100 text-blue-800'}`}>
+                        %
+                      </span>
+                    </div>
+                  </div>
                   <div className="h-80">
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart
@@ -450,35 +480,56 @@ const SensorsPage = () => {
                                   backgroundColor: '#1f2937',
                                   borderColor: '#374151',
                                   color: 'white',
+                                  borderRadius: '0.5rem',
                                 }
-                              : {}
+                              : {
+                                  borderRadius: '0.5rem',
+                                }
                           }
                           cursor={{
                             stroke: isDark ? '#6b7280' : '#d1d5db',
                             strokeWidth: 1,
                             strokeDasharray: '3 3',
                           }}
+                          formatter={(value) => [`${value}%`, 'Humidity']}
+                          labelFormatter={(label) => `Time: ${label}`}
                         />
                         <Legend />
                         <Line
                           type="monotone"
                           dataKey="humidity"
                           stroke="#3b82f6"
-                          strokeWidth={2}
-                          activeDot={{ r: 8 }}
+                          strokeWidth={3}
+                          activeDot={{ r: 8, stroke: '#fff', strokeWidth: 2 }}
+                          dot={{ r: 4, strokeWidth: 2 }}
                           name="Humidity (%)"
+                        />
+                        <Brush 
+                          dataKey="time" 
+                          height={30} 
+                          stroke={isDark ? "#9ca3af" : "#6b7280"}
+                          travellerWidth={10}
+                          startIndex={Math.max(0, sensorData.length - 10)}
                         />
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
                 </Card>
 
-                <Card>
-                  <h3
-                    className={`text-lg font-medium mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}
-                  >
-                    Soil Moisture
-                  </h3>
+                <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className={`text-lg font-semibold flex items-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      <svg className="w-5 h-5 mr-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h6M3 9h18M3 15h18M3 21h18" />
+                      </svg>
+                      Soil Moisture
+                    </h3>
+                    <div className="flex items-center">
+                      <span className={`text-sm px-2 py-1 rounded-full ${isDark ? 'bg-green-900 text-green-200' : 'bg-green-100 text-green-800'}`}>
+                        %
+                      </span>
+                    </div>
+                  </div>
                   <div className="h-80">
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart
@@ -513,35 +564,56 @@ const SensorsPage = () => {
                                   backgroundColor: '#1f2937',
                                   borderColor: '#374151',
                                   color: 'white',
+                                  borderRadius: '0.5rem',
                                 }
-                              : {}
+                              : {
+                                  borderRadius: '0.5rem',
+                                }
                           }
                           cursor={{
                             stroke: isDark ? '#6b7280' : '#d1d5db',
                             strokeWidth: 1,
                             strokeDasharray: '3 3',
                           }}
+                          formatter={(value) => [`${value}%`, 'Soil Moisture']}
+                          labelFormatter={(label) => `Time: ${label}`}
                         />
                         <Legend />
                         <Line
                           type="monotone"
                           dataKey="soil_moisture"
                           stroke="#22c55e"
-                          strokeWidth={2}
-                          activeDot={{ r: 8 }}
+                          strokeWidth={3}
+                          activeDot={{ r: 8, stroke: '#fff', strokeWidth: 2 }}
+                          dot={{ r: 4, strokeWidth: 2 }}
                           name="Soil Moisture (%)"
+                        />
+                        <Brush 
+                          dataKey="time" 
+                          height={30} 
+                          stroke={isDark ? "#9ca3af" : "#6b7280"}
+                          travellerWidth={10}
+                          startIndex={Math.max(0, sensorData.length - 10)}
                         />
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
                 </Card>
 
-                <Card>
-                  <h3
-                    className={`text-lg font-medium mb-4 ${isDark ? 'text-white' : 'text-gray-900'}`}
-                  >
-                    Light Level
-                  </h3>
+                <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className={`text-lg font-semibold flex items-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      <svg className="w-5 h-5 mr-2 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                      </svg>
+                      Light Level
+                    </h3>
+                    <div className="flex items-center">
+                      <span className={`text-sm px-2 py-1 rounded-full ${isDark ? 'bg-yellow-900 text-yellow-200' : 'bg-yellow-100 text-yellow-800'}`}>
+                        lux
+                      </span>
+                    </div>
+                  </div>
                   <div className="h-80">
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart
@@ -576,23 +648,36 @@ const SensorsPage = () => {
                                   backgroundColor: '#1f2937',
                                   borderColor: '#374151',
                                   color: 'white',
+                                  borderRadius: '0.5rem',
                                 }
-                              : {}
+                              : {
+                                  borderRadius: '0.5rem',
+                                }
                           }
                           cursor={{
                             stroke: isDark ? '#6b7280' : '#d1d5db',
                             strokeWidth: 1,
                             strokeDasharray: '3 3',
                           }}
+                          formatter={(value) => [`${value}`, 'Light Level']}
+                          labelFormatter={(label) => `Time: ${label}`}
                         />
                         <Legend />
                         <Line
                           type="monotone"
                           dataKey="light_level"
                           stroke="#f59e0b"
-                          strokeWidth={2}
-                          activeDot={{ r: 8 }}
+                          strokeWidth={3}
+                          activeDot={{ r: 8, stroke: '#fff', strokeWidth: 2 }}
+                          dot={{ r: 4, strokeWidth: 2 }}
                           name="Light Level"
+                        />
+                        <Brush 
+                          dataKey="time" 
+                          height={30} 
+                          stroke={isDark ? "#9ca3af" : "#6b7280"}
+                          travellerWidth={10}
+                          startIndex={Math.max(0, sensorData.length - 10)}
                         />
                       </LineChart>
                     </ResponsiveContainer>
