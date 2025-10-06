@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 import plantData from '../data/plantsData.json';
 import PlantRecommendationCard from './PlantRecommendationCard';
+import PlantDetailModal from './PlantDetailModal';
 
 const PlantRecommendationsPanel = () => {
   const { theme } = useTheme();
@@ -9,6 +10,8 @@ const PlantRecommendationsPanel = () => {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSoilType, setSelectedSoilType] = useState('');
+  const [selectedPlant, setSelectedPlant] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Get unique soil types from all plants
   const soilTypes = useMemo(() => {
@@ -28,6 +31,16 @@ const PlantRecommendationsPanel = () => {
       return matchesSearch && matchesSoil;
     });
   }, [searchTerm, selectedSoilType]);
+
+  const handlePlantClick = (plant) => {
+    setSelectedPlant(plant);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedPlant(null);
+  };
 
   return (
     <div
@@ -104,7 +117,7 @@ const PlantRecommendationsPanel = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {filteredPlants.map((plant, index) => (
                 <div key={index} className="h-auto">
-                  <PlantRecommendationCard plant={plant} />
+                  <PlantRecommendationCard plant={plant} onClick={handlePlantClick} />
                 </div>
               ))}
             </div>
@@ -143,6 +156,13 @@ const PlantRecommendationsPanel = () => {
           )}
         </div>
       </div>
+
+      {/* Plant Detail Modal */}
+      <PlantDetailModal 
+        plant={selectedPlant} 
+        isOpen={isModalOpen} 
+        onClose={handleCloseModal} 
+      />
     </div>
   );
 };

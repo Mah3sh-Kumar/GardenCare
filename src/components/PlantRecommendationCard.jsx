@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 
-const PlantRecommendationCard = ({ plant }) => {
+const PlantRecommendationCard = ({ plant, onClick }) => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
@@ -9,9 +9,10 @@ const PlantRecommendationCard = ({ plant }) => {
 
   return (
     <div
-      className={`rounded-lg border shadow-sm overflow-hidden h-full flex flex-col ${
+      className={`rounded-lg border shadow-sm overflow-hidden h-full flex flex-col cursor-pointer transition-all duration-200 hover:shadow-md hover:scale-[1.02] ${
         isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'
       }`}
+      onClick={() => onClick && onClick(plant)}
     >
       <div
         className={`p-4 border-b ${
