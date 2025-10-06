@@ -17,10 +17,13 @@ import Card from '../components/ui/Card';
 import Select from '../components/ui/Select';
 import Badge from '../components/ui/Badge';
 import DataService from '../services/dataService';
+import { convertTemperature, getTemperatureUnitSymbol } from '../utils/temperatureUtils';
+import { useTemperatureUnit } from '../hooks/useTemperatureUnit';
 
 const SensorsPage = () => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
+  const temperatureUnit = useTemperatureUnit();
 
   const [sensors, setSensors] = useState([]);
   const [sensorData, setSensorData] = useState([]);
@@ -87,14 +90,19 @@ const SensorsPage = () => {
 
       // Transform data for charts
       const transformedData = filteredData.map((item) => ({
-        time: formatTime(item.timestamp, timeframe),
-        temperature: parseFloat(item.temperature) || 0,
+        ...item,
+        time: new Date(item.timestamp).toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: false,
+        }),
+        // Convert temperature based on user preference
+        temperature: convertTemperature(parseFloat(item.temperature) || 0, 'celsius', temperatureUnit),
         humidity: parseFloat(item.humidity) || 0,
         soil_moisture: parseFloat(item.soil_moisture) || 0,
         light_level: parseInt(item.light_level) || 0,
       }));
 
-      console.log(`Loaded ${transformedData.length} data points for sensor ${sensorId}`);
       setSensorData(transformedData);
     } catch (err) {
       console.error('Error loading sensor data:', err);
@@ -224,48 +232,42 @@ const SensorsPage = () => {
         </div>
       )}
 
+      {/* Sensor Controls */}
+      <div className="flex flex-col sm:flex-row gap-4">
+        <Select
+          id="sensor-select"
+          value={selectedSensor || ''}
+          onChange={(e) => setSelectedSensor(e.target.value)}
+          label="Select Sensor"
+          className="w-full sm:w-64"
+        >
+          <option value="">Select a sensor</option>
+          {sensors.map((sensor) => (
+            <option key={sensor.id} value={sensor.id}>
+              {sensor.name}
+            </option>
+          ))}
+        </Select>
+
+        <Select
+          id="timeframe-select"
+          value={timeframe}
+          onChange={(e) => setTimeframe(e.target.value)}
+          label="Timeframe"
+          className="w-full sm:w-32"
+        >
+          <option value="day">Last 24 Hours</option>
+          <option value="week">Last 7 Days</option>
+          <option value="month">Last 30 Days</option>
+        </Select>
+      </div>
+
       {loading ? (
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-green-500"></div>
         </div>
       ) : (
         <>
-          {/* Sensor Selection and Timeframe */}
-          <div
-            className={`flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4 rounded-lg ${isDark ? 'bg-gray-800' : 'bg-white'} border ${isDark ? 'border-gray-700' : 'border-gray-200'}`}
-          >
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Select
-                id="sensor-select"
-                value={selectedSensor || ''}
-                onChange={(e) => setSelectedSensor(e.target.value)}
-                label="Select Sensor"
-                className="w-full sm:w-64"
-              >
-                <option value="">Select a sensor</option>
-                {sensors.map((sensor) => (
-                  <option key={sensor.id} value={sensor.id}>
-                    {sensor.name}
-                  </option>
-                ))}
-              </Select>
-
-              <Select
-                id="timeframe-select"
-                value={timeframe}
-                onChange={(e) => setTimeframe(e.target.value)}
-                label="Timeframe"
-                className="w-full sm:w-32"
-              >
-                <option value="day">Last 24 Hours</option>
-                <option value="week">Last 7 Days</option>
-                <option value="month">Last 30 Days</option>
-              </Select>
-            </div>
-
-
-          </div>
-
           {selectedSensor ? (
             <>
               {/* Sensor Details */}
@@ -317,12 +319,26 @@ const SensorsPage = () => {
                     {sensors
                       .filter((sensor) => sensor.id === selectedSensor)
                       .map((sensor) => (
-                        <p
-                          key={sensor.id}
-                          className={`text-lg font-semibold ${getBatteryColor(sensor.battery)}`}
-                        >
-                          {sensor.battery}%
-                        </p>
+                        <div key={sensor.id} className="flex items-center">
+                          <span
+                            className={`font-semibold ${getBatteryColor(sensor.battery)}`}
+                          >
+                            {sensor.battery}%
+                          </span>
+                          <svg
+                            className={`ml-2 h-5 w-5 ${getBatteryColor(sensor.battery)}`}
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                            />
+                          </svg>
+                        </div>
                       ))}
                   </div>
 
@@ -346,19 +362,20 @@ const SensorsPage = () => {
                 </div>
               </Card>
 
-              {/* Charts */}
+              {/* Charts Section */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Temperature Chart */}
                 <Card className="shadow-lg hover:shadow-xl transition-shadow duration-300">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className={`text-lg font-semibold flex items-center ${isDark ? 'text-white' : 'text-gray-900'}`}>
                       <svg className="w-5 h-5 mr-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                       </svg>
                       Temperature
                     </h3>
                     <div className="flex items-center">
                       <span className={`text-sm px-2 py-1 rounded-full ${isDark ? 'bg-orange-900 text-orange-200' : 'bg-orange-100 text-orange-800'}`}>
-                        °C
+                        {getTemperatureUnitSymbol(temperatureUnit)}
                       </span>
                     </div>
                   </div>
@@ -407,7 +424,7 @@ const SensorsPage = () => {
                             strokeWidth: 1,
                             strokeDasharray: '3 3',
                           }}
-                          formatter={(value) => [`${value}°C`, 'Temperature']}
+                          formatter={(value) => [`${value}${getTemperatureUnitSymbol(temperatureUnit)}`, 'Temperature']}
                           labelFormatter={(label) => `Time: ${label}`}
                         />
                         <Legend />
@@ -418,7 +435,7 @@ const SensorsPage = () => {
                           strokeWidth={3}
                           activeDot={{ r: 8, stroke: '#fff', strokeWidth: 2 }}
                           dot={{ r: 4, strokeWidth: 2 }}
-                          name="Temperature (°C)"
+                          name="Temperature"
                         />
                         <Brush 
                           dataKey="time" 

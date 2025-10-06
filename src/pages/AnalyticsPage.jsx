@@ -13,6 +13,8 @@ import {
   Cell,
   LineChart,
   Line,
+  AreaChart,
+  Area,
 } from 'recharts';
 import { useTheme } from '../contexts/ThemeContext';
 import AnalyticsService from '../services/analyticsService';
@@ -186,12 +188,12 @@ const AnalyticsPage = () => {
   }
 
   const {
-    summary,
-    waterUsageByZone,
-    waterSavings,
-    moistureDistribution,
-    healthScores,
-    insights,
+    summary = {},
+    waterUsageByZone = [],
+    waterUsageTrend = [],
+    moistureDistribution = [],
+    healthScores = [],
+    insights = [],
   } = analyticsData;
 
   return (
@@ -259,10 +261,10 @@ const AnalyticsPage = () => {
             </div>
             <div className="mt-1 flex items-baseline">
               <div className="text-2xl font-semibold text-gray-900 dark:text-white">
-                {summary.totalWaterUsage}L
+                {summary?.actualWaterUsage ? `${summary.actualWaterUsage.toFixed(2)}L` : (summary?.totalWaterUsage ? `${summary.totalWaterUsage}L` : '0L')}
               </div>
               <div className="ml-2 text-sm text-green-600 dark:text-green-400">
-                {summary.totalWaterUsage > 0 ? '-15% vs avg' : 'No data'}
+                {summary?.actualWaterUsage > 0 || summary?.totalWaterUsage > 0 ? '-15% vs avg' : 'No data'}
               </div>
             </div>
           </div>
@@ -273,10 +275,10 @@ const AnalyticsPage = () => {
             </div>
             <div className="mt-1 flex items-baseline">
               <div className="text-2xl font-semibold text-gray-900 dark:text-white">
-                {summary.totalWaterSaved}L
+                {summary?.totalWaterSaved || 0}L
               </div>
               <div className="ml-2 text-sm text-green-600 dark:text-green-400">
-                {summary.totalWaterSaved > 0 ? '+8% vs last month' : 'No data'}
+                {summary?.totalWaterSaved > 0 ? '+8% vs last month' : 'No data'}
               </div>
             </div>
           </div>
@@ -287,12 +289,12 @@ const AnalyticsPage = () => {
             </div>
             <div className="mt-1 flex items-baseline">
               <div className="text-2xl font-semibold text-gray-900 dark:text-white">
-                {summary.avgMoisture}%
+                {summary?.avgMoisture || 0}%
               </div>
               <div className="ml-2 text-sm text-green-600 dark:text-green-400">
-                {summary.avgMoisture >= 40 && summary.avgMoisture <= 60
+                {summary?.avgMoisture >= 40 && summary?.avgMoisture <= 60
                   ? 'Optimal'
-                  : summary.avgMoisture > 0
+                  : summary?.avgMoisture > 0
                     ? 'Needs attention'
                     : 'No data'}
               </div>
@@ -305,10 +307,10 @@ const AnalyticsPage = () => {
             </div>
             <div className="mt-1 flex items-baseline">
               <div className="text-2xl font-semibold text-gray-900 dark:text-white">
-                {summary.avgHealthScore}/100
+                {summary?.avgHealthScore || 0}/100
               </div>
               <div className="ml-2 text-sm text-green-600 dark:text-green-400">
-                {summary.avgHealthScore > 0 ? '+5 pts' : 'No data'}
+                {summary?.avgHealthScore > 0 ? '+5 pts' : 'No data'}
               </div>
             </div>
           </div>
@@ -321,7 +323,7 @@ const AnalyticsPage = () => {
           <h2 className="text-lg font-medium text-gray-800 dark:text-white mb-4">
             Water Usage By Zone
           </h2>
-          {waterUsageByZone.length > 0 ? (
+          {(waterUsageByZone && waterUsageByZone.length > 0) ? (
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={waterUsageByZone}>
@@ -360,21 +362,21 @@ const AnalyticsPage = () => {
           )}
         </div>
 
-        {/* Water Savings Chart */}
+        {/* Water Usage Trend Chart */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
           <h2 className="text-lg font-medium text-gray-800 dark:text-white mb-4">
-            Water Savings Trend
+            Water Usage Trend
           </h2>
-          {waterSavings.length > 0 ? (
+          {(waterUsageTrend && waterUsageTrend.length > 0) ? (
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={waterSavings}>
+                <AreaChart data={waterUsageTrend}>
                   <CartesianGrid
                     strokeDasharray="3 3"
                     stroke={isDark ? '#374151' : '#e5e7eb'}
                   />
                   <XAxis
-                    dataKey="month"
+                    dataKey="date"
                     stroke={isDark ? '#9CA3AF' : '#6b7280'}
                   />
                   <YAxis
@@ -393,15 +395,19 @@ const AnalyticsPage = () => {
                       color: isDark ? '#F9FAFB' : '#111827',
                     }}
                   />
-                  <Legend />
-                  <Bar dataKey="saved" fill="#22c55e" name="Water Saved" />
-                  <Bar dataKey="regular" fill="#94a3b8" name="Regular Usage" />
-                </BarChart>
+                  <Area
+                    type="monotone"
+                    dataKey="usage"
+                    stroke="#22c55e"
+                    fill="#22c55e"
+                    fillOpacity={0.3}
+                  />
+                </AreaChart>
               </ResponsiveContainer>
             </div>
           ) : (
             <div className="h-64 flex items-center justify-center text-gray-500 dark:text-gray-400">
-              No water savings data available
+              No water usage trend data available
             </div>
           )}
         </div>
@@ -411,7 +417,7 @@ const AnalyticsPage = () => {
           <h2 className="text-lg font-medium text-gray-800 dark:text-white mb-4">
             Moisture Level Distribution
           </h2>
-          {moistureDistribution.length > 0 ? (
+          {(moistureDistribution && moistureDistribution.length > 0) ? (
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
@@ -453,7 +459,7 @@ const AnalyticsPage = () => {
           <h2 className="text-lg font-medium text-gray-800 dark:text-white mb-4">
             Plant Health Scores
           </h2>
-          {healthScores.length > 0 ? (
+          {(healthScores && healthScores.length > 0) ? (
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={healthScores}>
@@ -514,7 +520,7 @@ const AnalyticsPage = () => {
         <h2 className="text-lg font-medium text-gray-800 dark:text-white mb-4">
           Smart Gardening Insights
         </h2>
-        {insights.length > 0 ? (
+        {(insights && insights.length > 0) ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {insights.map((insight) => (
               <div

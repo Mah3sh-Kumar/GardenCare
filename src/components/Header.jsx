@@ -1,65 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
+import { useNotifications } from '../contexts/NotificationContext';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../lib/supabaseClient';
 import Button from './ui/Button';
 
 const Header = ({ toggleSidebar }) => {
   const { user, logout } = useAuth();
   const { theme, setThemeDirectly } = useTheme();
+  const { notifications, unreadCount, clearAllAlerts } = useNotifications();
   const navigate = useNavigate();
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const notificationsRef = useRef(null);
   const profileRef = useRef(null);
 
-  // Real notifications data from Supabase
-  const [notifications, setNotifications] = useState([]);
-  const [unreadCount, setUnreadCount] = useState(0);
-
-  // Load notifications from Supabase
-  useEffect(() => {
-    loadNotifications();
-  }, []);
-
-  const loadNotifications = async () => {
-    try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) return;
-
-      const { data, error } = await supabase
-        .from('alerts')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('timestamp', { ascending: false })
-        .limit(10);
-
-      if (error) {
-        console.error('Error loading notifications:', error);
-        return;
-      }
-
-      // Transform alerts to notifications format
-      const transformedNotifications = data.map((alert) => ({
-        id: alert.id,
-        title: getAlertTitle(alert.type),
-        description: alert.message,
-        time: formatTimeAgo(alert.timestamp),
-        read: alert.read,
-        icon: getAlertIcon(alert.type),
-        type: alert.type,
-      }));
-
-      setNotifications(transformedNotifications);
-      setUnreadCount(transformedNotifications.filter((n) => !n.read).length);
-    } catch (error) {
-      console.error('Error loading notifications:', error);
-    }
-  };
-
+  // Utility functions for notification display
   const getAlertTitle = (type) => {
     switch (type) {
       case 'warning':
@@ -97,6 +53,8 @@ const Header = ({ toggleSidebar }) => {
       return `${Math.floor(diffInMinutes / 60)} hour${Math.floor(diffInMinutes / 60) > 1 ? 's' : ''} ago`;
     return `${Math.floor(diffInMinutes / 1440)} day${Math.floor(diffInMinutes / 1440) > 1 ? 's' : ''} ago`;
   };
+
+
 
   // Close dropdowns when clicking outside
   useEffect(() => {
@@ -149,32 +107,13 @@ const Header = ({ toggleSidebar }) => {
     }
   };
 
-  // Handler for marking all notifications as read
-  const markAllNotificationsRead = async () => {
+  // Handler for clearing all notifications
+  const clearAllNotifications = async () => {
     try {
-      // Mark all alerts as read in Supabase
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) return;
-
-      const { error } = await supabase
-        .from('alerts')
-        .update({ read: true })
-        .eq('user_id', user.id)
-        .eq('read', false);
-
-      if (error) {
-        console.error('Error marking notifications as read:', error);
-        return;
-      }
-
-      // Update local state
-      setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
-      setUnreadCount(0);
+      await clearAllAlerts();
       setShowNotifications(false);
     } catch (error) {
-      console.error('Error marking notifications as read:', error);
+      console.error('Error clearing all notifications:', error);
     }
   };
 
@@ -325,45 +264,57 @@ const Header = ({ toggleSidebar }) => {
                 </div>
                 <ul className="max-h-64 overflow-y-auto divide-y divide-gray-100 dark:divide-gray-700">
                   {notifications && notifications.length > 0 ? (
-                    notifications.map((notif, idx) => (
+                    notifications.map((notif, idx) => {
+                      // Transform notification data for display
+                      const displayNotif = {
+                        id: notif.id || idx,
+                        title: getAlertTitle(notif.type),
+                        description: notif.message,
+                        time: formatTimeAgo(notif.timestamp),
+                        read: notif.is_read,
+                        icon: getAlertIcon(notif.type),
+                        type: notif.type
+                      };
+                      
+                      return (
                       <li
-                        key={notif.id || idx}
+                        key={displayNotif.id}
                         className={`px-4 py-3 flex items-start gap-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition cursor-pointer border-l-4 ${
-                          !notif.read 
+                          !displayNotif.read 
                             ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' 
                             : 'border-transparent'
                         }`}
                       >
                         <span className="mt-1 text-lg flex-shrink-0" aria-hidden="true">
-                          {notif.icon}
+                          {displayNotif.icon}
                         </span>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-start justify-between">
                             <div
                               className={`text-sm font-medium truncate pr-2 ${
-                                notif.read 
+                                displayNotif.read 
                                   ? 'text-gray-500 dark:text-gray-400' 
                                   : theme === 'dark' ? 'text-white' : 'text-gray-900'
                               }`}
                             >
-                              {notif.title}
+                              {displayNotif.title}
                             </div>
                             <div className="text-xs text-gray-400 whitespace-nowrap">
-                              {notif.time}
+                              {displayNotif.time}
                             </div>
                           </div>
                           <div className="text-xs text-gray-500 dark:text-gray-400 mt-1 line-clamp-2">
-                            {notif.description}
+                            {displayNotif.description}
                           </div>
                         </div>
-                        {!notif.read && (
+                        {!displayNotif.read && (
                           <span
                             className="ml-1 mt-2 h-2 w-2 rounded-full bg-blue-500 flex-shrink-0"
                             aria-hidden="true"
                           ></span>
                         )}
                       </li>
-                    ))
+                    )})
                   ) : (
                     <li className="px-4 py-8 text-center">
                       <div className="flex flex-col items-center space-y-3">
@@ -385,9 +336,10 @@ const Header = ({ toggleSidebar }) => {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={markAllNotificationsRead}
+                      onClick={clearAllNotifications}
+                      className="text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
                     >
-                      Mark all as read
+                      Clear all
                     </Button>
                   </div>
                 )}

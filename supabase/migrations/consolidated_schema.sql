@@ -117,6 +117,7 @@ CREATE TABLE IF NOT EXISTS public.sensor_data (
   light_level integer CHECK (light_level >= 0 AND light_level <= 4095),
   ph_level decimal(4,2) CHECK (ph_level >= 0 AND ph_level <= 14),
   battery_level decimal(5,2) CHECK (battery_level >= 0 AND battery_level <= 100),
+  water_usage decimal(8,3) DEFAULT 0.000,
   timestamp timestamp with time zone NOT NULL DEFAULT now(),
   user_id uuid NOT NULL,
   PRIMARY KEY (id),

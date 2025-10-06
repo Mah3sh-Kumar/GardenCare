@@ -22,6 +22,8 @@ import {
 } from 'react-icons/fi';
 import PlantZonesPanel from './PlantZonesPanel';
 import PlantRecommendationsPanel from './PlantRecommendationsPanel';
+import { convertTemperature, getTemperatureUnitSymbol } from '../utils/temperatureUtils';
+import { useTemperatureUnit } from '../hooks/useTemperatureUnit';
 
 const WeatherIcon = ({ condition, ...props }) => {
   const conditionText = condition?.toLowerCase() || '';
@@ -44,6 +46,7 @@ const WeatherIcon = ({ condition, ...props }) => {
 const WeatherPanel = () => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
+  const temperatureUnit = useTemperatureUnit();
 
   const [city, setCity] = useState('Boisar');
   const [weatherData, setWeatherData] = useState(null);
@@ -306,12 +309,12 @@ const WeatherPanel = () => {
                       <p
                         className={`font-bold text-3xl ${isDark ? 'text-white' : 'text-gray-900'}`}
                       >
-                        {Math.round(weatherData.temp_c)}°C
+                        {convertTemperature(weatherData.temp_c, 'celsius', temperatureUnit).toFixed(0)}{getTemperatureUnitSymbol(temperatureUnit)}
                       </p>
                       <p
                         className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}
                       >
-                        Feels like {Math.round(weatherData.feelslike_c)}°
+                        Feels like {convertTemperature(weatherData.feelslike_c, 'celsius', temperatureUnit).toFixed(0)}{getTemperatureUnitSymbol(temperatureUnit)}
                       </p>
                     </div>
                     <div className="text-yellow-400">
@@ -404,33 +407,64 @@ const WeatherPanel = () => {
                                 weekday: 'short',
                               })}
                         </p>
-                        <div className="w-1/3 text-center text-yellow-400">
+                        <div className="flex items-center justify-center w-1/3">
                           <WeatherIcon
                             condition={day.day.condition.text}
-                            size={18}
+                            size={20}
+                            className="text-yellow-400"
                           />
                         </div>
-                        <p
-                          className={`w-1/3 text-right font-medium text-xs ${isDark ? 'text-gray-300' : 'text-gray-700'}`}
-                        >
+                        <div className="flex items-center justify-end w-1/3 space-x-2">
                           <span
-                            className={`${isDark ? 'text-white' : 'text-gray-900'}`}
+                            className={`text-xs font-medium ${isDark ? 'text-gray-400' : 'text-gray-600'}`}
                           >
-                            {Math.round(day.day.maxtemp_c)}°
-                          </span>{' '}
-                          / {Math.round(day.day.mintemp_c)}°
-                        </p>
+                            {convertTemperature(day.day.mintemp_c, 'celsius', temperatureUnit).toFixed(0)}{getTemperatureUnitSymbol(temperatureUnit)}
+                          </span>
+                          <span
+                            className={`text-sm font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}
+                          >
+                            {convertTemperature(day.day.maxtemp_c, 'celsius', temperatureUnit).toFixed(0)}{getTemperatureUnitSymbol(temperatureUnit)}
+                          </span>
+                        </div>
                       </div>
                     ))}
                   </div>
                 </div>
 
+                {/* Additional Weather Info */}
                 <div
                   className={`p-3 rounded-xl ${isDark ? 'bg-gray-700/30' : 'bg-gray-50'}`}
                 >
                   <div className="grid grid-cols-2 gap-2">
+                    <div className="p-2 rounded-md bg-white/10">
+                      <p
+                        className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}
+                      >
+                        Visibility
+                      </p>
+                      <p
+                        className={`font-bold text-xs ${isDark ? 'text-white' : 'text-gray-800'}`}
+                      >
+                        {weatherData.vis_km} km
+                      </p>
+                    </div>
+                    <div className="p-2 rounded-md bg-white/10">
+                      <p
+                        className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}
+                      >
+                        Gusts
+                      </p>
+                      <p
+                        className={`font-bold text-xs ${isDark ? 'text-white' : 'text-gray-800'}`}
+                      >
+                        {weatherData.gust_kph} km/h
+                      </p>
+                    </div>
                     <div className="flex items-center gap-2">
-                      <FiSunrise size={18} className="text-yellow-500" />
+                      <FiSunrise
+                        size={14}
+                        className={`${isDark ? 'text-yellow-400' : 'text-yellow-600'}`}
+                      />
                       <div>
                         <p
                           className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}
@@ -440,12 +474,15 @@ const WeatherPanel = () => {
                         <p
                           className={`font-bold text-xs ${isDark ? 'text-white' : 'text-gray-800'}`}
                         >
-                          {forecast[0].astro.sunrise}
+                          {weatherData.sunrise || 'N/A'}
                         </p>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <FiSunset size={18} className="text-orange-500" />
+                      <FiSunset
+                        size={14}
+                        className={`${isDark ? 'text-orange-400' : 'text-orange-600'}`}
+                      />
                       <div>
                         <p
                           className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}
@@ -455,41 +492,7 @@ const WeatherPanel = () => {
                         <p
                           className={`font-bold text-xs ${isDark ? 'text-white' : 'text-gray-800'}`}
                         >
-                          {forecast[0].astro.sunset}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <FiEye size={18} className="text-blue-500" />
-                      <div>
-                        <p
-                          className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}
-                        >
-                          Visibility
-                        </p>
-                        <p
-                          className={`font-bold text-xs ${isDark ? 'text-white' : 'text-gray-800'}`}
-                        >
-                          {weatherData.vis_km} km
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div
-                        className={`w-5 h-5 flex items-center justify-center rounded-full ${getAirQualityClass(weatherData.air_quality?.['us-epa-index'])}`}
-                      >
-                        <FiWind size={10} className="text-white" />
-                      </div>
-                      <div>
-                        <p
-                          className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}
-                        >
-                          Air Quality
-                        </p>
-                        <p
-                          className={`font-bold text-xs ${isDark ? 'text-white' : 'text-gray-800'}`}
-                        >
-                          {weatherData.air_quality?.['us-epa-index'] || 'N/A'}
+                          {weatherData.sunset || 'N/A'}
                         </p>
                       </div>
                     </div>

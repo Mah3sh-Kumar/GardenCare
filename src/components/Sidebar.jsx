@@ -13,6 +13,7 @@ import {
 import { FaLeaf } from 'react-icons/fa';
 import StickyAlert from './StickyAlert';
 import { useTheme } from '../contexts/ThemeContext';
+import { useAlerts } from '../hooks/useAlerts';
 
 const links = [
   {
@@ -62,6 +63,7 @@ const links = [
 const Sidebar = ({ isOpen, setIsOpen }) => {
   const location = useLocation();
   const { theme } = useTheme();
+  const { alerts, loading, error } = useAlerts(1); 
 
   const darkMode = theme === 'dark';
 
@@ -219,12 +221,28 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           })}
         </nav>
 
-        {/* Sticky Alert at Bottom */}
+        {/* Sticky Alert at Bottom - Replaced hardcoded alert with realtime alerts */}
         <div className="p-3.5 border-t border-gray-200 dark:border-gray-700">
-          <StickyAlert
-            message="⚠ Moisture level critically low in Zone 3"
-            type="warning"
-          />
+          {loading ? (
+            <div className="mx-2 mb-4 p-3 rounded flex items-center gap-2 text-sm">
+              <div className="animate-pulse flex-1">
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+              </div>
+            </div>
+          ) : error ? (
+            <StickyAlert
+              message="⚠ Error loading alerts"
+              type="error"
+            />
+          ) : alerts && alerts.length > 0 ? (
+            <StickyAlert
+              message={`⚠ ${alerts[0].message}`}
+              type={
+                alerts[0].type === 'critical' || alerts[0].severity === 'critical' ? 'error' :
+                alerts[0].type === 'warning' || alerts[0].severity === 'high' ? 'warning' : 'info'
+              }
+            />
+          ) : null}
         </div>
       </aside>
     </>
