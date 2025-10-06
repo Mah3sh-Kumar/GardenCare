@@ -1,327 +1,221 @@
-# 🌿 GardenCare: Smart Plant Monitoring & Irrigation System
+# GardenCare Dashboard
 
-GardenCare is a comprehensive IoT solution for smart plant monitoring and automated irrigation. Built with React, Tailwind CSS, Supabase, and ESP32 microcontrollers, it provides real-time monitoring of environmental conditions and intelligent watering based on plant needs.
+A comprehensive IoT dashboard for smart plant monitoring and automated irrigation systems.
 
-## 🌱 Project Overview
+## 🌱 Overview
 
-GardenCare transforms traditional gardening into a smart, data-driven experience. The system consists of:
+GardenCare is a full-stack IoT solution that enables users to monitor and control their garden environment through a web-based dashboard. The system integrates ESP32 microcontrollers with various sensors to collect environmental data and automate watering based on plant needs.
 
-- **ESP32 Sensor Units**: Collect temperature, humidity, soil moisture, and light data
-- **Supabase Backend**: Secure database with real-time capabilities and business logic
-- **React Dashboard**: Modern web interface for monitoring and control
-- **ML-based Plant Recommendations**: AI-powered suggestions for optimal plant selection
+## 🏗️ System Architecture
 
-### Key Features
+```mermaid
+graph TD
+    A[ESP32 Sensor Unit] -->|Sensor Data| B[Supabase Database]
+    B -->|Real-time Updates| C[React Dashboard UI]
+    C -->|Commands| D[Supabase Functions]
+    D -->|Trigger Actions| A
+    E[Weather API] -->|Forecast Data| B
+    F[ML Engine] -->|Plant Recommendations| C
+    
+    subgraph Hardware
+        A
+    end
+    
+    subgraph Cloud
+        B
+        D
+        E
+        F
+    end
+    
+    subgraph Frontend
+        C
+    end
+    
+    style A fill:#4ade80,stroke:#16a34a
+    style B fill:#3b82f6,stroke:#1d4ed8
+    style C fill:#8b5cf6,stroke:#6d28d9
+    style D fill:#3b82f6,stroke:#1d4ed8
+    style E fill:#0ea5e9,stroke:#0284c7
+    style F fill:#ec4899,stroke:#db2777
+```
 
-- 🌡️ **Real-time Monitoring**: Live tracking of temperature, humidity, soil moisture, and light levels
-- 💧 **Smart Watering**: Automated irrigation based on soil moisture thresholds
-- 🤖 **ML Analysis**: Plant recommendations based on environmental conditions
-- 📊 **Data Visualization**: Interactive charts and historical data analysis
-- 📱 **Responsive UI**: Works on desktop, tablet, and mobile devices
-- 🔔 **Alert System**: Notifications for critical conditions and system events
-- ⚙️ **Zone Management**: Configure multiple garden zones with different settings
-- 📅 **Watering Schedules**: Set automated watering routines
+## 🚀 Features
 
-## 🛠️ Technology Stack
+- **Real-time Monitoring**: Live sensor data visualization
+- **Automated Watering**: Smart irrigation based on soil moisture
+- **Plant Recommendations**: AI-powered plant suggestions
+- **Alert System**: Notifications for critical conditions
+- **Zone Management**: Configure multiple garden areas
+- **Historical Data**: Trend analysis and reporting
+- **Mobile Responsive**: Works on all device sizes
+
+## 📁 Project Structure
+
+```
+.
+├── Docs                    # Documentation files
+│   ├── code-snippets       # Detailed code explanations
+│   ├── BACKEND_ARCHITECTURE.md    # Backend architecture documentation
+│   ├── BACKEND_API.md             # Backend API documentation
+│   ├── BACKEND_SECURITY.md        # Backend security documentation
+│   ├── ESP32_INTEGRATION.md       # ESP32 integration documentation
+│   ├── BACKEND_SUMMARY.md         # Backend summary documentation
+│   ├── BACKEND_OVERVIEW.md        # Backend overview documentation
+│   ├── API_REFERENCE.md    # API reference
+│   ├── CHANGELOG.md        # Project changelog
+│   ├── SETUP_GUIDE.md      # Setup instructions
+│   └── TROUBLESHOOTING.md  # Troubleshooting guide
+├── assets                  # Static assets
+├── src                     # Source code
+│   ├── components          # React components
+│   ├── contexts            # React contexts
+│   ├── data                # Static data files
+│   ├── hooks               # Custom React hooks
+│   ├── lib                 # Utility libraries
+│   ├── pages               # Page components
+│   ├── services            # Business logic services
+│   ├── test                # Test files
+│   ├── utils               # Helper functions
+│   ├── App.jsx             # Main application component
+│   ├── index.css           # Global styles
+│   └── main.jsx            # Application entry point
+├── supabase                # Supabase configuration
+│   ├── functions           # Edge Functions
+│   ├── migrations          # Database migrations
+│   └── README.md           # Supabase setup instructions
+├── DOCUMENTATION.md        # Main project documentation
+├── README.md               # Project overview
+├── eslint.config.js        # ESLint configuration
+├── index.html              # HTML entry point
+├── package.json            # Project dependencies
+├── postcss.config.js       # PostCSS configuration
+├── tailwind.config.js      # Tailwind CSS configuration
+├── vercel.json             # Vercel deployment configuration
+└── vitest.config.js        # Vitest testing configuration
+```
+
+## 🛠️ Tech Stack
 
 ### Frontend
-- **React 18.2** - Modern UI library with hooks and context
-- **Vite 7.1** - Lightning fast build tool and development server
-- **Tailwind CSS 3.4** - Utility-first CSS framework for responsive design
-- **Recharts 3.1** - Declarative charting library built on D3
-- **React Router 7.7** - Declarative routing for React applications
+- **React 18** - UI library
+- **Vite** - Build tool
+- **Tailwind CSS** - Styling framework
+- **React Router** - Client-side routing
+- **Supabase JS Client** - Backend integration
+- **Chart.js** - Data visualization
+- **Framer Motion** - Animations
 
 ### Backend
-- **Supabase 2.52** - Open source Firebase alternative with real-time capabilities
-- **PostgreSQL** - Robust relational database
-- **Supabase Auth** - Secure authentication with email/password and social logins
-- **Supabase Realtime** - Live updates using websockets
-- **Supabase Edge Functions** - Serverless functions for business logic
+- **Supabase** - Backend-as-a-Service
+  - **PostgreSQL** - Database
+  - **Supabase Auth** - Authentication
+  - **Realtime Engine** - WebSocket connections
+  - **Edge Functions** - Serverless functions
+  - **Storage** - File storage
 
 ### Hardware
-- **ESP32 Microcontroller** - Powerful, low-cost microcontroller with WiFi
-- **DHT11 Sensor** - Temperature and humidity sensing
-- **Soil Moisture Sensor** - Capacitive soil moisture measurement
-- **Light Sensor** - Ambient light level detection
-- **Water Pump** - 5V-12V submersible pump for irrigation
-- **Relay Module** - Control high-voltage devices with low-voltage signals
+- **ESP32** - Microcontroller
+- **DHT11** - Temperature/Humidity sensor
+- **Soil Moisture Sensor** - Soil hydration monitoring
+- **Light Sensor** - Ambient light detection
+- **Water Pump** - Irrigation system
+- **ULN2003 Driver** - Pump control
+
+## 📖 Documentation
+
+For detailed information about the project, please refer to the following documentation files:
+
+- [Main Documentation](DOCUMENTATION.md) - Complete project overview
+- [Backend Architecture](Docs/BACKEND_ARCHITECTURE.md) - Database schema and security implementation
+- [Backend API](Docs/BACKEND_API.md) - API endpoints and Edge Functions
+- [Backend Security](Docs/BACKEND_SECURITY.md) - Security measures and compliance
+- [ESP32 Integration](Docs/ESP32_INTEGRATION.md) - Device communication protocols
+- [Backend Summary](Docs/BACKEND_SUMMARY.md) - Executive summary of backend features
+- [Backend Overview](Docs/BACKEND_OVERVIEW.md) - High-level backend architecture
+- [API Reference](Docs/API_REFERENCE.md) - REST API documentation
+- [Setup Guide](Docs/SETUP_GUIDE.md) - Installation and configuration instructions
+- [Troubleshooting](Docs/TROUBLESHOOTING.md) - Common issues and solutions
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-
-- Node.js 18+ and npm
+- Node.js 16+
+- npm or yarn
 - Supabase account
-- ESP32 development board (optional for hardware)
-- DHT11 sensor (optional for hardware)
-- Soil moisture sensor (optional for hardware)
-- Water pump and relay module (optional for hardware)
+- ESP32 development board (for hardware integration)
 
 ### Installation
 
-1. **Clone the repository:**
-   ```bash
-   git clone <repository-url>
-   cd GardenCare
-   ```
-
-2. **Install dependencies:**
-   ```bash
-   npm ci
-   ```
-
-3. **Set up environment variables:**
-   ```bash
-   cp .env.example .env
-   # Edit .env with your Supabase credentials
-   ```
-
-4. **Start the development server:**
-   ```bash
-   npm run dev
-   ```
-
-5. **Access the application:**
-   Open your browser and navigate to `http://localhost:5173`
-
-### Environment Variables
-
-Create a `.env` file in the project root with the following variables:
-
+1. Clone the repository:
 ```bash
-VITE_SUPABASE_URL=your_supabase_project_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+git clone https://github.com/your-username/garden-care-dashboard.git
+cd garden-care-dashboard
 ```
 
-Optional variables:
+2. Install dependencies:
 ```bash
-VITE_DEBUG=1                    # Enable debug logging
-VITE_WEATHER_API_KEY=key        # Weather integration (optional)
+npm install
 ```
 
-## 🏗️ Supabase Setup
+3. Set up environment variables:
+```bash
+cp .env.example .env
+# Edit .env with your Supabase credentials
+```
 
-### Database Schema
+4. Start the development server:
+```bash
+npm run dev
+```
 
-The project uses a comprehensive database schema with the following key tables:
+### Supabase Setup
 
-- `zones` - Garden zones with configuration
-- `devices` - ESP32 devices and their status
-- `sensor_data` - Environmental readings from devices
-- `watering_controls` - Watering system configuration
-- `watering_schedules` - Automated watering schedules
-- `commands` - Commands sent to devices
-- `alerts` - System notifications and alerts
-- `api_keys` - Device authentication keys
-
-### Row Level Security (RLS)
-
-All tables implement Row Level Security to ensure data isolation:
-- Users can only access their own data
-- Devices can only write sensor data for their assigned user
-- API keys are properly scoped and validated
-
-### Realtime Subscriptions
-
-The dashboard leverages Supabase Realtime for live updates:
-- Sensor data appears instantly in charts
-- Alert notifications are delivered in real-time
-- Device status updates automatically
-- Zone changes are reflected immediately
-
-## 📊 Dashboard Usage
-
-### Main Dashboard
-
-The dashboard provides an overview of your garden's health:
-
-1. **Statistics Cards**: Current temperature, humidity, soil moisture, and light levels
-2. **Weather Panel**: Current weather conditions and forecasts
-3. **Alerts Panel**: Recent system notifications
-4. **Charts**: Historical data visualization for all sensors
-5. **Plant Zones**: Overview of configured garden zones
-6. **Plant Recommendations**: AI-powered plant suggestions
-
-### Plants Page
-
-View and manage plant recommendations:
-- Detailed plant information and care requirements
-- Soil type compatibility
-- Water and humidity requirements
-- Temperature preferences
-
-### Watering Schedule
-
-Configure automated watering:
-- Create schedules for different zones
-- Set watering duration and frequency
-- Enable/disable schedules
-- View watering history
-
-### Sensors Page
-
-Monitor all connected devices:
-- Device status and health
-- Last seen timestamps
-- Sensor readings
-- Firmware versions
-
-### Analytics Page
-
-Gain insights from your data:
-- Water usage statistics
-- Plant health scores
-- Moisture distribution analysis
-- Performance metrics
-
-### System Page
-
-Manage system configuration:
-- Register new ESP32 devices
-- Configure API keys
-- View system diagnostics
-- Simulate sensor data for testing
-
-### Settings Page
-
-Customize your experience:
-- Profile management
-- Notification preferences
-- Theme settings (light/dark mode)
-- Account security
+1. Create a new Supabase project
+2. Run the database migrations from `supabase/migrations/`
+3. Deploy the Edge Functions from `supabase/functions/`
+4. Configure authentication settings
+5. Set up storage buckets
 
 ## 🧪 Testing
 
-### Run Tests
-
+Run the test suite:
 ```bash
-# Run all tests
 npm run test
-
-# Run tests with UI
-npm run test:ui
-
-# Run tests once (CI mode)
-npm run test:run
-
-# Run with coverage
-npm run test:coverage
 ```
 
-### Test Structure
-
-- **Unit tests**: `src/test/supabaseClient.test.js` - Tests Supabase client and auth helpers
-- **Integration tests**: `src/test/integration.test.jsx` - Tests core Supabase flows
-- **Component tests**: `src/test/AuthContext.test.jsx` - Tests React components
-- **Realtime tests**: `src/test/realtimeManager.test.js` - Tests realtime subscription manager
-
-## 📋 Available Scripts
-
+Run tests in watch mode:
 ```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run preview      # Preview production build
-npm run lint         # Run ESLint
-npm run test         # Run tests in watch mode
-npm run test:run     # Run tests once
-npm run test:ui      # Run tests with UI
-npm run test:coverage # Run tests with coverage report
+npm run test:watch
 ```
 
 ## 📦 Deployment
 
-### Build for Production
+### Vercel Deployment
 
+1. Connect your GitHub repository to Vercel
+2. Set environment variables in Vercel dashboard
+3. Deploy!
+
+### Manual Deployment
+
+Build the project:
 ```bash
 npm run build
 ```
 
-### Deploy Options
-
-The application can be deployed to any static hosting service:
-
-- **Vercel** (recommended)
-- **Netlify**
-- **GitHub Pages**
-- **AWS S3 + CloudFront**
-- **Google Cloud Storage**
-
-### Environment Configuration
-
-Ensure environment variables are set in your deployment platform:
-
+Serve the built files:
 ```bash
-VITE_SUPABASE_URL=your_production_supabase_url
-VITE_SUPABASE_ANON_KEY=your_production_supabase_anon_key
+npm run preview
 ```
-
-## 🔧 ESP32 Device Setup
-
-### Hardware Requirements
-
-- ESP32 development board
-- DHT11 temperature/humidity sensor
-- Capacitive soil moisture sensor
-- Light sensor (optional)
-- 5V-12V submersible water pump
-- Relay module (5V)
-- Jumper wires and breadboard
-- Power supply (5V for ESP32, appropriate voltage for pump)
-
-### Wiring Diagram
-
-```
-ESP32         Components
-GPIO 4   →   DHT11 Data
-GPIO 34  →   Soil Moisture Sensor Analog Output
-GPIO 35  →   Light Sensor Analog Output
-GPIO 2   →   Relay Module Input
-3.3V     →   DHT11 VCC
-GND      →   DHT11 GND
-3.3V     →   Soil Moisture Sensor VCC
-GND      →   Soil Moisture Sensor GND
-5V       →   Relay Module VCC
-GND      →   Relay Module GND
-Relay Output → Water Pump
-```
-
-### Firmware Installation
-
-1. Open `ESP32_SIMPLE.ino` in Arduino IDE
-2. Install required libraries:
-   - WiFi
-   - HTTPClient
-   - ArduinoJson
-   - DHT sensor library
-3. Update configuration values:
-   ```cpp
-   const char* ssid = "your_wifi_ssid";
-   const char* password = "your_wifi_password";
-   const char* supabaseUrl = "your_supabase_url";
-   const char* supabaseServiceKey = "your_supabase_service_key";
-   const char* deviceId = "unique_device_identifier";
-   const char* deviceUUID = "device_uuid_from_database";
-   const char* zoneUUID = "zone_uuid_from_database";
-   const char* userUUID = "user_uuid_from_database";
-   ```
-4. Upload firmware to ESP32
 
 ## 🤝 Contributing
-
-We welcome contributions to GardenCare! Here's how you can help:
 
 1. Fork the repository
 2. Create a feature branch
 3. Commit your changes
 4. Push to the branch
-5. Open a pull request
-
-### Development Guidelines
-
-- Follow the existing code style
-- Write tests for new functionality
-- Update documentation as needed
-- Ensure all tests pass before submitting
+5. Create a pull request
 
 ## 📄 License
 
@@ -332,9 +226,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Supabase](https://supabase.io) for the amazing backend platform
 - [React](https://reactjs.org) for the UI library
 - [Tailwind CSS](https://tailwindcss.com) for the styling framework
-- [ESP32](https://www.espressif.com/en/products/socs/esp32) for the microcontroller
-- All the open source libraries and tools that made this project possible
+- All the open-source libraries that made this project possible
 
 ---
-
-*GardenCare - Bringing intelligence to your garden, one plant at a time.* 🌻
+*GardenCare Dashboard - Last Updated: October 6, 2025*

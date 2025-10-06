@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import DataService from '../services/dataService';
+import { DataService } from '../services/dataService';
 import { useAuth } from './AuthContext';
+import { supabase } from '../lib/supabaseClient';
 
 const NotificationContext = createContext();
 
@@ -53,19 +54,17 @@ export const NotificationProvider = ({ children }) => {
     }
   }, []);
 
-  const markAllAsRead = useCallback(async () => {
+  const clearAllAlerts = useCallback(async () => {
     try {
-      await Promise.all(
-        notifications.map(notification => DataService.markAlertAsRead(notification.id))
-      );
+      await DataService.clearAllAlerts();
       setNotifications([]);
       setUnreadCount(0);
       return true;
     } catch (err) {
-      console.error('Error marking all notifications as read:', err);
+      console.error('Error clearing all alerts:', err);
       throw err;
     }
-  }, [notifications]);
+  }, []);
 
   const addNotification = useCallback((notification) => {
     setNotifications(prev => [notification, ...prev]);
@@ -77,13 +76,76 @@ export const NotificationProvider = ({ children }) => {
     loadNotifications();
   }, [loadNotifications]);
 
-  // Set up polling for notifications
+  // Set up real-time subscription for alerts
   useEffect(() => {
     if (!user) return;
 
-    const interval = setInterval(loadNotifications, 30000); // Poll every 30 seconds
-    return () => clearInterval(interval);
-  }, [user, loadNotifications]);
+    console.log('Setting up real-time alerts subscription for user:', user.id);
+    
+    const channel = supabase
+      .channel('alerts-realtime')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'alerts',
+          filter: `user_id=eq.${user.id}`
+        },
+        (payload) => {
+          console.log('New alert received:', payload.new);
+          const newAlert = payload.new;
+          setNotifications(prev => [newAlert, ...prev]);
+          setUnreadCount(prev => prev + 1);
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'DELETE',
+          schema: 'public',
+          table: 'alerts',
+          filter: `user_id=eq.${user.id}`
+        },
+        (payload) => {
+          console.log('Alert deleted:', payload.old);
+          const deletedAlert = payload.old;
+          setNotifications(prev => prev.filter(n => n.id !== deletedAlert.id));
+          setUnreadCount(prev => Math.max(0, prev - 1));
+        }
+      )
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'alerts',
+          filter: `user_id=eq.${user.id}`
+        },
+        (payload) => {
+          console.log('Alert updated:', payload.new);
+          const updatedAlert = payload.new;
+          setNotifications(prev => 
+            prev.map(n => n.id === updatedAlert.id ? updatedAlert : n)
+          );
+        }
+      )
+      .subscribe((status) => {
+        console.log('Alerts subscription status:', status);
+      });
+
+    return () => {
+      console.log('Cleaning up alerts subscription');
+      supabase.removeChannel(channel);
+    };
+  }, [user]);
+
+  // Remove the polling since we now have real-time updates
+  // useEffect(() => {
+  //   if (!user) return;
+  //   const interval = setInterval(loadNotifications, 30000);
+  //   return () => clearInterval(interval);
+  // }, [user, loadNotifications]);
 
   const value = {
     notifications,
@@ -92,7 +154,7 @@ export const NotificationProvider = ({ children }) => {
     error,
     loadNotifications,
     markAsRead,
-    markAllAsRead,
+    clearAllAlerts,
     addNotification,
   };
 

@@ -19,24 +19,12 @@ import LoadingSpinner from './components/ui/LoadingSpinner';
 import Dashboard from './components/Dashboard';
 
 // Lazy load other components with fallback handling
-const PlantsPage = React.lazy(() => 
-  import('./pages/PlantsPage').catch(() => ({ default: () => <div>Page not available</div> }))
-);
-const WateringSchedulePage = React.lazy(() => 
-  import('./pages/WateringSchedulePage').catch(() => ({ default: () => <div>Page not available</div> }))
-);
-const SensorsPage = React.lazy(() => 
-  import('./pages/SensorsPage').catch(() => ({ default: () => <div>Page not available</div> }))
-);
-const AnalyticsPage = React.lazy(() => 
-  import('./pages/AnalyticsPage').catch(() => ({ default: () => <div>Page not available</div> }))
-);
-const SettingsPage = React.lazy(() => 
-  import('./pages/SettingsPage').catch(() => ({ default: () => <div>Page not available</div> }))
-);
-const SystemPage = React.lazy(() => 
-  import('./pages/SystemPage').catch(() => ({ default: () => <div>Page not available</div> }))
-);
+const PlantsPage = React.lazy(() => import('./pages/PlantsPage'));
+const WateringSchedulePage = React.lazy(() => import('./pages/WateringSchedulePage'));
+const SensorsPage = React.lazy(() => import('./pages/SensorsPage'));
+const AnalyticsPage = React.lazy(() => import('./pages/AnalyticsPage'));
+const SettingsPage = React.lazy(() => import('./pages/SettingsPage'));
+const SystemPage = React.lazy(() => import('./pages/SystemPage'));
 
 function App() {
   return (

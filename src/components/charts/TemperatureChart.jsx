@@ -12,11 +12,14 @@ import {
 import DataService from '../../services/dataService';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useSensorData } from '../../lib/useRealtimeData';
+import { convertTemperature, getTemperatureUnitSymbol } from '../../utils/temperatureUtils';
+import { useTemperatureUnit } from '../../hooks/useTemperatureUnit';
 
 const TemperatureChart = React.memo(() => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const { sensorData, loading, error } = useSensorData(24);
+  const temperatureUnit = useTemperatureUnit();
 
   // Transform data for chart with memoization for performance
   const chartData = useMemo(() => {
@@ -26,9 +29,9 @@ const TemperatureChart = React.memo(() => {
         minute: '2-digit',
         hour12: false,
       }),
-      temperature: parseFloat(item.temperature) || 0,
+      temperature: convertTemperature(parseFloat(item.temperature) || 0, 'celsius', temperatureUnit),
     }));
-  }, [sensorData]);
+  }, [sensorData, temperatureUnit]);
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -44,7 +47,7 @@ const TemperatureChart = React.memo(() => {
             Time: {label}
           </p>
           <p className={`text-orange-500 font-semibold`}>
-            Temperature: {payload[0].value}°C
+            Temperature: {payload[0].value}{getTemperatureUnitSymbol(temperatureUnit)}
           </p>
         </div>
       );
@@ -193,7 +196,7 @@ const TemperatureChart = React.memo(() => {
               strokeWidth: 2,
               fill: isDark ? '#1f2937' : '#ffffff',
             }}
-            name="Temperature (°C)"
+            name={`Temperature (${getTemperatureUnitSymbol(temperatureUnit)})`}
             dot={{
               r: 4,
               fill: '#f97316',

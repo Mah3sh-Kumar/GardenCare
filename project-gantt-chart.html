@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GardenCare Project Gantt Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .header .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        .project-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #ecf0f1;
+            border-radius: 8px;
+        }
+        .info-item {
+            text-align: center;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .info-value {
+            font-size: 1.3em;
+            color: #27ae60;
+            margin-top: 5px;
+        }
+        .chart-container {
+            position: relative;
+            height: 800px;
+            margin: 30px 0;
+        }
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        .milestone {
+            background: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin: 5px 0;
+            display: inline-block;
+        }
+        .phase-header {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #2c3e50;
+            margin: 20px 0 10px 0;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 5px;
+        }
+        .export-buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .export-btn {
+            background: #3498db;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            margin: 0 10px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+        .export-btn:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌱 GardenCare / FarmFlow</h1>
+            <div class="subtitle">Smart Garden Management System - Project Timeline</div>
+        </div>
+
+        <div class="project-info">
+            <div class="info-item">
+                <div class="info-label">Start Date</div>
+                <div class="info-value">July 20, 2025</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">End Date</div>
+                <div class="info-value">October 5, 2025</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Duration</div>
+                <div class="info-value">77 Days</div>
+            </div>
+            <div class="info-item">
+                <div class="info-label">Total Tasks</div>
+                <div class="info-value">24 Tasks</div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="ganttChart"></canvas>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #e74c3c;"></div>
+                <span>ESP32 Hardware & Sensors</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #3498db;"></div>
+                <span>Database & Backend</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #2ecc71;"></div>
+                <span>React Dashboard Development</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #f39c12;"></div>
+                <span>Integration & API</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #9b59b6;"></div>
+                <span>Watering System & Control</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #1abc9c;"></div>
+                <span>ML Module Integration</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #34495e;"></div>
+                <span>Testing & Quality Assurance</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #95a5a6;"></div>
+                <span>Documentation & Final</span>
+            </div>
+        </div>
+
+        <div class="phase-header">📋 Key Milestones</div>
+        <div class="milestone">Hardware Setup Complete - Week 2</div>
+        <div class="milestone">Database Schema Ready - Week 3</div>
+        <div class="milestone">Dashboard MVP - Week 6</div>
+        <div class="milestone">Full Integration - Week 9</div>
+        <div class="milestone">ML Module Active - Week 10</div>
+        <div class="milestone">Project Delivery - Week 11</div>
+
+        <div class="export-buttons">
+            <button class="export-btn" onclick="exportChart()">📊 Export as PNG</button>
+            <button class="export-btn" onclick="printChart()">🖨️ Print Chart</button>
+        </div>
+    </div>
+
+    <script>
+        // Project data with start date July 20, 2025
+        const projectStart = new Date('2025-07-20');
+        
+        // Helper function to calculate date from project start
+        function addDays(days) {
+            const date = new Date(projectStart);
+            date.setDate(date.getDate() + days);
+            return date;
+        }
+
+        // Task data with dependencies and phases
+        const tasks = [
+            // Phase 1: ESP32 Hardware Setup and Sensor Integration (Days 1-14)
+            { name: 'ESP32 Board Setup & Configuration', start: addDays(0), end: addDays(3), color: '#e74c3c' },
+            { name: 'Soil Moisture Sensors Integration', start: addDays(2), end: addDays(6), color: '#e74c3c' },
+            { name: 'Temperature & Humidity Sensors', start: addDays(4), end: addDays(8), color: '#e74c3c' },
+            { name: 'Light Sensor & Water Pump Setup', start: addDays(6), end: addDays(10), color: '#e74c3c' },
+            { name: 'Hardware Testing & Calibration', start: addDays(10), end: addDays(14), color: '#e74c3c' },
+
+            // Phase 2: Supabase Database Design and RLS Policies (Days 8-21)
+            { name: 'Database Schema Design', start: addDays(8), end: addDays(14), color: '#3498db' },
+            { name: 'RLS Policies Implementation', start: addDays(12), end: addDays(18), color: '#3498db' },
+            { name: 'User Authentication Setup', start: addDays(15), end: addDays(21), color: '#3498db' },
+            { name: 'Database Functions & Triggers', start: addDays(18), end: addDays(24), color: '#3498db' },
+
+            // Phase 3: React Dashboard Development (Days 15-42)
+            { name: 'UI Components & Layout', start: addDays(15), end: addDays(25), color: '#2ecc71' },
+            { name: 'Charts & Data Visualization', start: addDays(22), end: addDays(32), color: '#2ecc71' },
+            { name: 'Dark Mode Implementation', start: addDays(28), end: addDays(35), color: '#2ecc71' },
+            { name: 'Mobile Responsiveness', start: addDays(32), end: addDays(42), color: '#2ecc71' },
+            { name: 'User Authentication Pages', start: addDays(25), end: addDays(35), color: '#2ecc71' },
+
+            // Phase 4: ESP32 ↔ Supabase Integration (Days 28-49)
+            { name: 'REST API Development', start: addDays(28), end: addDays(38), color: '#f39c12' },
+            { name: 'Real-time Data Streaming', start: addDays(35), end: addDays(45), color: '#f39c12' },
+            { name: 'Device Registration System', start: addDays(40), end: addDays(49), color: '#f39c12' },
+
+            // Phase 5: Watering Logic & Pump Control (Days 42-56)
+            { name: 'Automatic Watering Logic', start: addDays(42), end: addDays(52), color: '#9b59b6' },
+            { name: 'Motor & ULN2002 Control', start: addDays(49), end: addDays(56), color: '#9b59b6' },
+            { name: 'Safety & Shutoff Systems', start: addDays(52), end: addDays(59), color: '#9b59b6' },
+
+            // Phase 6: ML Module Integration (Days 56-70)
+            { name: 'TensorFlow.js Setup', start: addDays(56), end: addDays(63), color: '#1abc9c' },
+            { name: 'Plant Care Recommendations', start: addDays(60), end: addDays(70), color: '#1abc9c' },
+
+            // Phase 7: Testing, Debugging & Logs (Days 63-73)
+            { name: 'Unit & Integration Testing', start: addDays(63), end: addDays(70), color: '#34495e' },
+            { name: 'End-to-End Testing', start: addDays(68), end: addDays(73), color: '#34495e' },
+
+            // Phase 8: Documentation & Final (Days 70-77)
+            { name: 'Documentation & README', start: addDays(70), end: addDays(77), color: '#95a5a6' }
+        ];
+
+        // Create the Gantt chart
+        const ctx = document.getElementById('ganttChart').getContext('2d');
+        
+        const chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: tasks.map(task => task.name),
+                datasets: [{
+                    label: 'Project Timeline',
+                    data: tasks.map(task => ({
+                        x: [task.start, task.end],
+                        y: task.name
+                    })),
+                    backgroundColor: tasks.map(task => task.color),
+                    borderColor: tasks.map(task => task.color),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'GardenCare/FarmFlow Project Gantt Chart',
+                        font: {
+                            size: 18,
+                            weight: 'bold'
+                        }
+                    },
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const task = tasks[context.dataIndex];
+                                const duration = Math.ceil((task.end - task.start) / (1000 * 60 * 60 * 24));
+                                return [
+                                    `Start: ${task.start.toLocaleDateString()}`,
+                                    `End: ${task.end.toLocaleDateString()}`,
+                                    `Duration: ${duration} days`
+                                ];
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'week',
+                            displayFormats: {
+                                week: 'MMM dd'
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Timeline (July 2025 - October 2025)'
+                        },
+                        min: projectStart,
+                        max: addDays(77)
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Project Tasks'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Export functions
+        function exportChart() {
+            const link = document.createElement('a');
+            link.download = 'gardencare-gantt-chart.png';
+            link.href = chart.toBase64Image();
+            link.click();
+        }
+
+        function printChart() {
+            window.print();
+        }
+
+        // Add print styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @media print {
+                body { margin: 0; }
+                .export-buttons { display: none; }
+                .container { box-shadow: none; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

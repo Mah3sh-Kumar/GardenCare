@@ -107,7 +107,7 @@ export class DataService {
     }
   }
 
-  // Mark alert as read with proper RLS
+  // Mark alert as read and delete it from database with proper RLS
   static async markAlertAsRead(alertId) {
     try {
       const user = await this.validateAuth();
@@ -131,23 +131,48 @@ export class DataService {
         throw new Error('Alert not found or does not belong to user');
       }
 
-      // Update the alert
-      const { error: updateError } = await supabase
+      // Delete the alert instead of just marking as read
+      const { error: deleteError } = await supabase
         .from('alerts')
-        .update({ is_read: true })
+        .delete()
         .eq('id', alertId)
         .eq('user_id', user.id);
 
-      if (updateError) {
-        const handledError = handleSupabaseError(updateError);
+      if (deleteError) {
+        const handledError = handleSupabaseError(deleteError);
         throw new Error(
-          handledError.userMessage || 'Failed to mark alert as read',
+          handledError.userMessage || 'Failed to delete alert',
         );
       }
 
       return true;
     } catch (error) {
       console.error('Error in markAlertAsRead:', error);
+      throw error;
+    }
+  }
+
+  // Clear all alerts (including read ones) for the user
+  static async clearAllAlerts() {
+    try {
+      const user = await this.validateAuth();
+
+      // Delete all alerts for the user
+      const { error: deleteError } = await supabase
+        .from('alerts')
+        .delete()
+        .eq('user_id', user.id);
+
+      if (deleteError) {
+        const handledError = handleSupabaseError(deleteError);
+        throw new Error(
+          handledError.userMessage || 'Failed to clear all alerts',
+        );
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Error in clearAllAlerts:', error);
       throw error;
     }
   }

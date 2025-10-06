@@ -47,7 +47,7 @@ The hardware component responsible for collecting environmental data:
 - **DHT11 Sensor**: Measures temperature and humidity
 - **Soil Moisture Sensor**: Monitors soil hydration levels
 - **Light Sensor**: Detects ambient light conditions
-- **Water Pump Control**: Controls irrigation via relay module
+- **Water Pump Control**: Controls irrigation via ULN2002 transistor driver
 - **WiFi Connectivity**: Communicates with Supabase backend
 
 #### Supabase Backend
@@ -77,6 +77,14 @@ Intelligent plant recommendation system:
 - **Care Guidelines**: Provides detailed plant care information
 
 ## 📊 Data Tables and Relationships
+
+For detailed information about the backend architecture, see [Backend Architecture Documentation](Docs/BACKEND_ARCHITECTURE.md).
+
+For comprehensive API documentation, see [Backend API Documentation](Docs/BACKEND_API.md).
+
+For security implementation details, see [Backend Security Documentation](Docs/BACKEND_SECURITY.md).
+
+For ESP32 integration specifics, see [ESP32 Integration Documentation](Docs/ESP32_INTEGRATION.md).
 
 ### Core Tables
 

@@ -4,15 +4,16 @@
 #include "DHT.h"
 
 // ============================================================================
-// CONFIGURATION - Update these values for your setup
+// CONFIGURATION - Update these values for your setup  
 // ============================================================================
 
 // WiFi credentials
-// const char* ssid = "vivo";
-// const char* password = "alpha12345";
+// const char* ssid = "IT_BMS";
+// const char* password = "Sdsm#2024";
 
-const char* ssid = "IT_BMS";
-const char* password = "Sdsm#2024";
+
+const char* ssid = "vivo";
+const char* password = "alpha12345";
 
 // Supabase configuration
 const char* supabaseUrl = "https://bzloebjykhwoscuoiikw.supabase.co";
@@ -27,12 +28,12 @@ const char* userUUID = "2cdf064e-29ce-4a9e-be08-24b2bf63e18f";   // **UPDATE THI
 const char* zoneId = "";  // Legacy - will be replaced by zoneUUID
 
 // Hardware pin definitions
-#define DHTPIN 4
-#define DHTTYPE DHT11
-#define SOIL_MOISTURE_PIN 34
-#define LIGHT_SENSOR_PIN 35      // Separate light sensor pin
-#define MOTOR_PUMP_PIN 2
-#define BUILTIN_LED 2
+#define DHTPIN 4   
+#define DHTTYPE DHT11 
+#define SOIL_MOISTURE_PIN 34 
+#define LIGHT_SENSOR_PIN 35       
+#define MOTOR_PUMP_PIN 14         
+#define BUILTIN_LED 2 
 
 // Timing configuration
 const unsigned long SENSOR_INTERVAL = 10000;    // 10 seconds for testing
@@ -62,6 +63,7 @@ bool pumpActive = false;
 unsigned long pumpStartTime = 0;
 int pumpDuration = 0;
 float lastSoilMoisture = 0;
+float totalWaterUsage = 0.0;  // Track total water usage in liters
 
 // ============================================================================
 // DEVICE CONFIGURATION FUNCTIONS
@@ -417,6 +419,7 @@ bool sendSensorData(float temp, float hum, float moisture, int lightLevel) {
   doc["light_level"] = lightLevel;  // Use actual light sensor reading
   doc["battery_level"] = 100.0;  // Placeholder for USB powered device
   doc["user_id"] = userUUID;      // Add required user_id field
+  doc["water_usage"] = totalWaterUsage;  // Add water usage data
   
   String jsonString;
   serializeJson(doc, jsonString);
@@ -426,6 +429,7 @@ bool sendSensorData(float temp, float hum, float moisture, int lightLevel) {
   Serial.printf("  Humidity: %.1f (rounded: %.1f)\n", hum, round(hum * 10) / 10.0);
   Serial.printf("  Soil Moisture: %.1f (rounded: %.1f)\n", moisture, round(moisture * 10) / 10.0);
   Serial.printf("  Light Level: %d\n", lightLevel);
+  Serial.printf("  Water Usage: %.3f L\n", totalWaterUsage);
   Serial.println("URL: " + url);
   Serial.println("Payload: " + jsonString);
   
@@ -438,6 +442,11 @@ bool sendSensorData(float temp, float hum, float moisture, int lightLevel) {
     Serial.printf("  → Sent Humidity: %.1f\n", round(hum * 10) / 10.0);
     Serial.printf("  → Sent Soil Moisture: %.1f\n", round(moisture * 10) / 10.0);
     Serial.printf("  → Sent Light Level: %d\n", lightLevel);
+    Serial.printf("  → Sent Water Usage: %.3f L\n", totalWaterUsage);
+    
+    // Reset water usage counter after successful send
+    totalWaterUsage = 0.0;
+    
     blinkLED(1, 100);  // Quick success blink
     http.end();
     return true;
@@ -518,8 +527,8 @@ void checkForCommands() {
   if (WiFi.status() != WL_CONNECTED) return;
   
   HTTPClient http;
-  // Direct table access - more reliable than Edge Functions
-  String url = String(supabaseUrl) + "/rest/v1/device_commands?device_id=eq." + String(deviceId) + "&status=eq.pending&select=*";
+  // FIXED: Use the correct 'commands' table instead of 'device_commands'
+  String url = String(supabaseUrl) + "/rest/v1/commands?device_id=eq." + String(deviceUUID) + "&status=eq.pending&select=*";
   
   http.begin(url);
   http.addHeader("apikey", supabaseAnonKey);
@@ -529,6 +538,7 @@ void checkForCommands() {
   
   if (responseCode == 200) {
     String payload = http.getString();
+    Serial.println("📡 Commands received: " + payload);
     
     DynamicJsonDocument doc(2048);
     deserializeJson(doc, payload);
@@ -540,12 +550,16 @@ void checkForCommands() {
       String commandType = command["command_type"];
       JsonObject params = command["parameters"];
       
-      Serial.println("Processing command: " + commandType);
+      Serial.println("🔧 Processing command: " + commandType + " (ID: " + commandId + ")");
       
       processCommand(commandId, commandType, params);
     }
   } else if (responseCode != 200) {
-    Serial.printf("Command check failed: %d\n", responseCode);
+    Serial.printf("❌ Command check failed: HTTP %d\n", responseCode);
+    if (responseCode > 0) {
+      String response = http.getString();
+      Serial.println("Error response: " + response);
+    }
   }
   
   http.end();
@@ -587,7 +601,8 @@ void updateCommandStatus(String commandId, String status, String message) {
   if (WiFi.status() != WL_CONNECTED) return;
   
   HTTPClient http;
-  String url = String(supabaseUrl) + "/rest/v1/device_commands?id=eq." + commandId;
+  // FIXED: Use the correct 'commands' table
+  String url = String(supabaseUrl) + "/rest/v1/commands?id=eq." + commandId;
   
   http.begin(url);
   http.addHeader("Content-Type", "application/json");
@@ -595,17 +610,25 @@ void updateCommandStatus(String commandId, String status, String message) {
   http.addHeader("Authorization", "Bearer " + String(supabaseAnonKey));
   
   DynamicJsonDocument doc(256);
-  doc["status"] = (status == "success") ? "completed" : "failed";
+  doc["status"] = (status == "success") ? "executed" : "failed";  // FIXED: Use correct status values
   doc["result"] = message;
   doc["executed_at"] = "now()";
   
   String jsonString;
   serializeJson(doc, jsonString);
   
+  Serial.println("📤 Updating command status: " + jsonString);
+  
   int responseCode = http.sendRequest("PATCH", jsonString);
   
   if (responseCode == 200 || responseCode == 204) {
-    Serial.println("Command status updated: " + status);
+    Serial.println("✅ Command status updated: " + status);
+  } else {
+    Serial.printf("❌ Failed to update command status: HTTP %d\n", responseCode);
+    if (responseCode > 0) {
+      String response = http.getString();
+      Serial.println("Error response: " + response);
+    }
   }
   
   http.end();
@@ -626,9 +649,9 @@ bool startPump(int duration) {
     return false;
   }
   
-  Serial.printf("Starting pump for %d seconds\n", duration);
+  Serial.printf("Starting ULN2002 pump control for %d seconds\n", duration);
   
-  digitalWrite(MOTOR_PUMP_PIN, HIGH);
+  digitalWrite(MOTOR_PUMP_PIN, HIGH);  // Activate ULN2002 output
   pumpActive = true;
   pumpStartTime = millis();
   pumpDuration = duration * 1000;
@@ -641,18 +664,24 @@ bool startPump(int duration) {
     delay(100);
   }
   
-  updateDeviceStatus("pumping", "Water pump active");
+  updateDeviceStatus("pumping", "Water pump active via ULN2002");
   return true;
 }
 
 void stopPump() {
   if (!pumpActive) return;
   
-  digitalWrite(MOTOR_PUMP_PIN, LOW);
+  digitalWrite(MOTOR_PUMP_PIN, LOW);  // Deactivate ULN2002 output
   pumpActive = false;
   
   unsigned long runtime = (millis() - pumpStartTime) / 1000;
-  Serial.printf("Pump stopped after %lu seconds\n", runtime);
+  // Calculate water usage: 0.086 L/s * runtime in seconds
+  float waterUsed = 0.086 * runtime;
+  totalWaterUsage += waterUsed;
+  
+  Serial.printf("ULN2002 pump stopped after %lu seconds\n", runtime);
+  Serial.printf("Water used in this cycle: %.3f L\n", waterUsed);
+  Serial.printf("Total water usage: %.3f L\n", totalWaterUsage);
   
   updateDeviceStatus("online", "Pump operation completed");
 }

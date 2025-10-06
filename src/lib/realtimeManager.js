@@ -22,10 +22,6 @@ class RealtimeManager {
    * @param {Object} options - Subscription options
    */
   subscribe(table, callback, options = {}) {
-    // Temporarily disable realtime subscriptions due to transport issues
-    console.warn(`Realtime subscriptions temporarily disabled for ${table} due to transport issues`);
-    return null;
-    
     // Skip realtime subscriptions if Supabase client is not properly initialized
     if (!supabase || !supabase.realtime) {
       console.warn(`Realtime not available for ${table}, skipping subscription`);
@@ -274,10 +270,6 @@ export const sensorDataSubscription = (callback) => {
 
 // Alternative subscription method for better compatibility
 export const createCompatibleSubscription = (table, callback, options = {}) => {
-  // Temporarily disabled due to transport issues
-  console.warn(`Compatible subscription temporarily disabled for ${table} due to transport issues`);
-  return null;
-  
   if (!supabase || !supabase.realtime) {
     console.warn(`Realtime not available for ${table}, skipping subscription`);
     return null;

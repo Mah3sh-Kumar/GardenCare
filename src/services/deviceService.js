@@ -121,6 +121,39 @@ export class DeviceService {
     }
   }
 
+  // Update device zone assignment
+  static async updateDeviceZone(deviceId, zoneId) {
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('User not authenticated');
+
+      const { data, error } = await supabase
+        .from('devices')
+        .update({ zone_id: zoneId })
+        .eq('id', deviceId)
+        .eq('user_id', user.id)
+        .select()
+        .single();
+
+      if (error) {
+        const handledError = handleSupabaseError(error);
+        console.error('Error updating device zone:', handledError);
+        throw handledError;
+      }
+
+      if (!data) {
+        throw new Error('Device not found or access denied');
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error in updateDeviceZone:', error);
+      throw error;
+    }
+  }
+
   // Delete a device
   static async deleteDevice(deviceId) {
     try {

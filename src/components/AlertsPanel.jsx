@@ -13,7 +13,7 @@ const AlertsPanel = () => {
     error, 
     loadNotifications, 
     markAsRead, 
-    markAllAsRead 
+    clearAllAlerts: clearAllAlertsFromContext 
   } = useNotifications();
   const isDark = theme === 'dark';
   const [actionLoading, setActionLoading] = useState(false);
@@ -106,20 +106,20 @@ const AlertsPanel = () => {
     }
   }, [markAsRead]);
 
-  const clearAllAlerts = useCallback(async () => {
+  const clearAllAlertsHandler = useCallback(async () => {
     try {
       setActionLoading(true);
       setActionError(null);
-      await markAllAsRead();
+      await clearAllAlertsFromContext();
     } catch (err) {
-      console.error('Error clearing alerts:', err);
+      console.error('Error clearing all alerts:', err);
       setActionError('Failed to clear all alerts. Please try again.');
       // Reset error after 3 seconds
       setTimeout(() => setActionError(null), 3000);
     } finally {
       setActionLoading(false);
     }
-  }, [markAllAsRead]);
+  }, [clearAllAlertsFromContext]);
 
   const formatTimeAgo = (timestamp) => {
     const now = new Date();
@@ -226,11 +226,12 @@ const AlertsPanel = () => {
           </button>
           {alerts.length > 0 && (
             <button
-              className={`text-sm hover:text-gray-700 transition-colors ${isDark ? 'text-gray-400 hover:text-gray-200' : 'text-gray-500 hover:text-gray-700'} ${actionLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
-              onClick={clearAllAlerts}
+              className={`text-sm hover:text-red-700 transition-colors ${isDark ? 'text-red-400 hover:text-red-200' : 'text-red-500 hover:text-red-700'} ${actionLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              onClick={clearAllAlertsHandler}
               disabled={actionLoading}
+              title="Clear all alerts permanently"
             >
-              Mark All Read
+              Clear All
             </button>
           )}
         </div>
