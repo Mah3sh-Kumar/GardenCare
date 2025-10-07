@@ -8,19 +8,21 @@
 // ============================================================================
 
 // WiFi credentials
-const char* ssid = "YOUR_WIFI_SSID";
-const char* password = "YOUR_WIFI_PASSWORD";
+const char* ssid = "vivo";
+const char* password = "alpha12345";
 
 // Supabase configuration
-const char* supabaseUrl = "https://YOUR_SUPABASE_PROJECT.supabase.co";
-const char* supabaseAnonKey = "YOUR_SUPABASE_ANON_KEY";
-const char* supabaseServiceKey = "YOUR_SUPABASE_SERVICE_KEY";
+const char* supabaseUrl = "https://bzloebjykhwoscuoiikw.supabase.co";
+const char* supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ6bG9lYmp5a2h3b3NjdW9paWt3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1NTE1MzksImV4cCI6MjA3NTEyNzUzOX0.dKVIuxw7zuHEXc-QSMCUfdm-dejRO2xgtHV11ZuMeJo";
+// **ESP32 NEEDS SERVICE ROLE KEY** - Get this from Supabase Dashboard > Settings > API
+const char* supabaseServiceKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ6bG9lYmp5a2h3b3NjdW9paWt3Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1OTU1MTUzOSwiZXhwIjoyMDc1MTI3NTM5fQ.K3Id8ZMSC3OvLJ_4tCLjLY9SkprVRa-J-GIwchNRSrQ";
 
 // Device configuration
 const char* deviceId = "esp01";              // String identifier for API calls
-const char* deviceUUID = "YOUR_DEVICE_UUID";  // Device UUID from database
-const char* zoneUUID = "YOUR_ZONE_UUID";    // Zone UUID from database
-const char* userUUID = "YOUR_USER_UUID";   // User UUID from database
+const char* deviceApiKey = "sk_t2hw0i7962lzmwjzhd90j9";  // API key from dashboard device management
+const char* configuredDeviceUUID = "dcf10adb-aa2e-4aaa-9b2b-fff6903a7a9b";  // Device UUID from database
+const char* zoneUUID = "0fa94b5e-d58a-4245-aee6-2fbee53b7de9";    // Zone UUID from database
+const char* userUUID = "2cdf064e-29ce-4a9e-be08-24b2bf63e18f";   // User UUID from database
 
 // Hardware pin definitions
 #define DHTPIN 4   
@@ -33,7 +35,7 @@ const char* userUUID = "YOUR_USER_UUID";   // User UUID from database
 // Timing configuration
 const unsigned long SENSOR_INTERVAL = 10000;    // 10 seconds for production testing
 const unsigned long COMMAND_CHECK_INTERVAL = 30000;  // 30 seconds
-const unsigned long STATUS_UPDATE_INTERVAL = 300000;  // 5 minutes
+const unsigned long STATUS_UPDATE_INTERVAL = 60000;  // 1 minute (increased frequency)
 const unsigned long WIFI_RECONNECT_INTERVAL = 5000;   // 5 seconds
 const unsigned long HTTP_RETRY_INTERVAL = 3000;       // 3 seconds
 const int MAX_WIFI_RECONNECT_ATTEMPTS = 10;
@@ -51,6 +53,7 @@ DHT dht(DHTPIN, DHTTYPE);
 
 // Global variables
 String deviceName = "";
+String deviceUUID = "";  // Will be populated from device config or configuration constant
 float moistureThreshold = 40.0;
 String soilType = "";
 unsigned long lastSensorReading = 0;
@@ -82,6 +85,7 @@ bool fetchDeviceConfig() {
   Serial.println("\n📥 Fetching device configuration...");
   Serial.println("  URL: " + url);
   Serial.printf("  Device ID: %s\n", deviceId);
+  Serial.println("  Make sure this device is registered in your dashboard!");
   
   // Prepare HTTP client with retry mechanism
   int retryCount = 0;
@@ -126,11 +130,16 @@ bool fetchDeviceConfig() {
       if (success) {
         JsonObject config = doc["config"];
         deviceName = config["device_name"].as<String>();
+        // Only update deviceUUID if it wasn't already configured
+        if (deviceUUID.length() == 0) {
+          deviceUUID = config["device_uuid"].as<String>();  // Store the device UUID
+        }
         moistureThreshold = config["moisture_threshold"] | 40.0;
         soilType = config["soil_type"].as<String>();
         
         Serial.println("✅ Device configuration loaded:");
         Serial.printf("  Device Name: %s\n", deviceName.c_str());
+        Serial.printf("  Device UUID: %s\n", deviceUUID.c_str());
         Serial.printf("  Moisture Threshold: %.1f%%\n", moistureThreshold);
         Serial.printf("  Soil Type: %s\n", soilType.c_str());
         
@@ -146,6 +155,7 @@ bool fetchDeviceConfig() {
           Serial.println("  2. Verify the device is registered in the 'devices' table");
           Serial.println("  3. Check if the device is assigned to the correct user");
           Serial.println("  4. Verify your Supabase API keys are correct");
+          Serial.println("  5. Make sure you've registered the device in the dashboard");
         }
         
         httpClient.end();
@@ -188,6 +198,12 @@ void setup() {
   Serial.begin(115200);
   delay(1000);
   Serial.println("\n=== ESP32 Garden System Starting ===");
+  Serial.println("📝 Configuration Instructions:");
+  Serial.println("  1. Update WiFi credentials (ssid, password)");
+  Serial.println("  2. Update Supabase configuration (supabaseUrl, supabaseAnonKey, supabaseServiceKey)");
+  Serial.println("  3. Update device configuration (deviceId, deviceApiKey, zoneUUID, userUUID)");
+  Serial.println("  4. Register your device in the dashboard to get API key");
+  Serial.println("");
   
   // Initialize hardware
   pinMode(SOIL_MOISTURE_PIN, INPUT);
@@ -204,6 +220,9 @@ void setup() {
   
   // Connect to WiFi
   connectWiFi();
+  
+  // Initialize deviceUUID from configuration
+  deviceUUID = String(configuredDeviceUUID);  // Use the configured deviceUUID
   
   // Fetch device configuration from database
   if (fetchDeviceConfig()) {
@@ -316,12 +335,16 @@ void loop() {
       Serial.printf("  Pump Active: %s\n", pumpActive ? "Yes" : "No");
       Serial.printf("  Soil Moisture: %.1f%%\n", lastSoilMoisture);
       Serial.printf("  Uptime: %lu seconds\n", millis() / 1000);
+    } else if (command == "heartbeat") {
+      Serial.println("\n💓 Manual heartbeat test triggered");
+      sendHeartbeat();
     } else if (command == "help") {
       Serial.println("\n📋 Available serial commands:");
       Serial.println("  test_pump      - Activate pump for 10 seconds");
       Serial.println("  read_sensors   - Read and send all sensor data");
       Serial.println("  calibrate_soil - Run soil sensor calibration");
       Serial.println("  status         - Show current device status");
+      Serial.println("  heartbeat      - Send device heartbeat");
       Serial.println("  help           - Show this help message");
     } else {
       Serial.println("\n❓ Unknown command. Type 'help' for available commands.");
@@ -362,9 +385,9 @@ void loop() {
     lastScheduleCheck = currentTime;
   }
   
-  // Update device status
+  // Send heartbeat to update device status
   if (currentTime - lastStatusUpdate >= STATUS_UPDATE_INTERVAL) {
-    updateDeviceStatus("online", "Running normally");
+    sendHeartbeat();
     lastStatusUpdate = currentTime;
   }
   
@@ -597,13 +620,12 @@ void readAndSendSensorData() {
   int lightLevel = 0;
   
   if (lightRaw >= 0 && lightRaw <= 4095) {
-    // Valid reading from LDR - convert to light intensity (lux approximation)
-    lightLevel = map(lightRaw, 0, 4095, 0, 10000); // 0-10000 lux approximation
-    lightLevel = constrain(lightLevel, 0, 10000);
+    // Valid reading from LDR - use raw value directly to respect database constraint (0-4095)
+    lightLevel = lightRaw;
   } else {
-    // Fallback: use a time-based simulation for realistic variation
+    // Fallback: use a time-based simulation within valid range
     unsigned long currentTime = millis();
-    lightLevel = 1000 + (currentTime % 9000);  // Varies between 1000-10000 lux
+    lightLevel = 100 + (currentTime % 3995);  // Varies between 100-4095 lux
   }
   
   lastSoilMoisture = soilMoisture;
@@ -613,7 +635,7 @@ void readAndSendSensorData() {
   Serial.printf("  Temperature: %.1f°C (averaged from %d readings)\n", temperature, validReadings);
   Serial.printf("  Humidity: %.1f%% (averaged from %d readings)\n", humidity, validReadings);
   Serial.printf("  Soil Moisture: %.1f%% (raw: %d, range: %d-%d)\n", soilMoisture, soilRaw, SOIL_MOISTURE_WET, SOIL_MOISTURE_DRY);
-  Serial.printf("  Light Level: %d lux (raw: %d)\n", lightLevel, lightRaw);
+  Serial.printf("  Light Level: %d (raw: %d)\n", lightLevel, lightRaw);
   
   // Check if soil moisture is extremely low and might indicate sensor issue
   if (soilMoisture == 0.0 && soilRaw >= SOIL_MOISTURE_DRY) {
@@ -641,7 +663,7 @@ bool sendSensorData(float temp, float hum, float moisture, int lightLevel) {
   Serial.printf("  Temperature: %.1f°C\n", temp);
   Serial.printf("  Humidity: %.1f%%\n", hum);
   Serial.printf("  Soil Moisture: %.1f%%\n", moisture);
-  Serial.printf("  Light Level: %d lux\n", lightLevel);
+  Serial.printf("  Light Level: %d (raw sensor value)\n", lightLevel);
   Serial.printf("  Water Usage: %.3f L\n", totalWaterUsage);
   Serial.println("  URL: " + url);
   
@@ -708,15 +730,18 @@ bool sendSensorData(float temp, float hum, float moisture, int lightLevel) {
 // DEVICE STATUS FUNCTIONS
 // ============================================================================
 
+// Function to update device status
 void updateDeviceStatus(String status, String message) {
   if (!isWiFiConnected()) {
     Serial.println("⚠️ WiFi not connected, cannot update device status");
     return;
   }
   
-  String url = String(supabaseUrl) + "/rest/v1/device_status";
+  // Use the device-status function to update device status
+  String url = String(supabaseUrl) + "/functions/v1/device-status";
   
   Serial.printf("\n📱 Updating device status: %s - %s\n", status.c_str(), message.c_str());
+  Serial.println("  URL: " + url);
   
   // Prepare HTTP client with retry mechanism
   int retryCount = 0;
@@ -725,15 +750,12 @@ void updateDeviceStatus(String status, String message) {
     httpClient.addHeader("Content-Type", "application/json");
     httpClient.addHeader("apikey", supabaseAnonKey);
     httpClient.addHeader("Authorization", "Bearer " + String(supabaseAnonKey));
-    httpClient.addHeader("Prefer", "return=minimal");
-    httpClient.addHeader("Prefer", "resolution=merge-duplicates");
+    httpClient.addHeader("X-API-Key", deviceApiKey);  // Use the device API key
     httpClient.setTimeout(15000);  // 15 second timeout
     
     DynamicJsonDocument doc(512);
-    doc["device_id"] = deviceId;
     doc["status"] = status;
     doc["message"] = message;
-    doc["last_seen"] = "now()";
     doc["wifi_rssi"] = WiFi.RSSI();
     doc["free_heap"] = (int)ESP.getFreeHeap();
     doc["uptime"] = (int)(millis() / 1000);
@@ -747,12 +769,14 @@ void updateDeviceStatus(String status, String message) {
     
     int responseCode = httpClient.POST(jsonString);
     
-    if (responseCode == 201 || responseCode == 200 || responseCode == 204) {
+    if (responseCode == 200) {
+      String response = httpClient.getString();
+      Serial.println("  Response: " + response);
       Serial.printf("✅ Device status updated successfully (HTTP %d)\n", responseCode);
       httpClient.end();
       return;
     } else {
-      Serial.printf("❌ HTTP request failed with code: %d\n", responseCode);
+      Serial.printf("❌ HTTP POST failed with code: %d\n", responseCode);
       if (responseCode > 0) {
         String response = httpClient.getString();
         Serial.println("  Response: " + response);
@@ -771,6 +795,47 @@ void updateDeviceStatus(String status, String message) {
   Serial.println("❌ Failed to update device status after all retries");
 }
 
+// Function to update device status history (for logging purposes)
+void updateDeviceStatusHistory(String status, String message) {
+  if (!isWiFiConnected()) {
+    return;
+  }
+  
+  String url = String(supabaseUrl) + "/rest/v1/device_status";
+  
+  // Prepare HTTP client
+  httpClient.begin(url);
+  httpClient.addHeader("Content-Type", "application/json");
+  httpClient.addHeader("apikey", supabaseAnonKey);
+  httpClient.addHeader("Authorization", "Bearer " + String(supabaseAnonKey));
+  httpClient.addHeader("Prefer", "return=minimal");
+  httpClient.addHeader("Prefer", "resolution=merge-duplicates");
+  httpClient.setTimeout(15000);  // 15 second timeout
+  
+  DynamicJsonDocument doc(512);
+  doc["device_id"] = deviceId;
+  doc["status"] = status;
+  doc["message"] = message;
+  doc["last_seen"] = "now()";
+  doc["wifi_rssi"] = WiFi.RSSI();
+  doc["free_heap"] = (int)ESP.getFreeHeap();
+  doc["uptime"] = (int)(millis() / 1000);
+  doc["pump_active"] = pumpActive;
+  doc["soil_moisture"] = round(lastSoilMoisture * 10) / 10.0;
+  
+  String jsonString;
+  serializeJson(doc, jsonString);
+  
+  int responseCode = httpClient.POST(jsonString);
+  httpClient.end();
+  
+  if (responseCode == 201 || responseCode == 200 || responseCode == 204) {
+    Serial.println("✅ Device status history updated");
+  } else {
+    Serial.printf("⚠️ Device status history update failed (HTTP %d)\n", responseCode);
+  }
+}
+
 // ============================================================================
 // COMMAND PROCESSING
 // ============================================================================
@@ -782,7 +847,8 @@ void checkForCommands() {
     return;
   }
   
-  String url = String(supabaseUrl) + "/rest/v1/commands?device_id=eq." + String(deviceUUID) + "&status=eq.pending&select=*";
+  // Use deviceUUID instead of deviceId since the commands table references the device_id field (which is a UUID)
+  String url = String(supabaseUrl) + "/rest/v1/commands?device_id=eq." + deviceUUID + "&status=eq.pending&select=*";
   
   Serial.println("\n🔍 Checking for pending commands...");
   
@@ -1040,4 +1106,69 @@ void blinkLED(int count, int delayMs) {
     digitalWrite(BUILTIN_LED, HIGH);  // Off
     delay(delayMs);
   }
+}
+
+// Function to send heartbeat to update device status
+void sendHeartbeat() {
+  if (!isWiFiConnected()) {
+    Serial.println("⚠️ WiFi not connected, cannot send heartbeat");
+    return;
+  }
+  
+  // Use the device-status function to send heartbeat
+  String url = String(supabaseUrl) + "/functions/v1/device-status";
+  
+  Serial.println("\n💓 Sending device heartbeat...");
+  Serial.println("  URL: " + url);
+  
+  // Prepare HTTP client with retry mechanism
+  int retryCount = 0;
+  while (retryCount <= MAX_HTTP_RETRIES) {
+    httpClient.begin(url);
+    httpClient.addHeader("Content-Type", "application/json");
+    httpClient.addHeader("apikey", supabaseAnonKey);
+    httpClient.addHeader("Authorization", "Bearer " + String(supabaseAnonKey));
+    httpClient.addHeader("X-API-Key", deviceApiKey);  // Use the device API key
+    httpClient.setTimeout(15000);  // 15 second timeout
+    
+    DynamicJsonDocument doc(512);
+    doc["status"] = "online";
+    doc["message"] = "Device is running normally";
+    doc["wifi_rssi"] = WiFi.RSSI();
+    doc["free_heap"] = (int)ESP.getFreeHeap();
+    doc["uptime"] = (int)(millis() / 1000);
+    doc["pump_active"] = pumpActive;
+    doc["soil_moisture"] = round(lastSoilMoisture * 10) / 10.0;
+    
+    String jsonString;
+    serializeJson(doc, jsonString);
+    
+    Serial.println("  Payload: " + jsonString);
+    
+    int responseCode = httpClient.POST(jsonString);
+    
+    if (responseCode == 200) {
+      String response = httpClient.getString();
+      Serial.println("  Response: " + response);
+      Serial.println("✅ Heartbeat sent successfully");
+      httpClient.end();
+      return;
+    } else {
+      Serial.printf("❌ HTTP POST failed with code: %d\n", responseCode);
+      if (responseCode > 0) {
+        String response = httpClient.getString();
+        Serial.println("  Response: " + response);
+      }
+      httpClient.end();
+      
+      retryCount++;
+      if (retryCount <= MAX_HTTP_RETRIES) {
+        Serial.printf("  Retrying in %d ms... (attempt %d/%d)\n", 
+                      HTTP_RETRY_INTERVAL * (retryCount + 1), retryCount + 1, MAX_HTTP_RETRIES + 1);
+        delay(HTTP_RETRY_INTERVAL * (retryCount + 1)); // Exponential backoff
+      }
+    }
+  }
+  
+  Serial.println("❌ Failed to send heartbeat after all retries");
 }

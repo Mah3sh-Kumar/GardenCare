@@ -1384,6 +1384,52 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
+-- Function to get device configuration for ESP32
+CREATE OR REPLACE FUNCTION get_device_config(p_device_id VARCHAR(50))
+RETURNS JSON
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+DECLARE
+  device_config JSON;
+BEGIN
+  SELECT json_build_object(
+    'device_id', d.device_id,
+    'device_uuid', d.id,  -- Add the device UUID for status updates
+    'device_name', d.name,
+    'zone_id', z.id,
+    'zone_name', z.name,
+    'moisture_threshold', z.moisture_threshold,
+    'soil_type', z.soil_type,
+    'status', d.status
+  )
+  INTO device_config
+  FROM public.devices d
+  JOIN public.zones z ON d.zone_id = z.id
+  WHERE d.device_id = p_device_id
+    AND z.user_id = auth.uid();
+  
+  IF device_config IS NULL THEN
+    RETURN json_build_object(
+      'success', false,
+      'error', 'Device not found or access denied'
+    );
+  END IF;
+  
+  RETURN json_build_object(
+    'success', true,
+    'config', device_config
+  );
+  
+EXCEPTION
+  WHEN OTHERS THEN
+    RETURN json_build_object(
+      'success', false,
+      'error', SQLERRM
+    );
+END;
+$$;
+
 -- Function to simulate sensor data for testing
 CREATE OR REPLACE FUNCTION public.simulate_sensor_data(
   device_count integer DEFAULT 1,

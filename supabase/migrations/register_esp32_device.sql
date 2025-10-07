@@ -81,6 +81,7 @@ DECLARE
 BEGIN
   SELECT json_build_object(
     'device_id', d.device_id,
+    'device_uuid', d.id,  -- Add the device UUID for status updates
     'device_name', d.name,
     'zone_id', z.id,
     'zone_name', z.name,
