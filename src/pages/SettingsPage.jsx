@@ -49,7 +49,6 @@ const SettingsPage = () => {
     darkMode: isDark,
     autoWatering: true,
     temperatureUnit: 'celsius',
-    dataRefreshInterval: 30,
   });
 
   // Auto-dismiss success messages after 3 seconds
@@ -579,40 +578,6 @@ const SettingsPage = () => {
                   °F
                 </button>
               </div>
-            </div>
-
-            <div>
-              <label
-                className={`block text-sm font-semibold ${isDark ? 'text-gray-300' : 'text-gray-700'} mb-2`}
-              >
-                Data Refresh Interval
-              </label>
-              <div className="flex items-center space-x-4">
-                <input
-                  type="range"
-                  min="10"
-                  max="300"
-                  step="10"
-                  value={systemSettings.dataRefreshInterval}
-                  onChange={(e) =>
-                    setSystemSettings({
-                      ...systemSettings,
-                      dataRefreshInterval: parseInt(e.target.value),
-                    })
-                  }
-                  className="w-full max-w-xs"
-                />
-                <span
-                  className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}
-                >
-                  {systemSettings.dataRefreshInterval} seconds
-                </span>
-              </div>
-              <p
-                className={`text-sm mt-1 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
-              >
-                How often to refresh sensor data (10-300 seconds)
-              </p>
             </div>
           </div>
         </Card>

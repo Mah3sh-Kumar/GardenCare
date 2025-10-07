@@ -176,13 +176,42 @@ void setup() {
     soilReadings[i] = analogRead(SOIL_MOISTURE_PIN);
     soilMin = min(soilMin, soilReadings[i]);
     soilMax = max(soilMax, soilReadings[i]);
-    Serial.printf("Reading %d: %d\n", i+1, soilReadings[i]);
+    Serial.printf("Reading %d: %d (GPIO %d)\n", i+1, soilReadings[i], SOIL_MOISTURE_PIN);
     delay(200);
+  }
+  
+  // Additional debugging for GPIO 34
+  Serial.println("\n🔬 GPIO 34 Detailed Analysis:");
+  pinMode(SOIL_MOISTURE_PIN, INPUT);
+  delay(100);
+  for (int i = 0; i < 5; i++) {
+    int rawValue = analogRead(SOIL_MOISTURE_PIN);
+    float voltage = (rawValue / 4095.0) * 3.3;
+    Serial.printf("  Raw: %d, Voltage: %.3fV\n", rawValue, voltage);
+    delay(500);
   }
   
   Serial.printf("\nSoil sensor analysis:\n");
   Serial.printf("  Range: %d - %d\n", soilMin, soilMax);
   Serial.printf("  Current settings: DRY=%d, WET=%d\n", SOIL_MOISTURE_DRY, SOIL_MOISTURE_WET);
+  
+  // Check for sensor connection issues
+  if (soilMin == 4095 && soilMax == 4095) {
+    Serial.println("  ❌ ERROR: All readings are 4095!");
+    Serial.println("  This usually means:");
+    Serial.println("    - Sensor not connected to GPIO 34");
+    Serial.println("    - Bad wiring or loose connections");
+    Serial.println("    - Sensor power not connected");
+    Serial.println("  📋 Wiring check:");
+    Serial.println("    - Sensor VCC → 3.3V or 5V");
+    Serial.println("    - Sensor GND → GND");
+    Serial.println("    - Sensor AOUT → GPIO 34");
+  } else if (soilMin == 0 && soilMax == 0) {
+    Serial.println("  ❌ ERROR: All readings are 0!");
+    Serial.println("  This usually means:");
+    Serial.println("    - Short circuit or grounded pin");
+    Serial.println("    - Wrong pin assignment");
+  }
   
   // Determine sensor type based on readings
   if (soilMax - soilMin < 100) {
@@ -203,11 +232,42 @@ void setup() {
   Serial.println("4. Update SOIL_MOISTURE_DRY and SOIL_MOISTURE_WET");
   Serial.println("================================\n");
   
-  // Test light sensor
-  int lightTest = analogRead(LIGHT_SENSOR_PIN);
-  Serial.printf("✅ Light sensor raw reading: %d\n", lightTest);
+  // Test light sensor with detailed debugging
+  Serial.println("\n=== Light Sensor Testing ===");
+  Serial.printf("Testing GPIO %d (LIGHT_SENSOR_PIN)\n", LIGHT_SENSOR_PIN);
+  
+  pinMode(LIGHT_SENSOR_PIN, INPUT);
+  delay(100);
+  
+  for (int i = 0; i < 5; i++) {
+    int lightRaw = analogRead(LIGHT_SENSOR_PIN);
+    float voltage = (lightRaw / 4095.0) * 3.3;
+    Serial.printf("  Light reading %d: Raw=%d, Voltage=%.3fV\n", i+1, lightRaw, voltage);
+    delay(300);
+  }
+  
+  // Try alternative GPIO pins for light sensor
+  Serial.println("\nTesting alternative GPIO pins:");
+  int testPins[] = {32, 33, 36, 39}; // Other ADC pins
+  for (int j = 0; j < 4; j++) {
+    int pin = testPins[j];
+    pinMode(pin, INPUT);
+    delay(50);
+    int value = analogRead(pin);
+    float voltage = (value / 4095.0) * 3.3;
+    Serial.printf("  GPIO %d: Raw=%d, Voltage=%.3fV\n", pin, value, voltage);
+  }
+  
+  // Run comprehensive sensor diagnostics
+  runSensorDiagnostics();
   
   // Connect to WiFi
+  
+  Serial.println("\n💡 LDR (GL5528) Wiring Instructions:");
+  Serial.println("  - One leg of LDR to 3.3V");
+  Serial.println("  - Other leg of LDR to GPIO 35");
+  Serial.println("  - 10kΩ resistor from GPIO 35 to GND (voltage divider)");
+  Serial.println("  - This creates a voltage divider circuit for analog reading\n");
   connectWiFi();
   
   // Fetch device configuration from database
@@ -229,11 +289,97 @@ void setup() {
 }
 
 // ============================================================================
+// AUTOMATIC WATERING FUNCTIONS
+// ============================================================================
+
+// Check if automatic watering should be triggered based on soil moisture
+void checkAutomaticWatering() {
+  // Only check if pump is not already active
+  if (pumpActive) return;
+  
+  // Check if soil moisture is below threshold
+  if (lastSoilMoisture < moistureThreshold) {
+    Serial.printf("\n🌱 Soil moisture (%.1f%%) below threshold (%.1f%%) - Triggering automatic watering\n", lastSoilMoisture, moistureThreshold);
+    
+    // Start watering for default duration
+    int wateringDuration = 30; // seconds
+    startPump(wateringDuration);
+    
+    // Update status
+    updateDeviceStatus("pumping", "Automatic watering triggered - low soil moisture");
+  }
+}
+
+// Fetch watering schedules from database
+bool fetchWateringSchedules() {
+  if (WiFi.status() != WL_CONNECTED) {
+    Serial.println("⚠️ No WiFi connection for schedule fetch");
+    return false;
+  }
+  
+  HTTPClient http;
+  String url = String(supabaseUrl) + "/rest/v1/watering_schedules?zone_id=eq." + String(zoneUUID) + "&is_active=eq.true&select=*";
+  
+  http.begin(url);
+  http.addHeader("apikey", supabaseServiceKey);
+  http.addHeader("Authorization", "Bearer " + String(supabaseServiceKey));
+  
+  int responseCode = http.GET();
+  
+  if (responseCode == 200) {
+    String payload = http.getString();
+    Serial.println("📅 Watering schedules: " + payload);
+    
+    // For now, we'll just log the schedules
+    // In a more advanced implementation, we could parse and check cron expressions
+    http.end();
+    return true;
+  } else {
+    Serial.printf("❌ Schedule fetch failed: HTTP %d\n", responseCode);
+    if (responseCode > 0) {
+      String response = http.getString();
+      Serial.println("Error response: " + response);
+    }
+    http.end();
+    return false;
+  }
+}
+
+// ============================================================================
 // MAIN LOOP
 // ============================================================================
 
 void loop() {
   unsigned long currentTime = millis();
+  
+  // Check for serial commands for debugging
+  if (Serial.available() > 0) {
+    String command = Serial.readStringUntil('\n');
+    command.trim();
+    
+    if (command == "test_pump") {
+      Serial.println("\n⚠️ Manual pump test disabled - system is now automatic");
+      Serial.println("Soil moisture: " + String(lastSoilMoisture) + "%");
+      Serial.println("Threshold: " + String(moistureThreshold) + "%");
+      
+      // Show current status
+      if (lastSoilMoisture < moistureThreshold) {
+        Serial.println("✅ Automatic watering would trigger now");
+      } else {
+        Serial.println("ℹ️ Soil moisture is adequate");
+      }
+    } else if (command == "check_commands") {
+      Serial.println("\n🔄 Manual command check triggered via serial");
+      checkForCommands();
+    } else if (command == "status") {
+      Serial.printf("\n📊 Device Status:\n");
+      Serial.printf("  WiFi: %s\n", WiFi.status() == WL_CONNECTED ? "Connected" : "Disconnected");
+      Serial.printf("  Pump Active: %s\n", pumpActive ? "Yes" : "No");
+      Serial.printf("  Soil Moisture: %.1f%%\n", lastSoilMoisture);
+      Serial.printf("  Moisture Threshold: %.1f%%\n", moistureThreshold);
+      Serial.printf("  Uptime: %lu seconds\n", millis() / 1000);
+    }
+  }
   
   // Check WiFi connection
   if (WiFi.status() != WL_CONNECTED) {
@@ -248,12 +394,22 @@ void loop() {
   if (currentTime - lastSensorReading >= SENSOR_INTERVAL) {
     readAndSendSensorData();
     lastSensorReading = currentTime;
+    
+    // Check for automatic watering after sensor reading
+    checkAutomaticWatering();
   }
   
   // Check for commands from dashboard
   if (currentTime - lastCommandCheck >= COMMAND_CHECK_INTERVAL) {
     checkForCommands();
     lastCommandCheck = currentTime;
+  }
+  
+  // Check watering schedules (every 5 minutes)
+  static unsigned long lastScheduleCheck = 0;
+  if (currentTime - lastScheduleCheck >= 300000) { // 5 minutes
+    fetchWateringSchedules();
+    lastScheduleCheck = currentTime;
   }
   
   // Update device status
@@ -266,6 +422,49 @@ void loop() {
   managePump();
   
   delay(1000);
+}
+
+// ============================================================================
+// DIAGNOSTIC FUNCTIONS
+// ============================================================================
+
+void runSensorDiagnostics() {
+  Serial.println("\n🔧 === SENSOR DIAGNOSTICS ===");
+  
+  // Test all ADC pins
+  int adcPins[] = {32, 33, 34, 35, 36, 39};
+  Serial.println("Testing all ADC-capable GPIO pins:");
+  
+  for (int i = 0; i < 6; i++) {
+    int pin = adcPins[i];
+    pinMode(pin, INPUT);
+    delay(50);
+    
+    int reading = analogRead(pin);
+    float voltage = (reading / 4095.0) * 3.3;
+    
+    Serial.printf("  GPIO %d: Raw=%d, Voltage=%.3fV", pin, reading, voltage);
+    
+    if (pin == SOIL_MOISTURE_PIN) {
+      Serial.print(" (SOIL SENSOR)");
+    }
+    if (pin == LIGHT_SENSOR_PIN) {
+      Serial.print(" (LIGHT SENSOR)");
+    }
+    
+    // Analyze readings
+    if (reading == 4095) {
+      Serial.print(" - FLOATING/DISCONNECTED");
+    } else if (reading == 0) {
+      Serial.print(" - GROUNDED/SHORT");
+    } else if (reading > 10 && reading < 4085) {
+      Serial.print(" - NORMAL RANGE");
+    }
+    
+    Serial.println();
+  }
+  
+  Serial.println("===========================\n");
 }
 
 // ============================================================================
@@ -364,17 +563,40 @@ void readAndSendSensorData() {
   }
   soilMoisture = constrain(soilMoisture, 0, 100);
   
-  // Read light level - try multiple pins if GPIO 35 doesn't work
+  // Read light level with improved debugging for LDR (GL5528)
   int lightLevel = 0;
   int lightRaw = analogRead(LIGHT_SENSOR_PIN);
   
-  // If light sensor pin gives valid reading, use it
-  if (lightRaw > 10) {
-    lightLevel = lightRaw;
+  Serial.printf("Light sensor debug: GPIO %d raw = %d\n", LIGHT_SENSOR_PIN, lightRaw);
+  
+  // Check if light sensor is working properly
+  if (lightRaw >= 0 && lightRaw <= 4095) {
+    // Valid reading from LDR - convert to light intensity (lux approximation)
+    // LDR resistance decreases with more light
+    // Raw values: 0 (dark) to 4095 (bright) - but actual range depends on voltage divider
+    
+    // Map the raw reading to a more realistic light level range
+    // Adjust these values based on your specific LDR and resistor combination
+    lightLevel = map(lightRaw, 0, 4095, 0, 10000); // 0-10000 lux approximation
+    lightLevel = constrain(lightLevel, 0, 10000);
+    
+    Serial.printf("✅ Using LDR reading: %d lux (raw: %d)\n", lightLevel, lightRaw);
   } else {
-    // Fallback: use a time-based simulation for realistic variation
-    unsigned long currentTime = millis();
-    lightLevel = 1000 + (currentTime % 2000);  // Varies between 1000-3000
+    // Invalid reading - use fallback
+    Serial.println("⚠️ Invalid LDR reading, using fallback...");
+    
+    // Try alternative pins
+    int altReading = analogRead(32);
+    if (altReading >= 0 && altReading <= 4095) {
+      lightLevel = map(altReading, 0, 4095, 0, 10000);
+      lightLevel = constrain(lightLevel, 0, 10000);
+      Serial.printf("✅ Using GPIO 32 LDR reading: %d lux (raw: %d)\n", lightLevel, altReading);
+    } else {
+      // Fallback: use a time-based simulation for realistic variation
+      unsigned long currentTime = millis();
+      lightLevel = 1000 + (currentTime % 9000);  // Varies between 1000-10000 lux
+      Serial.printf("🔄 Using simulated reading: %d lux\n", lightLevel);
+    }
   }
   
   lastSoilMoisture = soilMoisture;
@@ -384,7 +606,7 @@ void readAndSendSensorData() {
   Serial.printf("  Temperature: %.1f°C (averaged from %d readings)\n", temperature, validReadings);
   Serial.printf("  Humidity: %.1f%% (averaged from %d readings)\n", humidity, validReadings);
   Serial.printf("  Soil Moisture: %.1f%% (raw: %d, range: %d-%d)\n", soilMoisture, soilRaw, SOIL_MOISTURE_WET, SOIL_MOISTURE_DRY);
-  Serial.printf("  Light Level: %d (GPIO %d raw: %d)\n", lightLevel, LIGHT_SENSOR_PIN, lightRaw);
+  Serial.printf("  Light Level: %d lux (GPIO %d raw: %d)\n", lightLevel, LIGHT_SENSOR_PIN, lightRaw);
   
   // Send to Supabase
   sendSensorData(temperature, humidity, soilMoisture, lightLevel);
@@ -428,7 +650,7 @@ bool sendSensorData(float temp, float hum, float moisture, int lightLevel) {
   Serial.printf("  Temperature: %.1f (rounded: %.1f)\n", temp, round(temp * 10) / 10.0);
   Serial.printf("  Humidity: %.1f (rounded: %.1f)\n", hum, round(hum * 10) / 10.0);
   Serial.printf("  Soil Moisture: %.1f (rounded: %.1f)\n", moisture, round(moisture * 10) / 10.0);
-  Serial.printf("  Light Level: %d\n", lightLevel);
+  Serial.printf("  Light Level: %d lux\n", lightLevel);
   Serial.printf("  Water Usage: %.3f L\n", totalWaterUsage);
   Serial.println("URL: " + url);
   Serial.println("Payload: " + jsonString);
@@ -441,7 +663,7 @@ bool sendSensorData(float temp, float hum, float moisture, int lightLevel) {
     Serial.printf("  → Sent Temperature: %.1f\n", round(temp * 10) / 10.0);
     Serial.printf("  → Sent Humidity: %.1f\n", round(hum * 10) / 10.0);
     Serial.printf("  → Sent Soil Moisture: %.1f\n", round(moisture * 10) / 10.0);
-    Serial.printf("  → Sent Light Level: %d\n", lightLevel);
+    Serial.printf("  → Sent Light Level: %d lux\n", lightLevel);
     Serial.printf("  → Sent Water Usage: %.3f L\n", totalWaterUsage);
     
     // Reset water usage counter after successful send
@@ -527,23 +749,38 @@ void checkForCommands() {
   if (WiFi.status() != WL_CONNECTED) return;
   
   HTTPClient http;
-  // FIXED: Use the correct 'commands' table instead of 'device_commands'
+  // Enhanced debugging: Check for commands using multiple methods
   String url = String(supabaseUrl) + "/rest/v1/commands?device_id=eq." + String(deviceUUID) + "&status=eq.pending&select=*";
   
+  Serial.println("\n🔍 Checking for commands...");
+  Serial.println("Device UUID: " + String(deviceUUID));
+  Serial.println("URL: " + url);
+  
   http.begin(url);
-  http.addHeader("apikey", supabaseAnonKey);
-  http.addHeader("Authorization", "Bearer " + String(supabaseAnonKey));
+  http.addHeader("apikey", supabaseServiceKey);  // Use service key for more permissions
+  http.addHeader("Authorization", "Bearer " + String(supabaseServiceKey));
   
   int responseCode = http.GET();
+  
+  Serial.printf("📡 Command check response: HTTP %d\n", responseCode);
   
   if (responseCode == 200) {
     String payload = http.getString();
     Serial.println("📡 Commands received: " + payload);
     
+    // Check if payload is empty array
+    if (payload == "[]" || payload.length() < 5) {
+      Serial.println("ℹ️ No pending commands found");
+      http.end();
+      return;
+    }
+    
     DynamicJsonDocument doc(2048);
     deserializeJson(doc, payload);
     
     JsonArray commands = doc.as<JsonArray>();
+    
+    Serial.printf("📋 Found %d pending commands\n", commands.size());
     
     for (JsonObject command : commands) {
       String commandId = command["id"];
@@ -554,17 +791,59 @@ void checkForCommands() {
       
       processCommand(commandId, commandType, params);
     }
-  } else if (responseCode != 200) {
+  } else {
     Serial.printf("❌ Command check failed: HTTP %d\n", responseCode);
     if (responseCode > 0) {
       String response = http.getString();
       Serial.println("Error response: " + response);
+      
+      // Try alternative query method
+      Serial.println("🔄 Trying alternative command query...");
+      checkForCommandsAlternative();
     }
   }
   
   http.end();
 }
 
+// Alternative command checking method
+void checkForCommandsAlternative() {
+  HTTPClient http;
+  // Try querying with device_id field directly
+  String url = String(supabaseUrl) + "/rest/v1/commands?device_id=eq." + String(deviceUUID) + "&status=eq.pending";
+  
+  http.begin(url);
+  http.addHeader("apikey", supabaseServiceKey);
+  http.addHeader("Authorization", "Bearer " + String(supabaseServiceKey));
+  
+  int responseCode = http.GET();
+  
+  if (responseCode == 200) {
+    String payload = http.getString();
+    Serial.println("🔄 Alternative method response: " + payload);
+    
+    if (payload != "[]" && payload.length() > 5) {
+      DynamicJsonDocument doc(2048);
+      deserializeJson(doc, payload);
+      
+      JsonArray commands = doc.as<JsonArray>();
+      
+      for (JsonObject command : commands) {
+        String commandId = command["id"];
+        String commandType = command["command_type"];
+        JsonObject params = command["parameters"];
+        
+        Serial.println("🔧 Alt method processing: " + commandType + " (ID: " + commandId + ")");
+        
+        processCommand(commandId, commandType, params);
+      }
+    }
+  }
+  
+  http.end();
+}
+
+// Function to process commands from dashboard
 void processCommand(String commandId, String commandType, JsonObject params) {
   String result = "success";
   String message = "Command executed";
@@ -639,17 +918,21 @@ void updateCommandStatus(String commandId, String status, String message) {
 // ============================================================================
 
 bool startPump(int duration) {
+  Serial.println("\n💧 === PUMP CONTROL DEBUG ===");
+  Serial.printf("Received pump start request for %d seconds\n", duration);
+  Serial.printf("Current pump state: %s\n", pumpActive ? "ACTIVE" : "INACTIVE");
+  Serial.printf("Current soil moisture: %.1f%%\n", lastSoilMoisture);
+  Serial.printf("Motor pump pin: %d\n", MOTOR_PUMP_PIN);
+  
   if (pumpActive) {
-    Serial.println("Pump already active");
+    Serial.println("⚠️ Pump already active");
     return false;
   }
   
-  if (lastSoilMoisture > 90) {
-    Serial.println("Soil too wet, pump canceled");
-    return false;
-  }
+  // Note: Removed soil moisture check to allow manual override and scheduled watering
+  // Even if soil is wet, user can still trigger watering if needed
   
-  Serial.printf("Starting ULN2002 pump control for %d seconds\n", duration);
+  Serial.printf("✅ Starting ULN2002 pump control for %d seconds\n", duration);
   
   digitalWrite(MOTOR_PUMP_PIN, HIGH);  // Activate ULN2002 output
   pumpActive = true;
@@ -657,6 +940,7 @@ bool startPump(int duration) {
   pumpDuration = duration * 1000;
   
   // Rapid blinks when pump starts
+  Serial.println("🔔 Pump activation sequence...");
   for (int i = 0; i < 5; i++) {
     digitalWrite(BUILTIN_LED, LOW);
     delay(100);
@@ -665,11 +949,16 @@ bool startPump(int duration) {
   }
   
   updateDeviceStatus("pumping", "Water pump active via ULN2002");
+  Serial.println("✅ Pump activated successfully");
   return true;
 }
 
 void stopPump() {
-  if (!pumpActive) return;
+  Serial.println("\n🛑 === PUMP STOP DEBUG ===");
+  if (!pumpActive) {
+    Serial.println("⚠️ Pump is not active");
+    return;
+  }
   
   digitalWrite(MOTOR_PUMP_PIN, LOW);  // Deactivate ULN2002 output
   pumpActive = false;
@@ -679,9 +968,9 @@ void stopPump() {
   float waterUsed = 0.086 * runtime;
   totalWaterUsage += waterUsed;
   
-  Serial.printf("ULN2002 pump stopped after %lu seconds\n", runtime);
-  Serial.printf("Water used in this cycle: %.3f L\n", waterUsed);
-  Serial.printf("Total water usage: %.3f L\n", totalWaterUsage);
+  Serial.printf("✅ ULN2002 pump stopped after %lu seconds\n", runtime);
+  Serial.printf("💧 Water used in this cycle: %.3f L\n", waterUsed);
+  Serial.printf("📊 Total water usage: %.3f L\n", totalWaterUsage);
   
   updateDeviceStatus("online", "Pump operation completed");
 }

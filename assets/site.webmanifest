@@ -1,6 +1,6 @@
 {
-  "name": "GardenFlow Dashboard",
-  "short_name": "GardenFlow",
+  "name": "GardenCare Dashboard",
+  "short_name": "GardenCare",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
