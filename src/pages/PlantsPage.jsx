@@ -376,7 +376,7 @@ const PlantsPage = () => {
               </div>
               
               <p className="text-gray-600 dark:text-gray-300 mb-6">
-                Select which devices should be assigned to this zone. These devices will receive pump commands when you toggle the pump.
+                Select which devices should be assigned to this zone. These devices will automatically water based on soil moisture levels.
               </p>
               
               {devices.length === 0 ? (
@@ -524,16 +524,9 @@ const PlantsPage = () => {
                     >
                       Assign Devices
                     </button>
-                    <button
-                      className={`text-sm px-3 py-1 rounded font-medium ${
-                        zone.pump_on
-                          ? 'bg-red-100 text-red-700 hover:bg-red-200'
-                          : 'bg-green-100 text-green-700 hover:bg-green-200'
-                      }`}
-                      onClick={() => handleTogglePump(zone.id, zone.pump_on)}
-                    >
-                      {zone.pump_on ? 'Turn Off Pump' : 'Turn On Pump'}
-                    </button>
+                    <div className="text-sm px-3 py-1 rounded font-medium bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300">
+                      Automatic Mode
+                    </div>
                   </div>
                 </div>
               </div>

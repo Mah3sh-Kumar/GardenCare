@@ -1,232 +1,183 @@
-# GardenCare Dashboard
+# Supabase CLI
 
-A comprehensive IoT dashboard for smart plant monitoring and automated irrigation systems.
+[![Coverage Status](https://coveralls.io/repos/github/supabase/cli/badge.svg?branch=main)](https://coveralls.io/github/supabase/cli?branch=main) [![Bitbucket Pipelines](https://img.shields.io/bitbucket/pipelines/supabase-cli/setup-cli/master?style=flat-square&label=Bitbucket%20Canary)](https://bitbucket.org/supabase-cli/setup-cli/pipelines) [![Gitlab Pipeline Status](https://img.shields.io/gitlab/pipeline-status/sweatybridge%2Fsetup-cli?label=Gitlab%20Canary)
+](https://gitlab.com/sweatybridge/setup-cli/-/pipelines)
 
-## 🌱 Overview
+[Supabase](https://supabase.io) is an open source Firebase alternative. We're building the features of Firebase using enterprise-grade open source tools.
 
-GardenCare is a full-stack IoT solution that enables users to monitor and control their garden environment through a web-based dashboard. The system integrates ESP32 microcontrollers with various sensors to collect environmental data and automate watering based on plant needs.
+This repository contains all the functionality for Supabase CLI.
 
-## 🏗️ System Architecture
+- [x] Running Supabase locally
+- [x] Managing database migrations
+- [x] Creating and deploying Supabase Functions
+- [x] Generating types directly from your database schema
+- [x] Making authenticated HTTP requests to [Management API](https://supabase.com/docs/reference/api/introduction)
 
-```mermaid
-graph TD
-    A[ESP32 Sensor Unit] -->|Sensor Data| B[Supabase Database]
-    B -->|Real-time Updates| C[React Dashboard UI]
-    C -->|Commands| D[Supabase Functions]
-    D -->|Trigger Actions| A
-    E[Weather API] -->|Forecast Data| B
-    F[ML Engine] -->|Plant Recommendations| C
-    
-    subgraph Hardware
-        A
-    end
-    
-    subgraph Cloud
-        B
-        D
-        E
-        F
-    end
-    
-    subgraph Frontend
-        C
-    end
-    
-    style A fill:#4ade80,stroke:#16a34a
-    style B fill:#3b82f6,stroke:#1d4ed8
-    style C fill:#8b5cf6,stroke:#6d28d9
-    style D fill:#3b82f6,stroke:#1d4ed8
-    style E fill:#0ea5e9,stroke:#0284c7
-    style F fill:#ec4899,stroke:#db2777
-```
+## Getting started
 
-## 🚀 Features
+### Install the CLI
 
-- **Real-time Monitoring**: Live sensor data visualization
-- **Automated Watering**: Smart irrigation based on soil moisture
-- **Plant Recommendations**: AI-powered plant suggestions
-- **Alert System**: Notifications for critical conditions
-- **Zone Management**: Configure multiple garden areas
-- **Historical Data**: Trend analysis and reporting
-- **Mobile Responsive**: Works on all device sizes
+Available via [NPM](https://www.npmjs.com) as dev dependency. To install:
 
-## 📁 Project Structure
-
-```
-.
-├── Docs                    # Documentation files
-│   ├── code-snippets       # Detailed code explanations
-│   ├── BACKEND_ARCHITECTURE.md    # Backend architecture documentation
-│   ├── BACKEND_API.md             # Backend API documentation
-│   ├── BACKEND_SECURITY.md        # Backend security documentation
-│   ├── ESP32_INTEGRATION.md       # ESP32 integration documentation
-│   ├── BACKEND_SUMMARY.md         # Backend summary documentation
-│   ├── BACKEND_OVERVIEW.md        # Backend overview documentation
-│   ├── API_REFERENCE.md    # API reference
-│   ├── CHANGELOG.md        # Project changelog
-│   ├── SETUP_GUIDE.md      # Setup instructions
-│   └── TROUBLESHOOTING.md  # Troubleshooting guide
-├── assets                  # Static assets
-├── src                     # Source code
-│   ├── components          # React components
-│   ├── contexts            # React contexts
-│   ├── data                # Static data files
-│   ├── hooks               # Custom React hooks
-│   ├── lib                 # Utility libraries
-│   ├── pages               # Page components
-│   ├── services            # Business logic services
-│   ├── test                # Test files
-│   ├── utils               # Helper functions
-│   ├── App.jsx             # Main application component
-│   ├── index.css           # Global styles
-│   └── main.jsx            # Application entry point
-├── supabase                # Supabase configuration
-│   ├── functions           # Edge Functions
-│   ├── migrations          # Database migrations
-│   └── README.md           # Supabase setup instructions
-├── DOCUMENTATION.md        # Main project documentation
-├── README.md               # Project overview
-├── eslint.config.js        # ESLint configuration
-├── index.html              # HTML entry point
-├── package.json            # Project dependencies
-├── postcss.config.js       # PostCSS configuration
-├── tailwind.config.js      # Tailwind CSS configuration
-├── vercel.json             # Vercel deployment configuration
-└── vitest.config.js        # Vitest testing configuration
-```
-
-## 🛠️ Tech Stack
-
-### Frontend
-- **React 18** - UI library
-- **Vite** - Build tool
-- **Tailwind CSS** - Styling framework
-- **React Router** - Client-side routing
-- **Supabase JS Client** - Backend integration
-- **Chart.js** - Data visualization
-- **Framer Motion** - Animations
-
-### Backend
-- **Supabase** - Backend-as-a-Service
-  - **PostgreSQL** - Database
-  - **Supabase Auth** - Authentication
-  - **Realtime Engine** - WebSocket connections
-  - **Edge Functions** - Serverless functions
-  - **Storage** - File storage
-
-### Hardware
-- **ESP32** - Microcontroller
-- **DHT11** - Temperature/Humidity sensor
-- **Soil Moisture Sensor** - Soil hydration monitoring
-- **Light Sensor** - Ambient light detection
-- **Water Pump** - Irrigation system
-- **ULN2003 Driver** - Pump control
-
-## 📖 Documentation
-
-For detailed information about the project, please refer to the following documentation files:
-
-- [Main Documentation](DOCUMENTATION.md) - Complete project overview
-- [Backend Architecture](Docs/BACKEND_ARCHITECTURE.md) - Database schema and security implementation
-- [Backend API](Docs/BACKEND_API.md) - API endpoints and Edge Functions
-- [Backend Security](Docs/BACKEND_SECURITY.md) - Security measures and compliance
-- [ESP32 Integration](Docs/ESP32_INTEGRATION.md) - Device communication protocols
-- [Backend Summary](Docs/BACKEND_SUMMARY.md) - Executive summary of backend features
-- [Backend Overview](Docs/BACKEND_OVERVIEW.md) - High-level backend architecture
-- [API Reference](Docs/API_REFERENCE.md) - REST API documentation
-- [Setup Guide](Docs/SETUP_GUIDE.md) - Installation and configuration instructions
-- [Troubleshooting](Docs/TROUBLESHOOTING.md) - Common issues and solutions
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Node.js 16+
-- npm or yarn
-- Supabase account
-- ESP32 development board (for hardware integration)
-
-### Installation
-
-1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/garden-care-dashboard.git
-cd garden-care-dashboard
+npm i supabase --save-dev
 ```
 
-2. Install dependencies:
+To install the beta release channel:
+
 ```bash
-npm install
+npm i supabase@beta --save-dev
 ```
 
-3. Set up environment variables:
+When installing with yarn 4, you need to disable experimental fetch with the following nodejs config.
+
+```
+NODE_OPTIONS=--no-experimental-fetch yarn add supabase
+```
+
+> **Note**
+For Bun versions below v1.0.17, you must add `supabase` as a [trusted dependency](https://bun.sh/guides/install/trusted) before running `bun add -D supabase`.
+
+<details>
+  <summary><b>macOS</b></summary>
+
+  Available via [Homebrew](https://brew.sh). To install:
+
+  ```sh
+  brew install supabase/tap/supabase
+  ```
+
+  To install the beta release channel:
+  
+  ```sh
+  brew install supabase/tap/supabase-beta
+  brew link --overwrite supabase-beta
+  ```
+  
+  To upgrade:
+
+  ```sh
+  brew upgrade supabase
+  ```
+</details>
+
+<details>
+  <summary><b>Windows</b></summary>
+
+  Available via [Scoop](https://scoop.sh). To install:
+
+  ```powershell
+  scoop bucket add supabase https://github.com/supabase/scoop-bucket.git
+  scoop install supabase
+  ```
+
+  To upgrade:
+
+  ```powershell
+  scoop update supabase
+  ```
+</details>
+
+<details>
+  <summary><b>Linux</b></summary>
+
+  Available via [Homebrew](https://brew.sh) and Linux packages.
+
+  #### via Homebrew
+
+  To install:
+
+  ```sh
+  brew install supabase/tap/supabase
+  ```
+
+  To upgrade:
+
+  ```sh
+  brew upgrade supabase
+  ```
+
+  #### via Linux packages
+
+  Linux packages are provided in [Releases](https://github.com/supabase/cli/releases). To install, download the `.apk`/`.deb`/`.rpm`/`.pkg.tar.zst` file depending on your package manager and run the respective commands.
+
+  ```sh
+  sudo apk add --allow-untrusted <...>.apk
+  ```
+
+  ```sh
+  sudo dpkg -i <...>.deb
+  ```
+
+  ```sh
+  sudo rpm -i <...>.rpm
+  ```
+
+  ```sh
+  sudo pacman -U <...>.pkg.tar.zst
+  ```
+</details>
+
+<details>
+  <summary><b>Other Platforms</b></summary>
+
+  You can also install the CLI via [go modules](https://go.dev/ref/mod#go-install) without the help of package managers.
+
+  ```sh
+  go install github.com/supabase/cli@latest
+  ```
+
+  Add a symlink to the binary in `$PATH` for easier access:
+
+  ```sh
+  ln -s "$(go env GOPATH)/bin/cli" /usr/bin/supabase
+  ```
+
+  This works on other non-standard Linux distros.
+</details>
+
+<details>
+  <summary><b>Community Maintained Packages</b></summary>
+
+  Available via [pkgx](https://pkgx.sh/). Package script [here](https://github.com/pkgxdev/pantry/blob/main/projects/supabase.com/cli/package.yml).
+  To install in your working directory:
+
+  ```bash
+  pkgx install supabase
+  ```
+
+  Available via [Nixpkgs](https://nixos.org/). Package script [here](https://github.com/NixOS/nixpkgs/blob/master/pkgs/development/tools/supabase-cli/default.nix).
+</details>
+
+### Run the CLI
+
 ```bash
-cp .env.example .env
-# Edit .env with your Supabase credentials
+supabase bootstrap
 ```
 
-4. Start the development server:
+Or using npx:
+
 ```bash
-npm run dev
+npx supabase bootstrap
 ```
 
-### Supabase Setup
+The bootstrap command will guide you through the process of setting up a Supabase project using one of the [starter](https://github.com/supabase-community/supabase-samples/blob/main/samples.json) templates.
 
-1. Create a new Supabase project
-2. Run the database migrations from `supabase/migrations/`
-3. Deploy the Edge Functions from `supabase/functions/`
-4. Configure authentication settings
-5. Set up storage buckets
+## Docs
 
-## 🧪 Testing
+Command & config reference can be found [here](https://supabase.com/docs/reference/cli/about).
 
-Run the test suite:
-```bash
-npm run test
+## Breaking changes
+
+We follow semantic versioning for changes that directly impact CLI commands, flags, and configurations.
+
+However, due to dependencies on other service images, we cannot guarantee that schema migrations, seed.sql, and generated types will always work for the same CLI major version. If you need such guarantees, we encourage you to pin a specific version of CLI in package.json.
+
+## Developing
+
+To run from source:
+
+```sh
+# Go >= 1.22
+go run . help
 ```
-
-Run tests in watch mode:
-```bash
-npm run test:watch
-```
-
-## 📦 Deployment
-
-### Vercel Deployment
-
-1. Connect your GitHub repository to Vercel
-2. Set environment variables in Vercel dashboard
-3. Deploy!
-
-### Manual Deployment
-
-Build the project:
-```bash
-npm run build
-```
-
-Serve the built files:
-```bash
-npm run preview
-```
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a pull request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙏 Acknowledgments
-
-- [Supabase](https://supabase.io) for the amazing backend platform
-- [React](https://reactjs.org) for the UI library
-- [Tailwind CSS](https://tailwindcss.com) for the styling framework
-- All the open-source libraries that made this project possible
-
----
-*GardenCare Dashboard - Last Updated: October 6, 2025*
