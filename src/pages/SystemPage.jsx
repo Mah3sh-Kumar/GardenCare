@@ -182,12 +182,16 @@ export default function SystemPage() {
         return;
       }
 
+      // Generate a more user-friendly zone name
+      const zoneCount = zones.length + 1;
+      const zoneName = `Garden Zone ${zoneCount}`;
+
       const { data, error } = await supabase
         .from('zones')
         .insert([
           {
-            name: 'Garden Zone 1',
-            description: 'Default garden zone for ESP32 device',
+            name: zoneName,
+            description: `Garden zone for your plants`,
             soil_type: 'Loamy',
             moisture_threshold: 40,
             user_id: user.id,
@@ -627,7 +631,8 @@ export default function SystemPage() {
                       <option value="">Select a zone</option>
                       {zones.map((zone) => (
                         <option key={zone.id} value={zone.id}>
-                          {zone.name} ({zone.soil_type})
+                          {zone.name}
+                          {zone.soil_type ? ` (${zone.soil_type})` : ''}
                         </option>
                       ))}
                     </select>

@@ -83,6 +83,80 @@ export class DataService {
     }
   }
 
+  // Get sensor data for charts with advanced filtering options
+  static async getSensorDataWithFilters(filters = {}) {
+    try {
+      const user = await this.validateAuth();
+
+      let query = supabase
+        .from('sensor_data')
+        .select('timestamp, temperature, humidity, soil_moisture, light_level, device_id, zone_id')
+        .eq('user_id', user.id);
+
+      // Apply timeframe filter
+      if (filters.hours) {
+        const startTime = new Date(
+          Date.now() - filters.hours * 60 * 60 * 1000,
+        ).toISOString();
+        query = query.gte('timestamp', startTime);
+      }
+
+      // Apply zone filter
+      if (filters.zoneId) {
+        query = query.eq('zone_id', filters.zoneId);
+      }
+
+      // Apply device filter
+      if (filters.deviceId) {
+        query = query.eq('device_id', filters.deviceId);
+      }
+
+      // Apply value range filters
+      if (filters.temperatureMin !== undefined) {
+        query = query.gte('temperature', filters.temperatureMin);
+      }
+      if (filters.temperatureMax !== undefined) {
+        query = query.lte('temperature', filters.temperatureMax);
+      }
+      if (filters.humidityMin !== undefined) {
+        query = query.gte('humidity', filters.humidityMin);
+      }
+      if (filters.humidityMax !== undefined) {
+        query = query.lte('humidity', filters.humidityMax);
+      }
+      if (filters.soilMoistureMin !== undefined) {
+        query = query.gte('soil_moisture', filters.soilMoistureMin);
+      }
+      if (filters.soilMoistureMax !== undefined) {
+        query = query.lte('soil_moisture', filters.soilMoistureMax);
+      }
+      if (filters.lightLevelMin !== undefined) {
+        query = query.gte('light_level', filters.lightLevelMin);
+      }
+      if (filters.lightLevelMax !== undefined) {
+        query = query.lte('light_level', filters.lightLevelMax);
+      }
+
+      // Order by timestamp
+      query = query.order('timestamp', { ascending: true });
+
+      const { data, error } = await query;
+
+      if (error) {
+        const handledError = handleSupabaseError(error);
+        console.error('Error fetching sensor data with filters:', handledError);
+        throw new Error(
+          handledError.userMessage || 'Failed to fetch filtered chart data',
+        );
+      }
+
+      return data || [];
+    } catch (error) {
+      console.error('Error in getSensorDataWithFilters:', error);
+      throw error;
+    }
+  }
+
   // Get system alerts with proper RLS
   static async getAlerts() {
     try {
