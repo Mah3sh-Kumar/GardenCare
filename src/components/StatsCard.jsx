@@ -1,5 +1,12 @@
 import React from 'react';
 import { useTheme } from '../contexts/ThemeContext';
+import { 
+  Thermometer, 
+  Droplets, 
+  Leaf, 
+  Sun, 
+  Cpu 
+} from 'lucide-react';
 
 const StatsCard = ({
   title,
@@ -91,6 +98,27 @@ const StatsCard = ({
     return `${change} change`;
   };
 
+  // Map titles to Lucide icons
+  const getIconComponent = (title) => {
+    switch (title) {
+      case 'Temperature':
+        return Thermometer;
+      case 'Humidity':
+        return Droplets;
+      case 'Soil Moisture':
+        return Leaf;
+      case 'Light Level':
+        return Sun;
+      case 'Active Devices':
+        return Cpu;
+      default:
+        return Thermometer; // fallback
+    }
+  };
+
+  // Get the appropriate icon component based on title
+  const IconComponent = getIconComponent(title);
+
   return (
     <div
       className={`${isDark ? 'bg-gray-800 hover:bg-gray-750' : 'bg-white hover:bg-gray-50'} p-4 sm:p-6 rounded-xl shadow-sm border ${isDark ? 'border-gray-700' : 'border-gray-200'} transition-all duration-200 hover:shadow-md focus-within:ring-2 focus-within:ring-green-500 focus-within:ring-opacity-50`}
@@ -105,23 +133,9 @@ const StatsCard = ({
           {title}
         </h3>
         <span
-          className={`p-2 rounded-full ${icon?.bgColor || 'bg-gray-500'} shadow-sm`}
+          className={`p-2 rounded-full ${icon?.bgColor || 'bg-gray-500'} shadow-sm flex items-center justify-center`}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 text-white"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d={icon?.path || 'M13 10V3L4 14h7v7l9-11h-7z'}
-            />
-          </svg>
+          <IconComponent className="h-5 w-5 text-white" aria-hidden="true" />
         </span>
       </div>
       <div className="flex flex-col">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import {
   LineChart,
@@ -62,25 +62,24 @@ const SensorsPage = () => {
     }
   };
 
+  // Calculate hours based on timeframe
+  const getHoursFromTimeframe = (timeframe) => {
+    switch (timeframe) {
+      case 'day':
+        return 24;
+      case 'week':
+        return 24 * 7;
+      case 'month':
+        return 24 * 30;
+      default:
+        return 24;
+    }
+  };
+
   // Load sensor data from Supabase
   const loadSensorData = async (sensorId, timeframe) => {
     try {
-      // Calculate hours based on timeframe
-      let hours;
-      switch (timeframe) {
-        case 'day':
-          hours = 24;
-          break;
-        case 'week':
-          hours = 24 * 7;
-          break;
-        case 'month':
-          hours = 24 * 30;
-          break;
-        default:
-          hours = 24;
-      }
-
+      const hours = getHoursFromTimeframe(timeframe);
       const data = await DataService.getSensorDataForCharts(hours);
 
       // Filter data for selected sensor if sensorId is provided
@@ -143,7 +142,7 @@ const SensorsPage = () => {
       console.log('Loading data for sensor:', selectedSensor, 'timeframe:', timeframe);
       loadSensorData(selectedSensor, timeframe);
     }
-  }, [selectedSensor, timeframe]);
+  }, [selectedSensor, timeframe, temperatureUnit]);
 
   // Function to refresh data
   const handleRefresh = () => {
@@ -152,8 +151,6 @@ const SensorsPage = () => {
       loadSensorData(selectedSensor, timeframe);
     }
   };
-
-
 
   const getSensorStatusClass = (status) => {
     switch (status) {
