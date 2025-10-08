@@ -195,18 +195,13 @@ const AlertsPanel = () => {
 
   return (
     <div
-      className={`${isDark ? 'bg-gray-800' : 'bg-white'} p-6 rounded-xl shadow-sm border ${isDark ? 'border-gray-700' : 'border-gray-200'} h-96 flex flex-col`}
+      className={`${isDark ? 'bg-gray-800' : 'bg-white'} p-6 rounded-xl shadow-sm border ${isDark ? 'border-gray-700' : 'border-gray-200'} h-[326px] flex flex-col`}
     >
       <div className="flex justify-between items-center mb-4 flex-shrink-0">
         <h2
           className={`text-lg font-medium ${isDark ? 'text-white' : 'text-gray-800'} flex items-center`}
         >
           System Alerts
-          {unreadCount > 0 && (
-            <span className="ml-2 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-red-500 rounded-full">
-              {unreadCount > 99 ? '99+' : unreadCount}
-            </span>
-          )}
         </h2>
         <div className="flex items-center space-x-2">
           <button

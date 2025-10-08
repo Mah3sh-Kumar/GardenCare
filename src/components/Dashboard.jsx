@@ -264,13 +264,6 @@ const Dashboard = () => {
       {/* Alerts */}
       <section aria-label="System Alerts">
         <div className="relative">
-          {unreadCount > 0 && (
-            <div className="absolute -top-2 -right-2 z-10">
-              <span className="inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 rounded-full animate-pulse">
-                {unreadCount > 99 ? '99+' : unreadCount}
-              </span>
-            </div>
-          )}
           <AlertsPanel />
         </div>
       </section>
