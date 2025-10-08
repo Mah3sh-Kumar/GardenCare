@@ -83,6 +83,80 @@ export class DataService {
     }
   }
 
+  // Get sensor data for charts with advanced filtering options
+  static async getSensorDataWithFilters(filters = {}) {
+    try {
+      const user = await this.validateAuth();
+
+      let query = supabase
+        .from('sensor_data')
+        .select('timestamp, temperature, humidity, soil_moisture, light_level, device_id, zone_id')
+        .eq('user_id', user.id);
+
+      // Apply timeframe filter
+      if (filters.hours) {
+        const startTime = new Date(
+          Date.now() - filters.hours * 60 * 60 * 1000,
+        ).toISOString();
+        query = query.gte('timestamp', startTime);
+      }
+
+      // Apply zone filter
+      if (filters.zoneId) {
+        query = query.eq('zone_id', filters.zoneId);
+      }
+
+      // Apply device filter
+      if (filters.deviceId) {
+        query = query.eq('device_id', filters.deviceId);
+      }
+
+      // Apply value range filters
+      if (filters.temperatureMin !== undefined) {
+        query = query.gte('temperature', filters.temperatureMin);
+      }
+      if (filters.temperatureMax !== undefined) {
+        query = query.lte('temperature', filters.temperatureMax);
+      }
+      if (filters.humidityMin !== undefined) {
+        query = query.gte('humidity', filters.humidityMin);
+      }
+      if (filters.humidityMax !== undefined) {
+        query = query.lte('humidity', filters.humidityMax);
+      }
+      if (filters.soilMoistureMin !== undefined) {
+        query = query.gte('soil_moisture', filters.soilMoistureMin);
+      }
+      if (filters.soilMoistureMax !== undefined) {
+        query = query.lte('soil_moisture', filters.soilMoistureMax);
+      }
+      if (filters.lightLevelMin !== undefined) {
+        query = query.gte('light_level', filters.lightLevelMin);
+      }
+      if (filters.lightLevelMax !== undefined) {
+        query = query.lte('light_level', filters.lightLevelMax);
+      }
+
+      // Order by timestamp
+      query = query.order('timestamp', { ascending: true });
+
+      const { data, error } = await query;
+
+      if (error) {
+        const handledError = handleSupabaseError(error);
+        console.error('Error fetching sensor data with filters:', handledError);
+        throw new Error(
+          handledError.userMessage || 'Failed to fetch filtered chart data',
+        );
+      }
+
+      return data || [];
+    } catch (error) {
+      console.error('Error in getSensorDataWithFilters:', error);
+      throw error;
+    }
+  }
+
   // Get system alerts with proper RLS
   static async getAlerts() {
     try {
@@ -373,7 +447,6 @@ export class DataService {
 
       // Default stats when no data available
       const defaultIcon = {
-        path: 'M9.5 3.25a2.25 2.25 0 1 1 3 2.122V6A2.5 2.5 0 0 1 10 8.5H6a1 1 0 0 0-1 1v1.128a2.251 2.251 0 1 1-1.5 0V5.372a2.25 2.25 0 1 1 1.5 0v1.836A2.493 2.493 0 0 1 6 7h4a1 1 0 0 0 1-1v-.628A2.25 2.25 0 0 1 9.5 3.25Zm-6 0a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0Zm8.25-.75a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5ZM4.25 12a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Z',
         bgColor: 'bg-gray-500',
       };
 
